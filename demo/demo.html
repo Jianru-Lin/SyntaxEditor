@@ -5,6 +5,37 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-hello, SyntaxEditor!
+	<!-- 每一个 statement 都包裹在一个 div 里 -->
+	<div class="statement if-statement box">
+		
+		<!-- if (...) -->
+		<div class="prefix-keyword box">if</div>
+		<div class="condition expression box">x + y &lt; 100</div>
+		<div class="statement box">
+			<span class="token identifer">console</span><span class="token identifer">.</span><span class="token identifer">log</span><ol class="list arg-list">
+				<li class="list-item arg-item">
+					<span class="list-item-seq">0</span><span class="token string">hello, %s!</span>
+				</li>
+				<li class="list-item arg-item">
+					<span class="list-item-seq">1</span><span class="token string">Jack</span>
+				</li>
+			</ol>
+		</div>
+
+		<!-- else if (...) -->
+		<div class="sub-prefix-keyword box">elif</div>
+		<div class="condition expression box">x + y &gt; 200</div>
+
+		<div class="statement box">
+		</div>
+
+	</div>
+
+	<!-- 自动刷新 -->
+	<script type="text/javascript">
+		setTimeout(function() {
+			location.reload(true);
+		}, 1000);
+	</script>
 </body>
 </html>

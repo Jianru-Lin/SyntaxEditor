@@ -1,3 +1,72 @@
 body {
-	font-size: 150px;
+	font-size: 24px;
+	font-family: Consolas;
+	background: #333333;
+	color: #f1f1f1;
+}
+
+.box {
+}
+
+li {
+	margin-bottom: .25em;
+}
+
+.statement,
+.if-statement > .condition {
+	position: relative;
+	margin-bottom: .5em;
+}
+
+.statement > .statement,
+.statement > .expression {
+	margin-left: 4em;
+}
+
+.statement .prefix-keyword,
+ .statement .sub-prefix-keyword{
+	position: absolute;
+	background: #3F9FE9;
+	min-width: 3em;
+	border-radius: 3px;
+	text-align: center;
+}
+
+.statement .sub-prefix-keyword {
+	background: #4b4b4b;
+}
+
+.token {
+	/*border: solid 1px rgba(255, 255, 255, 0.17);*/
+	display: inline-block;
+}
+
+.token.string {
+	color: gray;
+}
+
+.list {
+	margin: 0 0 0 0.5em;
+	padding: 0;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.list-item {
+	display: block;
+/*	border: solid 1px rgba(255, 255, 255, 0.17);
+	border-top: none;*/
+}
+
+.list-item:first-child {
+	/*border: solid 1px rgba(255, 255, 255, 0.17);*/	
+}
+
+.list-item-seq {
+	display: inline-block;
+	background: gray;
+	color: black;
+	border-radius: 3px;
+	padding: 0 .25em;
+	margin-right: .25em;
 }
