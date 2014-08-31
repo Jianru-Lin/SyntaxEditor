@@ -1,0 +1,8 @@
+{
+	"name": "SyntaxEditor-Server",
+	"version": "1.0.0",
+	"description": "SyntaxEditor-Server",
+	"dependencies": {
+		"express": ">=4.3.1"
+	}
+}

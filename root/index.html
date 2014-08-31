@@ -2,7 +2,10 @@
 <html>
 <head>
 	<title>SyntaxEditor Demo</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<script type="text/javascript" src="js/esprima.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
 	<!-- 每一个 statement 都包裹在一个 div 里 -->
@@ -69,7 +72,7 @@
 	<!-- 自动刷新 -->
 	<script type="text/javascript">
 		setTimeout(function() {
-			location.reload(true);
+			//location.reload(true);
 		}, 1000);
 	</script>
 </body>
