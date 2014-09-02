@@ -1,5 +1,5 @@
 function demo() {
-	var o = [a+100,add(3,4),[{a:100}]]
+	var o = [,a,,c,,d,,,]
 }
 
 $(function() {
@@ -175,8 +175,14 @@ var handler_map = {
 		// elements
 		if (ast.elements && ast.elements.length > 0) {
 			ast.elements.forEach(function(e, i) {
-				append(d, ast_to_dom(e))
-				if (i < ast.elements.length - 1) {
+				// e can be null
+				if (e) {
+					append(d, ast_to_dom(e))
+					if (i < ast.elements.length - 1) {
+						append(d, text(_class(div(), 'comma'), ', '))
+					}
+				}
+				else {
 					append(d, text(_class(div(), 'comma'), ', '))
 				}
 			})
