@@ -1,5 +1,10 @@
 function demo() {
-	func()
+	var o = {
+		a: undefined, 
+		o: {
+			x: 100
+		}
+	}
 }
 
 $(function() {
@@ -138,8 +143,35 @@ var handler_map = {
 		var d = _class(div(), ast.type)
 		append(d, ast_to_dom(ast.callee))
 		append(d, text(_class(div(), ['bracket', 'left']), '('))
-		// todo
+		// arguments
+		if (ast.arguments && ast.arguments.length > 0) {
+			ast.arguments.forEach(function(arg, i) {
+				append(d, ast_to_dom(arg))
+				if (i < ast.arguments.length - 1) {
+					append(d, text(_class(div(), 'comma'), ', '))
+				}
+			});
+		}
 		append(d, text(_class(div(), ['bracket', 'right']), ')'))
+		return d
+	},
+	'ObjectExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, text(_class(div(), ['bracket', 'left']), '{'))
+		// properties
+		if (ast.properties && ast.properties.length > 0) {
+			ast.properties.forEach(function(p, i) {
+				var _ = _class(div(), p.type)
+				append(_, ast_to_dom(p.key))
+				append(_, text(_class(div(), 'colon'), ': '))
+				append(_, ast_to_dom(p.value))
+				append(d, _)
+				if (i < ast.properties.length - 1) {
+					append(d, text(_class(div(), 'comma'), ', '))
+				}
+			})
+		}
+		append(d, text(_class(div(), ['bracket', 'right']), '}'))
 		return d
 	}
 }

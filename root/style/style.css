@@ -37,7 +37,7 @@ div {
 .LogicalExpression,
 .ConditionalExpression,
 .AssignmentExpression,
-.CallExpression {
+.CallExpression, {
 	background: rgba(0, 255, 143, 0.3);
 	padding: 0 .5em;
 }
@@ -59,7 +59,9 @@ div {
 .LogicalExpression > *,
 .ConditionalExpression > *,
 .AssignmentExpression > *,
-.CallExpression > * {
+.CallExpression > *,
+.ObjectExpression > *,
+.ObjectExpression > .Property > * {
 	display: inline-block;
 }
 
@@ -79,7 +81,9 @@ div {
 	opacity: .5;
 }
 
-.VariableDeclarator > .equ {
+.VariableDeclarator > .equ,
+.comma,
+.colon {
 	white-space: pre;
 }
 
