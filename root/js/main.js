@@ -1,10 +1,5 @@
 function demo() {
-	var o = {
-		a: undefined, 
-		o: {
-			x: 100
-		}
-	}
+	var o = [a+100,add(3,4),[{a:100}]]
 }
 
 $(function() {
@@ -172,6 +167,21 @@ var handler_map = {
 			})
 		}
 		append(d, text(_class(div(), ['bracket', 'right']), '}'))
+		return d
+	},
+	'ArrayExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, text(_class(div(), ['bracket', 'left']), '['))
+		// elements
+		if (ast.elements && ast.elements.length > 0) {
+			ast.elements.forEach(function(e, i) {
+				append(d, ast_to_dom(e))
+				if (i < ast.elements.length - 1) {
+					append(d, text(_class(div(), 'comma'), ', '))
+				}
+			})
+		}
+		append(d, text(_class(div(), ['bracket', 'right']), ']'))
 		return d
 	}
 }

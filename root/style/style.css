@@ -61,7 +61,8 @@ div {
 .AssignmentExpression > *,
 .CallExpression > *,
 .ObjectExpression > *,
-.ObjectExpression > .Property > * {
+.ObjectExpression > .Property > *,
+.ArrayExpression > * {
 	display: inline-block;
 }
 
