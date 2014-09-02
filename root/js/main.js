@@ -1,5 +1,5 @@
 function demo() {
-	var a = void delete typeof + - ~ !a;
+	func()
 }
 
 $(function() {
@@ -62,10 +62,12 @@ var handler_map = {
 		append(consequent, ast_to_dom(ast.consequent))
 		append(d, consequent)
 		// alternate
-		append(d, text(_class(div(), 'else'), 'else'))
-		var alternate = _class(div(), 'alternate')
-		append(alternate, ast_to_dom(ast.alternate))
-		append(d, alternate)
+		if (ast.alternate) {
+			append(d, text(_class(div(), 'else'), 'else'))
+			var alternate = _class(div(), 'alternate')
+			append(alternate, ast_to_dom(ast.alternate))
+			append(d, alternate)
+		}
 		return d
 	},
 	'BlockStatement': function(ast) {
@@ -102,6 +104,42 @@ var handler_map = {
 			append(d, ast_to_dom(ast.argument))
 			append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
 		}
+		return d
+	},
+	'LogicalExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.left))
+		append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
+		append(d, ast_to_dom(ast.right))
+		return d
+	},
+	'ConditionalExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.test))
+		append(d, text(_class(div(), 'operator'), ' ? '))
+		append(d, ast_to_dom(ast.consequent))
+		append(d, text(_class(div(), 'operator'), ' : '))
+		append(d, ast_to_dom(ast.alternate))
+		return d
+	},
+	'AssignmentExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.left))
+		append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
+		append(d, ast_to_dom(ast.right))
+		return d
+	},
+	'ExpressionStatement': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.expression))
+		return d
+	},
+	'CallExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.callee))
+		append(d, text(_class(div(), ['bracket', 'left']), '('))
+		// todo
+		append(d, text(_class(div(), ['bracket', 'right']), ')'))
 		return d
 	}
 }

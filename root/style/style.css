@@ -33,7 +33,11 @@ div {
 
 .BinaryExpression,
 .UpdateExpression,
-.UnaryExpression {
+.UnaryExpression,
+.LogicalExpression,
+.ConditionalExpression,
+.AssignmentExpression,
+.CallExpression {
 	background: rgba(0, 255, 143, 0.3);
 	padding: 0 .5em;
 }
@@ -51,7 +55,11 @@ div {
 .VariableDeclarator > .init,
 .BinaryExpression > *,
 .UpdateExpression > *,
-.UnaryExpression > * {
+.UnaryExpression > *,
+.LogicalExpression > *,
+.ConditionalExpression > *,
+.AssignmentExpression > *,
+.CallExpression > * {
 	display: inline-block;
 }
 
