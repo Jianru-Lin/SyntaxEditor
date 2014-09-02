@@ -31,7 +31,9 @@ div {
 	margin-top: .5em;
 }
 
-.BinaryExpression {
+.BinaryExpression,
+.UpdateExpression,
+.UnaryExpression {
 	background: rgba(0, 255, 143, 0.3);
 	padding: 0 .5em;
 }
@@ -47,7 +49,9 @@ div {
 .VariableDeclarator > .id,
 .VariableDeclarator > .equ,
 .VariableDeclarator > .init,
-.BinaryExpression > * {
+.BinaryExpression > *,
+.UpdateExpression > *,
+.UnaryExpression > * {
 	display: inline-block;
 }
 

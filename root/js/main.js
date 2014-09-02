@@ -1,11 +1,5 @@
 function demo() {
-	var a = 100
-	if (a) {
-		var c = 100;
-	}
-	else {
-		var d = 200;
-	}	
+	var a = void delete typeof + - ~ !a;
 }
 
 $(function() {
@@ -84,6 +78,30 @@ var handler_map = {
 		append(d, ast_to_dom(ast.left))
 		append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
 		append(d, ast_to_dom(ast.right))
+		return d
+	},
+	'UpdateExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		if (ast.prefix) {
+			append(d, text(_class(div(), 'operator'), ' ' + ast.operator))
+			append(d, ast_to_dom(ast.argument))
+		}
+		else {
+			append(d, ast_to_dom(ast.argument))
+			append(d, text(_class(div(), 'operator'), ast.operator + ' '))
+		}
+		return d
+	},
+	'UnaryExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		if (ast.prefix) {
+			append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
+			append(d, ast_to_dom(ast.argument))
+		}
+		else {
+			append(d, ast_to_dom(ast.argument))
+			append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
+		}
 		return d
 	}
 }
