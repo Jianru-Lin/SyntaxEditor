@@ -5,68 +5,76 @@ body {
 	color: #f1f1f1;
 }
 
-.box {
-}
-
-li {
-	margin-bottom: .25em;
-}
-
-.statement,
-.if-statement > .condition {
+div {
 	position: relative;
-	margin-bottom: .5em;
 }
 
-.statement > .statement,
-.statement > .expression {
-	margin-left: 4em;
-}
+/* 关键词 */
 
-.statement .prefix-keyword,
- .statement .sub-prefix-keyword{
-	position: absolute;
-	background: #3F9FE9;
-	min-width: 3em;
-	border-radius: 3px;
-	text-align: center;
-}
-
-.statement .sub-prefix-keyword {
-	background: #4b4b4b;
-}
-
-.token {
-	/*border: solid 1px rgba(255, 255, 255, 0.17);*/
-	display: inline-block;
-}
-
-.token.string {
-	color: gray;
-}
-
-.list {
-	margin: 0 0 0 0.5em;
-	padding: 0;
+.var,
+.if,
+.else {
+	color: yellow;
 	display: inline-block;
 	vertical-align: top;
+	white-space: pre;
 }
 
-.list-item {
-	display: block;
-/*	border: solid 1px rgba(255, 255, 255, 0.17);
-	border-top: none;*/
+/* If */
+
+.BlockStatement {
+	border: solid 1px rgba(255, 255, 255, 0.2);
+	padding: .25em;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	padding-left: 2em;
+	margin-top: .5em;
 }
 
-.list-item:first-child {
-	/*border: solid 1px rgba(255, 255, 255, 0.17);*/	
+.BinaryExpression {
+	background: rgba(0, 255, 143, 0.3);
+	padding: 0 .5em;
 }
 
-.list-item-seq {
+/* 操作符 */
+
+.operator {
+	white-space: pre;
+}
+
+/* 并排编排 */
+
+.VariableDeclarator > .id,
+.VariableDeclarator > .equ,
+.VariableDeclarator > .init,
+.BinaryExpression > * {
 	display: inline-block;
-	background: gray;
-	color: black;
-	border-radius: 3px;
-	padding: 0 .25em;
+}
+
+.VariableDeclaration > .box,
+.IfStatement .test {
+	display: inline-block;
+}
+
+.IfStatement .test > div {
+	display: inline-block;
+}
+
+/* 点缀字符 */
+
+.VariableDeclarator > .equ,
+.IfStatement > .test > .bracket {
+	opacity: .5;
+}
+
+.VariableDeclarator > .equ {
+	white-space: pre;
+}
+
+.bracket.left {
 	margin-right: .25em;
+}
+
+.bracket.right {
+	margin-left: .25em;
 }
