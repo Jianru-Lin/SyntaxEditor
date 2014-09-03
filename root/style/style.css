@@ -62,7 +62,8 @@ div {
 .CallExpression > *,
 .ObjectExpression > *,
 .ObjectExpression > .Property > *,
-.ArrayExpression > * {
+.ArrayExpression > *,
+.NewExpression > * {
 	display: inline-block;
 }
 
@@ -84,7 +85,8 @@ div {
 
 .VariableDeclarator > .equ,
 .comma,
-.colon {
+.colon,
+.new {
 	white-space: pre;
 }
 

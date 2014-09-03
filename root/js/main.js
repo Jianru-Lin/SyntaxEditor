@@ -1,5 +1,5 @@
 function demo() {
-	var o = [,a,,c,,d,,,]
+	new F(a,b);
 }
 
 $(function() {
@@ -188,6 +188,23 @@ var handler_map = {
 			})
 		}
 		append(d, text(_class(div(), ['bracket', 'right']), ']'))
+		return d
+	},
+	'NewExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, text(_class(div(), 'new'), 'new '))
+		append(d, ast_to_dom(ast.callee))
+		// arguments
+		append(d, text(_class(div(), ['bracket', 'left']), '('))
+		if (ast.arguments && ast.arguments.length > 0) {
+			ast.arguments.forEach(function(e, i) {
+				append(d, ast_to_dom(e))
+				if (i < ast.arguments.length - 1) {
+					append(d, text(_class(div(), 'comma'), ', '))
+				}
+			})
+		}
+		append(d, text(_class(div(), ['bracket', 'right']), ')'))
 		return d
 	}
 }
