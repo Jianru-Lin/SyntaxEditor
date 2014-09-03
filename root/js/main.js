@@ -1,15 +1,5 @@
 function demo() {
-	var d = _class(div(), ast.type)
-	// id
-	var id = _class(div(), 'id')
-	append(id, ast_to_dom(ast.id))
-	append(d, id)
-	// =
-	append(d, text(_class(div(), "equ"), ' = '))
-	// init
-	var init = _class(div(), 'init')
-	append(init, ast_to_dom(ast.init))
-	append(d, init)
+	a['blala-hey'].c
 }
 
 $(function() {
@@ -218,19 +208,30 @@ var handler_map = {
 		return d
 	},
 	'MemberExpression': function(ast) {
-		var d = _class(div(), ast.type)
-		append(d, ast_to_dom(ast.object))
 		var prop = ast.property
 		if (prop.type === 'Literal' && /^['"]/.test(prop.raw)) {
-			append(d, text(_class(div(), 'bracket'), '['))
-			append(d, ast_to_dom(prop))
-			append(d, text(_class(div(), 'bracket'), ']'))
+			var t = [
+				'div.' + ast.type,
+				[
+					ast_to_dom(ast.object),
+					['div.bracket', '['],
+					ast_to_dom(prop),
+					['div.bracket', ']']
+				]
+			]
 		}
 		else {
-			append(d, text(_class(div(), 'dot'), '.'))
-			append(d, ast_to_dom(prop))
+			var t = [
+				'div.' + ast.type,
+				[
+					ast_to_dom(ast.object),
+					['div.dot', '.'],
+					ast_to_dom(prop)
+				]
+			]
 		}
-		return d
+
+		return render(t)
 	}
 }
 
@@ -277,5 +278,36 @@ function append(e, list) {
 	list.forEach(function(item) {
 		if (item) e.appendChild(item)
 	})
+	return e
+}
+
+function render(l) {
+	if (!l || l.length < 1) return
+	var tmp = l[0].split('.')
+	var name = tmp[0]
+
+	var e = document.createElement(name)
+	if (tmp.length > 1) {
+		for (var i = 1; i < tmp.length; ++i) {
+			e.classList.add(tmp[i])
+		}
+	}
+
+	if (typeof l[1] === 'string') {
+		e.textContent = l[1]
+	}
+	else if (Array.isArray(l[1])) {
+		var children = l[1]
+		for (var i = 0; i < children.length; ++i) {
+			var child = children[i]
+			if (Array.isArray(child)) {
+				e.appendChild(render(child))
+			}
+			else if (typeof child === 'object' && child != null) {
+				e.appendChild(child)
+			}
+		}
+	}
+
 	return e
 }
