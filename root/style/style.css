@@ -63,7 +63,8 @@ div {
 .ObjectExpression > *,
 .ObjectExpression > .Property > *,
 .ArrayExpression > *,
-.NewExpression > * {
+.NewExpression > *,
+.MemberExpression > * {
 	display: inline-block;
 }
 

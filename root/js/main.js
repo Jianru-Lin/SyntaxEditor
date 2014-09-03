@@ -1,5 +1,5 @@
 function demo() {
-	new F(a,b);
+	new a["b"].c
 }
 
 $(function() {
@@ -205,6 +205,21 @@ var handler_map = {
 			})
 		}
 		append(d, text(_class(div(), ['bracket', 'right']), ')'))
+		return d
+	},
+	'MemberExpression': function(ast) {
+		var d = _class(div(), ast.type)
+		append(d, ast_to_dom(ast.object))
+		var prop = ast.property
+		if (prop.type === 'Literal' && /^['"]/.test(prop.raw)) {
+			append(d, text(_class(div(), 'bracket'), '['))
+			append(d, ast_to_dom(prop))
+			append(d, text(_class(div(), 'bracket'), ']'))
+		}
+		else {
+			append(d, text(_class(div(), 'dot'), '.'))
+			append(d, ast_to_dom(prop))
+		}
 		return d
 	}
 }
