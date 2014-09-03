@@ -1,5 +1,15 @@
 function demo() {
-	new a["b"].c
+	var d = _class(div(), ast.type)
+	// id
+	var id = _class(div(), 'id')
+	append(id, ast_to_dom(ast.id))
+	append(d, id)
+	// =
+	append(d, text(_class(div(), "equ"), ' = '))
+	// init
+	var init = _class(div(), 'init')
+	append(init, ast_to_dom(ast.init))
+	append(d, init)
 }
 
 $(function() {

@@ -3,6 +3,7 @@ body {
 	font-family: Consolas;
 	background: #333333;
 	color: #f1f1f1;
+	line-height: 2.5em;
 }
 
 div {
@@ -89,12 +90,4 @@ div {
 .colon,
 .new {
 	white-space: pre;
-}
-
-.bracket.left {
-	margin-right: .25em;
-}
-
-.bracket.right {
-	margin-left: .25em;
 }
