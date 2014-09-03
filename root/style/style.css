@@ -14,10 +14,19 @@ div {
 
 .var,
 .if,
-.else {
+.else,
+.keyword {
 	color: yellow;
 	display: inline-block;
 	vertical-align: top;
+	white-space: pre;
+}
+
+.line > * {
+	display: inline-block;
+}
+
+.pre {
 	white-space: pre;
 }
 

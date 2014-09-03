@@ -1,5 +1,11 @@
 function demo() {
-	a['blala-hey'].c
+	var obj = {
+		name: function() {},
+		get value() {},
+		set value(v) {}
+	}
+
+	function x() {}
 }
 
 $(function() {
@@ -231,6 +237,20 @@ var handler_map = {
 			]
 		}
 
+		return render(t)
+	},
+	'FunctionExpression': function(ast) {
+		return render(['div', '{λ}'])
+	},
+	'FunctionDeclaration': function(ast) {
+		var t = [
+			'div.line.' + ast.type,
+			[
+				['div.keyword.pre', 'function '],
+				ast_to_dom(ast.id),
+				['div', '() {}']
+			]
+		]
 		return render(t)
 	}
 }
