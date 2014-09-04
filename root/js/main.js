@@ -1,11 +1,7 @@
 function demo() {
-	var obj = {
-		name: function() {},
-		get value() {},
-		set value(v) {}
+	{
+		var a = 100 + 1 * 5;
 	}
-
-	function x() {}
 }
 
 $(function() {
@@ -19,15 +15,15 @@ $(function() {
 
 var handler_map = {
 	'Program': function(ast) {
-		return append(_class(div(), ast.type), ast_list_to_dom(ast.body))
+		return div2(ast.type).append_ast(ast.body).dom()
 	},
 	'VariableDeclaration': function(ast) {
-		var d = _class(div(), ast.type)
-		append(d, text(_class(div(), 'var'), 'var '))
-		var box = _class(div(), 'box')
-		append(box, ast_list_to_dom(ast.declarations))
-		append(d, box)
-		return d
+		return (
+			div2(ast.type)
+				.append(span2('keyword', 'pre').text('var '))
+				.append(span2('box').append_ast(ast.declarations))
+				.dom()
+		)
 	},
 	'VariableDeclarator': function(ast) {
 		if (ast.init) {
@@ -49,10 +45,10 @@ var handler_map = {
 		}
 	},
 	'Identifier': function(ast) {
-		return text(_class(div(), ast.type), ast.name)
+		return span2(ast.type).text(ast.name).dom()
 	},
 	'Literal': function(ast) {
-		return text(_class(div(), ast.type), ast.raw)
+		return span2(ast.type).text(ast.raw).dom()
 	},
 	'IfStatement': function(ast) {
 		var d = _class(div(), ast.type)
@@ -77,9 +73,7 @@ var handler_map = {
 		return d
 	},
 	'BlockStatement': function(ast) {
-		var d = _class(div(), ast.type)
-		append(d, ast_list_to_dom(ast.body))
-		return d
+		return div2(ast.type).append_ast(ast.body).dom()
 	},
 	'BinaryExpression': function(ast) {
 		var d = _class(div(), ast.type)
@@ -216,42 +210,36 @@ var handler_map = {
 	'MemberExpression': function(ast) {
 		var prop = ast.property
 		if (prop.type === 'Literal' && /^['"]/.test(prop.raw)) {
-			var t = [
-				'div.' + ast.type,
-				[
-					ast_to_dom(ast.object),
-					['div.bracket', '['],
-					ast_to_dom(prop),
-					['div.bracket', ']']
-				]
-			]
+			return (
+				div2(ast.type)
+					.append(ast_to_dom(ast.object))
+					.append(span2().text('['))
+					.append(ast_to_dom(prop))
+					.append(span2().text(']'))
+					.dom()
+			)
 		}
 		else {
-			var t = [
-				'div.' + ast.type,
-				[
-					ast_to_dom(ast.object),
-					['div.dot', '.'],
-					ast_to_dom(prop)
-				]
-			]
+			return (
+				div2(ast.type)
+					.append(ast_to_dom(ast.object))
+					.append(span2().text('.'))
+					.append(ast_to_dom(prop))
+					.dom()
+			)
 		}
-
-		return render(t)
 	},
 	'FunctionExpression': function(ast) {
-		return render(['div', '{λ}'])
+		return div2(ast.type).text('{λ}').dom()
 	},
 	'FunctionDeclaration': function(ast) {
-		var t = [
-			'div.line.' + ast.type,
-			[
-				['div.keyword.pre', 'function '],
-				ast_to_dom(ast.id),
-				['div', '() {}']
-			]
-		]
-		return render(t)
+		return (
+			div2(ast.type)
+				.append(span2('keyword', 'pre').text('function '))
+				.append(ast_to_dom(ast.id))
+				.append(span2().text('() {}'))
+				.dom()
+		)
 	}
 }
 
@@ -301,33 +289,73 @@ function append(e, list) {
 	return e
 }
 
-function render(l) {
-	if (!l || l.length < 1) return
-	var tmp = l[0].split('.')
-	var name = tmp[0]
+function div2() {
+	var class_ = []
+	for (var i = 0; i < arguments.length; ++i) {
+		class_.push(arguments[i])
+	}
+	return new E('div', class_)
+}
+
+function span2() {
+	var class_ = []
+	for (var i = 0; i < arguments.length; ++i) {
+		class_.push(arguments[i])
+	}
+	return new E('span', class_)
+}
+
+function E(name, class_) {
+	if (!Array.isArray(class_)) {
+		class_ = [class_]
+	}
 
 	var e = document.createElement(name)
-	if (tmp.length > 1) {
-		for (var i = 1; i < tmp.length; ++i) {
-			e.classList.add(tmp[i])
+	class_.forEach(function(c) {
+		if (c) e.classList.add(c)
+	})
+
+	this.e = e
+
+	return this
+}
+
+E.prototype.append = function(target) {
+	if (target) {
+		if (target.constructor === E) {
+			this.e.appendChild(target.e)
+		}
+		else {
+			this.e.appendChild(target)
 		}
 	}
 
-	if (typeof l[1] === 'string') {
-		e.textContent = l[1]
-	}
-	else if (Array.isArray(l[1])) {
-		var children = l[1]
-		for (var i = 0; i < children.length; ++i) {
-			var child = children[i]
-			if (Array.isArray(child)) {
-				e.appendChild(render(child))
-			}
-			else if (typeof child === 'object' && child != null) {
-				e.appendChild(child)
-			}
-		}
-	}
+	return this
+}
 
-	return e
+E.prototype.append_ast = function(ast) {
+	var self = this
+	if (ast) {
+		var ast_list
+		if (Array.isArray(ast)) {
+			ast_list = ast
+		}
+		else {
+			ast_list = [ast]
+		}
+		ast_list.forEach(function(a) {
+			self.append(ast_to_dom(a))
+		})
+	}
+	return self
+}
+
+E.prototype.text = function(t) {
+	t = t || ''
+	this.e.textContent = t
+	return this
+}
+
+E.prototype.dom = function() {
+	return this.e
 }
