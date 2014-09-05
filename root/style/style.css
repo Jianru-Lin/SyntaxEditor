@@ -12,18 +12,11 @@ div {
 
 /* 关键词 */
 
-.var,
-.if,
-.else,
 .keyword {
 	color: yellow;
 	display: inline-block;
 	vertical-align: top;
 	white-space: pre;
-}
-
-.line > * {
-	display: inline-block;
 }
 
 .pre {
@@ -41,7 +34,6 @@ div {
 	padding: .25em .5em;
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
-	margin-top: .5em;
 }
 
 .BinaryExpression,
