@@ -32,12 +32,15 @@ div {
 
 /* If */
 
+.indent {
+	padding-left: 2em;
+}
+
 .BlockStatement {
 	border: solid 1px rgba(255, 255, 255, 0.2);
-	padding: .25em;
+	padding: .25em .5em;
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
-	padding-left: 2em;
 	margin-top: .5em;
 }
 

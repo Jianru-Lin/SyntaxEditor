@@ -1,16 +1,7 @@
 function demo() {
-	if (a < 100) {
-		console.log('small')
-	}
-	else if (a < 1000) {
-		console.log('normal')
-	}
-	else if (a < 10000) {
-		console.log('big')
-	}
-	else {
-		console.log('very big')
-	}
+	do {
+		console.log('hello')
+	} while (a > 100)
 }
 
 $(function() {
@@ -278,6 +269,18 @@ var handler_map = {
 				.append_ast(ast.id)
 				.append(span2().text('() {}'))
 				.dom()
+		)
+	},
+	'DoWhileStatement': function(ast) {
+		return (
+			div2(ast.type)
+				.append(span2('keyword').text('do'))
+				.append(
+					div2('indent')
+						.append_ast(ast.body))
+				.append(
+					span2('keyword', 'pre').text('while '))
+				.append_ast(ast.test)
 		)
 	}
 }
