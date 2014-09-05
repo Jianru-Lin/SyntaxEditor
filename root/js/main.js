@@ -1,6 +1,15 @@
 function demo() {
-	{
-		var a = 100 + 1 * 5;
+	if (a < 100) {
+		console.log('small')
+	}
+	else if (a < 1000) {
+		console.log('normal')
+	}
+	else if (a < 10000) {
+		console.log('big')
+	}
+	else {
+		console.log('very big')
 	}
 }
 
@@ -26,22 +35,19 @@ var handler_map = {
 		)
 	},
 	'VariableDeclarator': function(ast) {
-		if (ast.init) {
-			var d = _class(div(), ast.type)
-			// id
-			var id = _class(div(), 'id')
-			append(id, ast_to_dom(ast.id))
-			append(d, id)
-			// =
-			append(d, text(_class(div(), 'equ'), ' = '))
-			// init
-			var init = _class(div(), 'init')
-			append(init, ast_to_dom(ast.init))
-			append(d, init)
-			return d
+		if (!ast.init) {
+			return (
+				div2(ast.type).append_ast(ast.id)
+			)
 		}
 		else {
-			return append(_class(div(), ast.type), ast_to_dom(ast.id))
+			return (
+				div2(ast.type)
+					.append(span2('id').append_ast(ast.id))
+					.append(span2('equ').text(' = '))
+					.append(span2('init').append_ast(ast.init))
+					.dom()
+			)
 		}
 	},
 	'Identifier': function(ast) {
@@ -51,48 +57,81 @@ var handler_map = {
 		return span2(ast.type).text(ast.raw).dom()
 	},
 	'IfStatement': function(ast) {
-		var d = _class(div(), ast.type)
-		append(d, text(_class(div(), 'if'), 'if '))
-		// test
-		var test = _class(div(), 'test')
-		//append(test, text(_class(div(), ['bracket', 'left']), '('))
-		append(test, ast_to_dom(ast.test))
-		//append(test, text(_class(div(), ['bracket', 'right']), ')'))
-		append(d, test)
-		// consequent
-		var consequent = _class(div(), 'consequent')
-		append(consequent, ast_to_dom(ast.consequent))
-		append(d, consequent)
-		// alternate
-		if (ast.alternate) {
-			append(d, text(_class(div(), 'else'), 'else'))
-			var alternate = _class(div(), 'alternate')
-			append(alternate, ast_to_dom(ast.alternate))
-			append(d, alternate)
+		var d = 
+			div2(ast.type)
+				.append(
+					span2('keyword', 'pre').text('if '))
+				.append(
+					span2('test')
+						.append_ast(ast.test))
+				.append(
+					div2('indent')
+						.append_ast(ast.consequent))
+
+		// else if ...
+		return f_else_if(ast.alternate)
+
+		function f_else_if(alternate) {
+
+			if (!alternate) {
+				return d.dom()
+			}
+			else if (alternate.type === 'IfStatement') {
+				d
+					.append(
+						span2('keyword', 'pre').text('else if '))
+					.append(
+						span2('test')
+							.append_ast(alternate.test))
+					.append(
+						div2('indent')
+							.append_ast(alternate.consequent))
+
+					// 继续递归生成 else if ...
+					return f_else_if(alternate.alternate)
+			}
+			else {
+				d
+					.append(
+						span2('keyword').text('else'))
+					.append(
+						div2('indent')
+							.append_ast(alternate))
+
+				return d.dom()
+			}
 		}
-		return d
 	},
 	'BlockStatement': function(ast) {
 		return div2(ast.type).append_ast(ast.body).dom()
 	},
 	'BinaryExpression': function(ast) {
-		var d = _class(div(), ast.type)
-		append(d, ast_to_dom(ast.left))
-		append(d, text(_class(div(), 'operator'), ' ' + ast.operator + ' '))
-		append(d, ast_to_dom(ast.right))
-		return d
+		return (
+			div2(ast.type)
+				.append_ast(ast.left)
+				.append(span2('operator', 'pre').text(' ' + ast.operator + ' '))
+				.append_ast(ast.right)
+				.dom()
+		)
 	},
 	'UpdateExpression': function(ast) {
-		var d = _class(div(), ast.type)
+
 		if (ast.prefix) {
-			append(d, text(_class(div(), 'operator'), ' ' + ast.operator))
-			append(d, ast_to_dom(ast.argument))
+			return (
+				div2(ast.type)
+					.append(span2('operator', 'pre').text(' ' + ast.operator))
+					.append_ast(ast.argument)
+					.dom()
+			)
 		}
 		else {
-			append(d, ast_to_dom(ast.argument))
-			append(d, text(_class(div(), 'operator'), ast.operator + ' '))
+			return (
+				div2(ast.type)
+					.append_ast(ast.argument)
+					.append(span2('operator', 'pre').text(' ' + ast.operator))
+					.dom()
+			)
 		}
-		return d
 	},
 	'UnaryExpression': function(ast) {
 		var d = _class(div(), ast.type)
@@ -212,9 +251,9 @@ var handler_map = {
 		if (prop.type === 'Literal' && /^['"]/.test(prop.raw)) {
 			return (
 				div2(ast.type)
-					.append(ast_to_dom(ast.object))
+					.append_ast(ast.object)
 					.append(span2().text('['))
-					.append(ast_to_dom(prop))
+					.append_ast(prop)
 					.append(span2().text(']'))
 					.dom()
 			)
@@ -222,9 +261,9 @@ var handler_map = {
 		else {
 			return (
 				div2(ast.type)
-					.append(ast_to_dom(ast.object))
+					.append_ast(ast.object)
 					.append(span2().text('.'))
-					.append(ast_to_dom(prop))
+					.append_ast(prop)
 					.dom()
 			)
 		}
@@ -236,7 +275,7 @@ var handler_map = {
 		return (
 			div2(ast.type)
 				.append(span2('keyword', 'pre').text('function '))
-				.append(ast_to_dom(ast.id))
+				.append_ast(ast.id)
 				.append(span2().text('() {}'))
 				.dom()
 		)
