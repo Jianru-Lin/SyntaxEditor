@@ -1,4 +1,4 @@
-function demo() {
+function demo(a, b, c) {
 	for (1;2;3) {
 		console.log('hello')
 	}
@@ -12,7 +12,6 @@ function demo() {
 
 $(function() {
 	var text = demo.toString()
-	text = text.substring(17, text.length - 2)
 	var ast = esprima.parse(text)
 	console.log(ast)
 	var dom = ast_to_dom(ast)
@@ -344,13 +343,42 @@ var handler_map = {
 		return span(ast.type).text('{λ}').dom()
 	},
 	'FunctionDeclaration': function(ast) {
-		return (
-			div(ast.type)
-				.append(span('keyword', 'pre').text('function '))
-				.append_ast(ast.id)
-				.append(span().text('() {}'))
-				.dom()
-		)
+		var params = ast.params
+		if (params && params.length > 0) {
+			var t = 
+				div(ast.type)
+					.append(span('keyword', 'pre').text('function '))
+					.append_ast(ast.id)
+					.append(span('pre').text('( '))
+
+			params.forEach(function(p, i) {
+				t.append_ast(p)
+				if (i < params.length - 1) {
+					t.append(span('pre').text(', '))
+				}
+			})
+
+			t
+				.append(span('pre').text(' )'))
+				.append(
+					div('indent')
+						.append_ast(ast.body))
+
+			return t.dom()
+		}
+		else {
+
+			return (
+				div(ast.type)
+					.append(span('keyword', 'pre').text('function '))
+					.append_ast(ast.id)
+					.append(span().text('()'))
+					.append(
+						div('indent')
+							.append_ast(ast.body))
+					.dom()
+			)
+		}
 	},
 	'DoWhileStatement': function(ast) {
 		return (
