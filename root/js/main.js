@@ -1,16 +1,9 @@
 function demo() {
 	var o = {
-		name: 'Jianru',
-		email: 'jianru.lin@gmail.com',
-		show: function() {}
+		name: function() {},
+		get email() {},
+		set email(v) {}
 	}
-
-	console.log(o.name, 100, f(1))
-
-	var arr = [{},{},3]
-	var arr2 = [1+2]
-	var arr3 = [new Object('hello'), new Object(), new Object]
-
 }
 
 $(function() {
@@ -226,12 +219,25 @@ var handler_map = {
 					.append(span('pre').text('{ '))
 
 			props.forEach(function(prop, i) {
-				t
-					.append(
-						span(prop.type)
-							.append_ast(prop.key)
-							.append(span('pre').text(': '))
-							.append_ast(prop.value))
+
+				if (prop.kind === 'get' || prop.kind === 'set') {
+					t
+						.append(
+							span(prop.type)
+								.append(span('keyword', 'pre').text(prop.kind + ' '))
+								.append_ast(prop.key)
+								.append(span('pre').text(': '))
+								.append_ast(prop.value))
+				}
+				else {
+					t
+						.append(
+							span(prop.type)
+								.append_ast(prop.key)
+								.append(span('pre').text(': '))
+								.append_ast(prop.value))
+				}
+
 
 				if (i < props.length - 1) {
 					t.append(span('pre').text(', '))
