@@ -1,13 +1,6 @@
 function demo(a, b, c) {
-	for (1;2;3) {
-		console.log('hello')
-	}
-	for (var k in obj) {
-		console.log(obj[k])
-	}
-	for (a in [1,2,3]) {
-		console.log(a)
-	}
+	return
+	return a + b + c
 }
 
 $(function() {
@@ -376,6 +369,23 @@ var handler_map = {
 					.append(
 						div('indent')
 							.append_ast(ast.body))
+					.dom()
+			)
+		}
+	},
+	'ReturnStatement': function(ast) {
+		if (ast.argument) {
+			return (
+				div(ast.type)
+					.append(span('keyword', 'pre').text('return '))
+					.append_ast(ast.argument)
+					.dom()
+			)
+		}
+		else {
+			return (
+				div(ast.type)
+					.append(span('keyword').text('return'))
 					.dom()
 			)
 		}
