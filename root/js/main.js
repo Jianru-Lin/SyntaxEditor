@@ -1,6 +1,18 @@
 function demo(a, b, c) {
-	a.b.c
-	a[b.c]
+	if (!ast.init) {
+		return (
+			div(ast.type).append_ast(ast.id).dom()
+		)
+	}
+	else {
+		return (
+			div(ast.type)
+				.append(span('id').append_ast(ast.id))
+				.append(span('equ').text(' = '))
+				.append(span('init').append_ast(ast.init))
+				.dom()
+		)
+	}
 }
 
 $(function() {
