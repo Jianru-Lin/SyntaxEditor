@@ -1,22 +1,3 @@
-function demo(a, b, c) {
-	switch(n) {
-		case a:
-			break;
-		case b:
-			break;
-		default:
-			break;
-	}
-}
-
-$(function() {
-	var text = demo.toString()
-	var ast = esprima.parse(text)
-	console.log(ast)
-	var dom = ast_to_dom(ast)
-	$('#ast-view').append(dom)
-})
-
 var handler_map = {
 	'Program': function(ast) {
 		return div(ast.type).append_ast(ast.body).dom()
@@ -702,4 +683,11 @@ E.prototype.text = function(t) {
 
 E.prototype.dom = function() {
 	return this.e
+}
+
+function compile() {
+	var text = document.getElementById('source-code').innerText
+	var ast = esprima.parse(text)
+	var dom = ast_to_dom(ast)
+	$('#ast-view').empty().append(dom)
 }

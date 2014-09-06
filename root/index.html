@@ -3,12 +3,11 @@
 <head>
 	<title>SyntaxEditor Demo</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/general.css">
 	<link rel="stylesheet" type="text/css" href="style/ast.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/esprima.js"></script>
-	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
@@ -18,7 +17,7 @@
 			<a class="navbar-brand" href="#">λ-view</a>
 			<ul class="nav navbar-nav">
 				<li class="active"><a data-toggle="tab" href="#before">Before</a></li>
-				<li><a data-toggle="tab" href="#after">After</a></li>
+				<li><a data-toggle="tab" href="#after" onclick="compile();">After</a></li>
 			</ul>
 		</div>
 	</nav>
