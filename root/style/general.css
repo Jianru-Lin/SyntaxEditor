@@ -1,3 +1,25 @@
 .navbar {
 	border-radius: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+}
+
+#top-tab-content {
+	position: absolute;
+	left: 0;
+	top: 52px;
+	right: 0;
+	bottom: 0;
+}
+
+#before, #after {
+	padding: 15px;
+	height: 100%;
+}
+
+#source-code {
+	outline: none;
+	height: 100%;
 }
