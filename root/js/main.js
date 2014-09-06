@@ -1,7 +1,7 @@
 function demo(a, b, c) {
-	with (obj) {
-		console.log(name)
-	}
+	throw "error"
+	throw 1 + 2 * 3
+	throw new Error
 }
 
 $(function() {
@@ -519,6 +519,24 @@ var handler_map = {
 				.append(
 					div('indent')
 						.append_ast(ast.body))
+				.dom()
+		)
+	},
+	'SwitchStatement': function(ast) {
+		var t =
+			div(ast.type)
+				.append(span('keyword', 'pre').text('switch '))
+				.append(span('pre').text('( '))
+				.append_ast(ast.type)
+				.append(span('pre').text(' )'))
+
+		return t.dom()
+	},
+	'ThrowStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(span('keyword','pre').text('throw '))
+				.append_ast(ast.argument)
 				.dom()
 		)
 	}
