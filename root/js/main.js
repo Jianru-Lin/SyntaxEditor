@@ -1,7 +1,5 @@
 function demo(a, b, c) {
-	throw "error"
-	throw 1 + 2 * 3
-	throw new Error
+	debugger
 }
 
 $(function() {
@@ -539,6 +537,9 @@ var handler_map = {
 				.append_ast(ast.argument)
 				.dom()
 		)
+	},
+	'DebuggerStatement': function(ast) {
+		return div(ast.type).append(span('keyword').text('debugger'))
 	}
 }
 
