@@ -9,6 +9,11 @@ div {
 	position: relative;
 }
 
+span {
+	display: inline-block;
+	vertical-align: top;
+}
+
 /* 关键词 */
 
 .keyword {
