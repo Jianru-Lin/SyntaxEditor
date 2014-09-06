@@ -199,7 +199,7 @@ var handler_map = {
 
 			var t =
 				span(ast.type)
-					.append(span('pre').text('{ '))
+					.append(span('bracket', 'left', 'pre').text('{ '))
 
 			var body = span('properties');
 
@@ -230,13 +230,14 @@ var handler_map = {
 			})
 
 			t.append(body)
-			t.append(span('pre').text(' }'))
+			t.append(span('bracket', 'right', 'pre').text(' }'))
 			return t.dom()
 		}
 		else {
 			return (
 				span(ast.type)
-					.append(span('pre').text('{}'))
+					.append(span('bracket', 'left', 'pre').text('{'))
+					.append(span('bracket', 'right', 'pre').text('}'))
 					.dom()
 			)
 		}
@@ -333,7 +334,7 @@ var handler_map = {
 				div(ast.type)
 					.append(span('keyword', 'pre').text('function '))
 					.append_ast(ast.id)
-					.append(span('pre').text('( '))
+					.append(span('pre').text(' ( '))
 
 			params.forEach(function(p, i) {
 				t.append_ast(p)
@@ -356,7 +357,7 @@ var handler_map = {
 				div(ast.type)
 					.append(span('keyword', 'pre').text('function '))
 					.append_ast(ast.id)
-					.append(span().text('()'))
+					.append(span().text(' ()'))
 					.append(
 						div('indent')
 							.append_ast(ast.body))

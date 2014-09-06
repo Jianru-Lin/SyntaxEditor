@@ -36,9 +36,16 @@ div {
 	display: block;
 }
 
-.ObjectExpression > .properties > .comma,
-.ObjectExpression > .pre {
+.ObjectExpression > .properties > .comma {
 	display: none;
+}
+
+.ObjectExpression > .bracket {
+	vertical-align: top;
+}
+
+.ObjectExpression:hover {
+	background: rgba(255, 255, 255, 0.06);
 }
 
 /* If */
