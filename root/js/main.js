@@ -1,6 +1,7 @@
 function demo(a, b, c) {
-	if (a) ;
-	else ;
+	with (obj) {
+		console.log(name)
+	}
 }
 
 $(function() {
@@ -503,7 +504,23 @@ var handler_map = {
 		)
 	},
 	'EmptyStatement': function(ast) {
-		return span().text(';').dom()
+		return div().text(';').dom()
+	},
+	'WithStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(
+					span('keyword', 'pre').text('with '))
+				.append(
+					span('pre').text('( '))
+				.append_ast(ast.object)
+				.append(
+					span('pre').text(' )'))
+				.append(
+					div('indent')
+						.append_ast(ast.body))
+				.dom()
+		)
 	}
 }
 
