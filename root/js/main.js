@@ -1,17 +1,11 @@
 function demo(a, b, c) {
-	if (!ast.init) {
-		return (
-			div(ast.type).append_ast(ast.id).dom()
-		)
-	}
-	else {
-		return (
-			div(ast.type)
-				.append(span('id').append_ast(ast.id))
-				.append(span('equ').text(' = '))
-				.append(span('init').append_ast(ast.init))
-				.dom()
-		)
+	switch(n) {
+		case a:
+			break;
+		case b:
+			break;
+		default:
+			break;
 	}
 }
 
@@ -534,16 +528,6 @@ var handler_map = {
 				.dom()
 		)
 	},
-	'SwitchStatement': function(ast) {
-		var t =
-			div(ast.type)
-				.append(span('keyword', 'pre').text('switch '))
-				.append(span('pre').text('( '))
-				.append_ast(ast.type)
-				.append(span('pre').text(' )'))
-
-		return t.dom()
-	},
 	'ThrowStatement': function(ast) {
 		return (
 			div(ast.type)
@@ -586,6 +570,50 @@ var handler_map = {
 		}
 
 		return t.dom()
+	},
+	'SwitchStatement': function(ast) {
+		var t =
+			div(ast.type)
+				.append(span('keyword', 'pre').text('switch '))
+				.append(span('pre').text('( '))
+				.append_ast(ast.discriminant)
+				.append(span('pre').text(' )'))
+				.append()
+
+		var indent = div('indent')
+
+		var cases = ast.cases
+		if (cases && cases.length > 0) {
+			t.append(indent)
+			cases.forEach(function(c) {
+				indent.append_ast(c)
+			})
+		}
+
+		return t.dom()
+	},
+	'SwitchCase': function(ast) {
+		if (ast.test) {
+			return (
+				div(ast.type)
+					.append(
+						span('keyword', 'pre').text('case '))
+					.append_ast(ast.test)
+					.append(
+						div('indent')
+							.append_ast(ast.consequent))
+			)
+		}
+		else {
+			return (
+				div(ast.type)
+					.append(
+						span('keyword').text('default'))
+					.append(
+						div('indent')
+							.append_ast(ast.consequent))
+			)
+		}
 	}
 }
 
