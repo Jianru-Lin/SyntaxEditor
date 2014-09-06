@@ -23,6 +23,10 @@ div {
 	white-space: pre;
 }
 
+.ForInStatement > div.VariableDeclaration {
+	display: inline-block;
+}
+
 /* If */
 
 .indent {

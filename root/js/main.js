@@ -1,10 +1,12 @@
 function demo() {
-	out: while (1) {
-		while (1) {
-			console.log('hello')
-			continue out
-			break out
-		}
+	for (1;2;3) {
+		console.log('hello')
+	}
+	for (var k in obj) {
+		console.log(obj[k])
+	}
+	for (a in [1,2,3]) {
+		console.log(a)
 	}
 }
 
@@ -415,6 +417,47 @@ var handler_map = {
 					div('label', 'pre')
 						.append_ast(ast.label)
 						.append(span().text(':')))
+				.append(
+					div('indent')
+						.append_ast(ast.body))
+				.dom()
+		)
+	},
+	'ForStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(
+					span('keyword', 'pre').text('for '))
+				.append(
+					span('pre').text('( '))
+				.append_ast(ast.init)
+				.append(
+					span('pre').text('; '))
+				.append_ast(ast.test)
+				.append(
+					span('pre').text('; '))
+				.append_ast(ast.update)
+				.append(
+					span('pre').text(' )'))
+				.append(
+					div('indent')
+						.append_ast(ast.body))
+				.dom()
+		)
+	},
+	'ForInStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(
+					span('keyword', 'pre').text('for '))
+				.append(
+					span('pre').text('( '))
+				.append_ast(ast.left)
+				.append(
+					span('keyword', 'pre').text(' in '))
+				.append_ast(ast.right)
+				.append(
+					span('pre').text(' )'))
 				.append(
 					div('indent')
 						.append_ast(ast.body))
