@@ -1,5 +1,11 @@
 function demo(a, b, c) {
-	debugger
+	try {
+		var a = 100
+	} catch(error) {
+		console.log('catch')
+	} finally {
+		console.log('finally')
+	}
 }
 
 $(function() {
@@ -539,7 +545,39 @@ var handler_map = {
 		)
 	},
 	'DebuggerStatement': function(ast) {
-		return div(ast.type).append(span('keyword').text('debugger'))
+		return div(ast.type).append(span('keyword').text('debugger')).dom()
+	},
+	'TryStatement': function(ast) {
+		// try
+		var t = 
+			div(ast.type)
+				.append(
+					span('keyword').text('try'))
+				.append(
+					div('indent')
+						.append_ast(ast.block))
+
+		// catch
+		var catch_clause = ast.handlers[0]
+		t
+			.append(
+				span('keyword', 'pre').text('catch '))
+			.append_ast(catch_clause.param)
+			.append(
+				div('indent')
+					.append_ast(catch_clause.body))
+
+		// finally
+		if (ast.finalizer) {
+			t
+				.append(
+					span('keyword').text('finally'))
+				.append(
+					div('indent')
+						.append_ast(ast.finalizer))
+		}
+
+		return t.dom()
 	}
 }
 
