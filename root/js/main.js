@@ -413,7 +413,8 @@ var handler_map = {
 			div(ast.type)
 				.append(
 					div('label', 'pre')
-						.append_ast(ast.label))
+						.append_ast(ast.label)
+						.append(span().text(':')))
 				.append(
 					div('indent')
 						.append_ast(ast.body))
