@@ -53,6 +53,10 @@ span {
 	background: rgba(255, 255, 255, 0.06);
 }
 
+.FunctionExpression > .content {
+	display: none;
+}
+
 /* If */
 
 .indent {

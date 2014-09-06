@@ -20,6 +20,10 @@
 	overflow: auto;
 }
 
+#after .container {
+	width: 100%;
+}
+
 #source-code {
 	outline: none;
 	height: 100%;

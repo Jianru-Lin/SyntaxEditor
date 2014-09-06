@@ -1,20 +1,21 @@
 <!doctype html>
 <html>
 <head>
-	<title>SyntaxEditor Demo</title>
+	<title>λ-VIEW</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/general.css">
 	<link rel="stylesheet" type="text/css" href="style/ast.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/esprima.js"></script>
+	<script type="text/javascript" src="js/ast_to_dom.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
 
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">λ-view</a>
+			<a class="navbar-brand" href="#">λ-VIEW</a>
 			<ul class="nav navbar-nav">
 				<li class="active"><a data-toggle="tab" href="#before">Before</a></li>
 				<li><a data-toggle="tab" href="#after" onclick="compile();">After</a></li>
@@ -29,7 +30,12 @@
 			</div>
 		</div>
 		<div class="tab-pane" id="after">
-			<div id="ast-view"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">function context</div>
+					<div id="ast-view" class="col-md-9"></div>
+				</div>
+			</div>
 		</div>
 
 	</div>
