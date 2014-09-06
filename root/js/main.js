@@ -268,6 +268,9 @@ var handler_map = {
 			)
 		}
 	},
+	'ThisExpression': function(ast) {
+		return span(ast.type).text('this').dom()
+	},
 	'NewExpression': function(ast) {
 		var args = ast.arguments
 		if (args && args.length > 0) {
