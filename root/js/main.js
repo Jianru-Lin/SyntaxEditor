@@ -1,6 +1,6 @@
 function demo(a, b, c) {
-	return
-	return a + b + c
+	if (a) ;
+	else ;
 }
 
 $(function() {
@@ -501,6 +501,9 @@ var handler_map = {
 						.append_ast(ast.body))
 				.dom()
 		)
+	},
+	'EmptyStatement': function(ast) {
+		return span().text(';').dom()
 	}
 }
 
