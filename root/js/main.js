@@ -687,7 +687,12 @@ E.prototype.dom = function() {
 
 function compile() {
 	var text = document.getElementById('source-code').innerText
-	var ast = esprima.parse(text)
-	var dom = ast_to_dom(ast)
-	$('#ast-view').empty().append(dom)
+	try {
+		var ast = esprima.parse(text)
+		var dom = ast_to_dom(ast)
+		$('#ast-view').empty().append(dom)
+	}
+	catch(e) {
+		$('#ast-view').text(e.message)
+	}
 }
