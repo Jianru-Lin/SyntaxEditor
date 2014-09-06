@@ -17,6 +17,7 @@
 #before, #after {
 	padding: 15px;
 	height: 100%;
+	overflow: auto;
 }
 
 #source-code {

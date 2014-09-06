@@ -27,6 +27,20 @@ div {
 	display: inline-block;
 }
 
+.ObjectExpression {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.ObjectExpression > .properties > .Property {
+	display: block;
+}
+
+.ObjectExpression > .properties > .comma,
+.ObjectExpression > .pre {
+	display: none;
+}
+
 /* If */
 
 .indent {

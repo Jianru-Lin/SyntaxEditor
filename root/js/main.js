@@ -201,10 +201,12 @@ var handler_map = {
 				span(ast.type)
 					.append(span('pre').text('{ '))
 
+			var body = span('properties');
+
 			props.forEach(function(prop, i) {
 
 				if (prop.kind === 'get' || prop.kind === 'set') {
-					t
+					body
 						.append(
 							span(prop.type)
 								.append(span('keyword', 'pre').text(prop.kind + ' '))
@@ -213,7 +215,7 @@ var handler_map = {
 								.append_ast(prop.value))
 				}
 				else {
-					t
+					body
 						.append(
 							span(prop.type)
 								.append_ast(prop.key)
@@ -223,10 +225,11 @@ var handler_map = {
 
 
 				if (i < props.length - 1) {
-					t.append(span('pre').text(', '))
+					body.append(span('pre', 'comma').text(', '))
 				}
 			})
 
+			t.append(body)
 			t.append(span('pre').text(' }'))
 			return t.dom()
 		}
