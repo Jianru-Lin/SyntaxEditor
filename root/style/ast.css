@@ -22,7 +22,8 @@ div {
 	white-space: pre;
 }
 
-.ForInStatement > div.VariableDeclaration {
+.ForStatement > .VariableDeclaration,
+.ForInStatement > .VariableDeclaration {
 	display: inline-block;
 }
 
