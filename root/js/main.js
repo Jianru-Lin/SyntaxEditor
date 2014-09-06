@@ -1,11 +1,6 @@
 function demo(a, b, c) {
-	try {
-		var a = 100
-	} catch(error) {
-		console.log('catch')
-	} finally {
-		console.log('finally')
-	}
+	a.b.c
+	a[b.c]
 }
 
 $(function() {
@@ -317,7 +312,8 @@ var handler_map = {
 	},
 	'MemberExpression': function(ast) {
 		var prop = ast.property
-		if (prop.type === 'Literal' && /^['"]/.test(prop.raw)) {
+		if ((prop.type === 'Literal' && /^['"]/.test(prop.raw))
+			|| ast.computed) {
 			return (
 				span(ast.type)
 					.append_ast(ast.object)
