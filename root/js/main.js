@@ -575,9 +575,7 @@ var handler_map = {
 		var t =
 			div(ast.type)
 				.append(span('keyword', 'pre').text('switch '))
-				.append(span('pre').text('( '))
 				.append_ast(ast.discriminant)
-				.append(span('pre').text(' )'))
 				.append()
 
 		var indent = div('indent')
