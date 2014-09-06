@@ -1,6 +1,10 @@
 function demo() {
-	while (1) {
-		console.log('hello')
+	out: while (1) {
+		while (1) {
+			console.log('hello')
+			continue out
+			break out
+		}
 	}
 }
 
@@ -356,6 +360,7 @@ var handler_map = {
 				.append(
 					span('keyword', 'pre').text('while '))
 				.append_ast(ast.test)
+				.dom()
 		)
 	},
 	'WhileStatement': function(ast) {
@@ -366,6 +371,53 @@ var handler_map = {
 				.append(
 					div('indent')
 						.append_ast(ast.body))
+				.dom()
+		)
+	},
+	'ContinueStatement': function(ast) {
+		if (ast.label) {
+			return (
+				div(ast.type)
+					.append(span('keyword', 'pre').text('continue '))
+					.append_ast(ast.label)
+					.dom()
+			)
+		}
+		else {
+			return (
+				div(ast.type)
+					.append(span('keyword').text('continue'))
+					.dom()
+			)
+		}
+	},
+	'BreakStatement': function(ast) {
+		if (ast.label) {
+			return (
+				div(ast.type)
+					.append(span('keyword', 'pre').text('break '))
+					.append_ast(ast.label)
+					.dom()
+			)
+		}
+		else {
+			return (
+				div(ast.type)
+					.append(span('keyword').text('break'))
+					.dom()
+			)
+		}
+	},
+	'LabeledStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(
+					div('label', 'pre')
+						.append_ast(ast.label))
+				.append(
+					div('indent')
+						.append_ast(ast.body))
+				.dom()
 		)
 	}
 }
