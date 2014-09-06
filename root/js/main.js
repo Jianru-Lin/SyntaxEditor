@@ -1,8 +1,6 @@
 function demo() {
-	var o = {
-		name: function() {},
-		get email() {},
-		set email(v) {}
+	while (1) {
+		console.log('hello')
 	}
 }
 
@@ -358,6 +356,16 @@ var handler_map = {
 				.append(
 					span('keyword', 'pre').text('while '))
 				.append_ast(ast.test)
+		)
+	},
+	'WhileStatement': function(ast) {
+		return (
+			div(ast.type)
+				.append(span('keyword', 'pre').text('while '))
+				.append_ast(ast.test)
+				.append(
+					div('indent')
+						.append_ast(ast.body))
 		)
 	}
 }
