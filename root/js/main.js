@@ -535,14 +535,16 @@ var handler_map = {
 						.append_ast(ast.block))
 
 		// catch
-		var catch_clause = ast.handlers[0]
-		t
-			.append(
-				span('keyword', 'pre').text('catch '))
-			.append_ast(catch_clause.param)
-			.append(
-				div('indent')
-					.append_ast(catch_clause.body))
+		if (ast.handlers && ast.handlers.length > 0) {
+			var catch_clause = ast.handlers[0]
+			t
+				.append(
+					span('keyword', 'pre').text('catch '))
+				.append_ast(catch_clause.param)
+				.append(
+					div('indent')
+						.append_ast(catch_clause.body))
+		}
 
 		// finally
 		if (ast.finalizer) {
