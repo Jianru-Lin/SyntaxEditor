@@ -1,5 +1,17 @@
+var editor;
+
+$(function() {
+	editor = ace.edit("source-code")
+	editor.setTheme("ace/theme/idle_fingers")
+	editor.getSession().setMode("ace/mode/javascript")
+	editor.setValue('')
+})
+
 function compile() {
-	var text = document.getElementById('source-code').innerText
+
+	if (!editor) return
+
+	var text = editor.getValue()
 	// try {
 		var ast = esprima.parse(text)
 		inspector = new Inspector()

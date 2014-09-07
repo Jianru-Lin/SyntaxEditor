@@ -15,9 +15,12 @@
 }
 
 #before, #after {
-	padding: 15px;
 	height: 100%;
 	overflow: auto;
+}
+
+#after {
+	padding: 15px;
 }
 
 #after .container {
@@ -25,6 +28,6 @@
 }
 
 #source-code {
-	outline: none;
 	height: 100%;
+	font-size: inherit;
 }
