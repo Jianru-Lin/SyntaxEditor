@@ -13,6 +13,7 @@ Inspector.prototype.enter_func = function(ast, dom) {
 	var name = is_lamda ? '#-' + self.next_lamda_id++ : ast.id.name
 
 	var func = {
+		is_lamda: is_lamda,
 		name: name,
 		full_name: calc_path() + name,
 		dom: dom

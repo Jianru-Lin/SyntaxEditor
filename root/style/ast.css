@@ -57,6 +57,20 @@ span {
 	display: none;
 }
 
+.FunctionExpression.show > .lamda {
+	display: none;
+}
+
+.FunctionExpression.show > .content {
+	display: block;
+}
+
+/* 不要显示嵌套函数 */
+.FunctionDeclaration .FunctionDeclaration,
+.FunctionExpression .FunctionDeclaration {
+	display: none;
+}
+
 /* If */
 
 .indent {
