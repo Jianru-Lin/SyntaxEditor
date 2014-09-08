@@ -66,6 +66,7 @@ span {
 }
 
 /* 不要显示嵌套函数 */
+.Program .FunctionDeclaration,
 .FunctionDeclaration .FunctionDeclaration,
 .FunctionExpression .FunctionDeclaration {
 	display: none;
@@ -146,4 +147,13 @@ span {
 .colon,
 .new {
 	white-space: pre;
+}
+
+a.lamda {
+	color: inherit;
+	text-decoration: none;
+}
+
+a.lamda:hover {
+	background: rgba(255, 255, 255, 0.06);
 }

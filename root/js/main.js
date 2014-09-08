@@ -22,17 +22,12 @@ function compile() {
 	// 	$('#ast-view').text(e.message)
 	// }
 
-	show_root()
-}
-
-function show_root() {
-	// clear current
-	$('#ast-view').empty()
-	// show
-	$(dom).clone().appendTo($('#ast-view'))
+	show_func('')
 }
 
 function show_func(full_name) {
+	full_name = full_name || ''
+
 	// clear current
 	$('#ast-view').empty()
 
@@ -50,10 +45,62 @@ function show_func(full_name) {
 	if (!func) return
 
 	// show it
-	if (func.is_lamda) {
-		$(func.dom).clone().addClass('show').appendTo($('#ast-view'))
+	$(func.dom).clone().addClass('show').appendTo($('#ast-view'))
+
+	// update context
+	update_context(func)
+}
+
+function update_context(func) {
+
+	$('#outside-function').empty()
+	$('#inside-function').empty()
+	$('#current-function').empty()
+
+	// outside
+	var outside = func.outside
+	while (outside) {
+		$('#outside-function')
+			.prepend(
+				$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<program>'))
+		outside = outside.outside
 	}
-	else {
-		$(func.dom).clone().appendTo($('#ast-view'))
+
+	// inside
+	if (func.inside && func.inside.length > 0) {
+		func.inside.forEach(function(_) {
+			if (_.is_lamda) return
+			$('#inside-function')
+				.append(
+					$('<a>').attr('href', 'javascript:show_func(\'' + _.full_name + '\');').text(_.name))
+		})
+	}
+
+	// current
+	$('#current-function')
+		.append(
+			$('<a>').attr('href', 'javascript:show_func(\'' + func.full_name + '\');').text(func.name || '<program>'))
+
+	function calc_relation(_, target) {
+		if (_.length === target.length) { 
+			return _ === target ? {same: true} : {neighbor: true}
+		}
+		else if (_.length > target.length) {
+			var tail = _.substring(target.length)
+			if (tail[0] === '/') {
+				if (tail.substring(1).indexOf('/') === -1) {
+					return {outside: true, parent: true}
+				}
+				else {
+					return {outside: true, parent: false}
+				}
+			}
+			else {
+				return {neighbor: true}
+			}
+		}
+		else {
+			return calc_relation(target, _)
+		}
 	}
 }

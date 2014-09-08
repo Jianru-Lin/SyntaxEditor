@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style/general.css">
 	<link rel="stylesheet" type="text/css" href="style/ast.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="//cdn.jsdelivr.net/ace/1.1.6/min/ace.js"></script>
+	<script src="ace/ace.js"></script>
 	<script type="text/javascript" src="js/esprima.js"></script>
 	<script type="text/javascript" src="js/ast_to_dom.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
@@ -32,8 +32,22 @@
 		<div class="tab-pane" id="after">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-3">function context</div>
-					<div id="ast-view" class="col-md-9"></div>
+					<div id="context" class="col-md-2">
+
+						<div>
+							<!-- <div class="context-title">Outside Function</div> -->
+							<div id="outside-function"></div>
+						</div>
+
+						<div id="current-function"></div>
+
+						<div>
+							<!-- <div class="context-title">Inside Function</div> -->
+							<div id="inside-function"></div>
+						</div>
+
+					</div>
+					<div id="ast-view" class="col-md-10 col-md-offset-2"></div>
 				</div>
 			</div>
 		</div>

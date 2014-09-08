@@ -6,32 +6,48 @@ function Inspector() {
 	this.next_lamda_id = 0
 }
 
+Inspector.prototype.enter_program = function(ast, dom) {
+	var root = {
+		is_lamda: false,
+		name: '',
+		full_name: '',
+		dom: dom,
+		outside: undefined,
+		inside: []
+	}
+	this.func_stack.push(root)
+	this.func_list.push(root)
+}
+
+Inspector.prototype.leave_program = function() {
+	this.func_stack.pop()
+}
+
 Inspector.prototype.enter_func = function(ast, dom) {
 	var self = this
 
 	var is_lamda = !ast.id || !ast.id.name
-	var name = is_lamda ? '#-' + self.next_lamda_id++ : ast.id.name
+	var name = is_lamda ? 'λ-' + self.next_lamda_id++ : ast.id.name
+
+	var last_func = self.func_stack[self.func_stack.length - 1]
 
 	var func = {
 		is_lamda: is_lamda,
 		name: name,
-		full_name: calc_path() + name,
-		dom: dom
+		full_name: last_func.full_name + '/' + name,
+		dom: dom,
+		outside: last_func,
+		inside: []
 	}
+
+	last_func.inside.push(func)
 
 	self.func_stack.push(func)
 	self.func_list.push(func)
 
 	dom.setAttribute('data-func-full-name', func.full_name)
 
-	function calc_path() {
-		var t = '/'
-		for (var i = 0, len = self.func_stack.length; i < len; ++i) {
-			var func = self.func_stack[i]
-			t += func.name + '/'
-		}
-		return t
-	}
+	return func
 }
 
 Inspector.prototype.leave_func = function() {
@@ -40,7 +56,11 @@ Inspector.prototype.leave_func = function() {
 
 var handler_map = {
 	'Program': function(ast) {
-		return div(ast.type).append_ast(ast.body).dom()
+		var root = div(ast.type)
+		inspector.enter_program(ast, root.dom())
+		root.append_ast(ast.body)
+		inspector.leave_program()
+		return root.dom()
 	},
 	'VariableDeclaration': function(ast) {
 		return (
@@ -370,11 +390,11 @@ var handler_map = {
 	'FunctionExpression': function(ast) {
 
 		var root = span(ast.type)
-		inspector.enter_func(ast, root.dom())
+		var func = inspector.enter_func(ast, root.dom())
 
 		var content = div('content')
 		root
-			.append(span('lamda').text('{λ}'))
+			.append(a('lamda').text('{λ}').attr('href', 'javascript:show_func(\'' + func.full_name + '\');'))
 			.append(content)
 
 		try {
@@ -730,6 +750,14 @@ function span() {
 	return new E('span', class_)
 }
 
+function a() {
+	var class_ = []
+	for (var i = 0; i < arguments.length; ++i) {
+		class_.push(arguments[i])
+	}
+	return new E('a', class_)
+}
+
 function E(name, class_) {
 	if (!Array.isArray(class_)) {
 		class_ = [class_]
@@ -778,6 +806,11 @@ E.prototype.append_ast = function(ast) {
 E.prototype.text = function(t) {
 	t = t || ''
 	this.e.textContent = t
+	return this
+}
+
+E.prototype.attr = function(name, value) {
+	this.e.setAttribute(name, value)
 	return this
 }
 
