@@ -141,6 +141,16 @@ var handler_map = {
 	'BlockStatement': function(ast) {
 		return div(ast.type).append_ast(ast.body).dom()
 	},
+	'SequenceExpression': function(ast) {
+		var root = span(ast.type)
+		ast.expressions.forEach(function(exp, i) {
+			root.append_ast(exp)
+			if (i < ast.expressions.length - 1) {
+				root.append(span('comma', 'pre').text(', '))
+			}
+		})
+		return root.dom()
+	},
 	'BinaryExpression': function(ast) {
 		return (
 			span(ast.type)
@@ -718,7 +728,10 @@ var handler_map = {
 
 function ast_to_dom(ast) {
 	var handler = handler_map[ast.type]
-	if (!handler) return null
+	if (!handler) {
+		throw new Error(ast.type)
+		//return null
+	}
 	else return handler(ast)
 }
 

@@ -89,16 +89,20 @@ span {
 }
 */
 
-.BinaryExpression,
-.UpdateExpression,
-.UnaryExpression,
-.LogicalExpression,
-.ConditionalExpression,
-.AssignmentExpression,
-.CallExpression, {
+/*
+
+.BinaryExpression:hover,
+.UpdateExpression:hover,
+.UnaryExpression:hover,
+.LogicalExpression:hover,
+.ConditionalExpression:hover,
+.AssignmentExpression:hover,
+.CallExpression:hover {
 	background: rgba(0, 255, 143, 0.3);
 	padding: 0 .5em;
 }
+
+*/
 
 /* 操作符 */
 
