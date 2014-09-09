@@ -68,12 +68,18 @@ function update_context(func) {
 
 	// inside
 	if (func.inside && func.inside.length > 0) {
-		func.inside.forEach(function(_) {
-			if (_.is_lamda) return
-			$('#inside-function')
-				.append(
-					$('<a>').attr('href', 'javascript:show_func(\'' + _.full_name + '\');').text(_.name))
-		})
+		func.inside
+			.filter(function(_) {
+				return !_.is_lamda
+			})
+			.sort(function(a, b) {
+				return a.name < b.name ? -1 : a.name === b.name ? 0 : 1
+			})
+			.forEach(function(_) {
+				$('#inside-function')
+					.append(
+						$('<a>').attr('href', 'javascript:show_func(\'' + _.full_name + '\');').text(_.name))
+			})
 	}
 
 	// current
