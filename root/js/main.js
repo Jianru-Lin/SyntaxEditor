@@ -1,5 +1,6 @@
 var editor;
 var dom;
+var last_text;
 
 $(function() {
 	editor = ace.edit("source-code")
@@ -13,6 +14,8 @@ function compile() {
 	if (!editor) return
 
 	var text = editor.getValue()
+	if (text === last_text) return
+	last_text = text
 	// try {
 		var ast = esprima.parse(text)
 		inspector = new Inspector()
