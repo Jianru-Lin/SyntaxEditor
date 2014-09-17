@@ -212,3 +212,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+# cloud9
+.c9
