@@ -19,8 +19,22 @@
 	overflow: auto;
 }
 
-#after .container {
+#after > .container {
 	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 44px;
+	right: 0;
+	bottom: 0;
+}
+
+#after > .container > .row {
+	margin: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
 }
 
 #source-code {
@@ -45,16 +59,17 @@
 
 /* 让 function context 固定显示在左侧 */
 
-#after > .container,
+/*#after > .container,
 #after > .container > .row {
 	height: 100%;
-}
+}*/
 
 #context {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	overflow: auto;
+	overflow-y: scroll;
 }
 
 #ast-view {
@@ -89,4 +104,8 @@
 
 .marg-tp {
 	margin-top: 10px;
+}
+
+#path {
+	border-radius: 0;
 }

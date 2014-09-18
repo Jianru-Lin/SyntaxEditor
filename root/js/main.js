@@ -66,14 +66,30 @@ function update_context(func) {
 	$('#inside-function').empty()
 	$('#current-function').empty()
 
-	// outside
+	// path
+	
+	var $path = $('#path')
+	$path.empty()
+
+	$path.prepend(
+		$('<li>').addClass('active').text(func.name || '<Program>'))
+
 	var outside = func.outside
 	while (outside) {
-		$('#outside-function')
-			.prepend(
-				$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<program>'))
+		$path.prepend(
+			$('<li>').append(
+				$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<Program>')))
 		outside = outside.outside
 	}
+
+	// outside
+	// var outside = func.outside
+	// while (outside) {
+	// 	$('#outside-function')
+	// 		.prepend(
+	// 			$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<program>'))
+	// 	outside = outside.outside
+	// }
 
 	// inside
 	if (func.inside && func.inside.length > 0) {
@@ -92,30 +108,30 @@ function update_context(func) {
 	}
 
 	// current
-	$('#current-function')
-		.append(
-			$('<a>').attr('href', 'javascript:show_func(\'' + func.full_name + '\');').text(func.name || '<program>'))
+	// $('#current-function')
+	// 	.append(
+	// 		$('<a>').attr('href', 'javascript:show_func(\'' + func.full_name + '\');').text(func.name || '<program>'))
 
-	function calc_relation(_, target) {
-		if (_.length === target.length) { 
-			return _ === target ? {same: true} : {neighbor: true}
-		}
-		else if (_.length > target.length) {
-			var tail = _.substring(target.length)
-			if (tail[0] === '/') {
-				if (tail.substring(1).indexOf('/') === -1) {
-					return {outside: true, parent: true}
-				}
-				else {
-					return {outside: true, parent: false}
-				}
-			}
-			else {
-				return {neighbor: true}
-			}
-		}
-		else {
-			return calc_relation(target, _)
-		}
-	}
+	// function calc_relation(_, target) {
+	// 	if (_.length === target.length) { 
+	// 		return _ === target ? {same: true} : {neighbor: true}
+	// 	}
+	// 	else if (_.length > target.length) {
+	// 		var tail = _.substring(target.length)
+	// 		if (tail[0] === '/') {
+	// 			if (tail.substring(1).indexOf('/') === -1) {
+	// 				return {outside: true, parent: true}
+	// 			}
+	// 			else {
+	// 				return {outside: true, parent: false}
+	// 			}
+	// 		}
+	// 		else {
+	// 			return {neighbor: true}
+	// 		}
+	// 	}
+	// 	else {
+	// 		return calc_relation(target, _)
+	// 	}
+	// }
 }
