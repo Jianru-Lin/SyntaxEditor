@@ -32,23 +32,19 @@ function show_func(full_name) {
 	full_name = full_name || ''
 
 	// clear current
-	$('#ast-view').empty()
-
-	// find target
-	var func;
-	for (var i = 0; i < inspector.func_list.length; ++i) {
-		var _ = inspector.func_list[i]
-		if (_.full_name === full_name) {
-			func = _
-			break
-		}
-	}
-
-	// not found ?
+	$('#ast-view > .current').removeClass('current')
+	
+	var func = inspector.func_map[full_name]
+	
 	if (!func) return
-
-	// show it
-	$(func.dom).clone().addClass('show').appendTo($('#ast-view'))
+	
+	// constructerd already ?
+	if (func.$dom) {
+		func.$dom.addClass('current')
+	}
+	else {
+		func.$dom = $(func.dom).clone().addClass('show').addClass('current').appendTo($('#ast-view'))
+	}
 
 	// update context
 	update_context(func)

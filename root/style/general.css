@@ -62,6 +62,14 @@
 	overflow: auto;
 }
 
+#ast-view > * {
+	display: none!important;
+}
+
+#ast-view > .current {
+	display: block!important;
+}
+
 .border {
 	border: solid 1px white;
 }

@@ -3,6 +3,7 @@ var inspector = undefined
 function Inspector() {
 	this.func_stack = []
 	this.func_list = []
+	this.func_map = {}
 	this.next_lamda_id = 0
 }
 
@@ -17,6 +18,7 @@ Inspector.prototype.enter_program = function(ast, dom) {
 	}
 	this.func_stack.push(root)
 	this.func_list.push(root)
+	this.func_map[root.full_name] = root
 }
 
 Inspector.prototype.leave_program = function() {
@@ -44,8 +46,9 @@ Inspector.prototype.enter_func = function(ast, dom) {
 
 	self.func_stack.push(func)
 	self.func_list.push(func)
+	self.func_map[func.full_name] = func
 
-	dom.setAttribute('data-func-full-name', func.full_name)
+	dom.setAttribute('data-full-name', func.full_name)
 
 	return func
 }
