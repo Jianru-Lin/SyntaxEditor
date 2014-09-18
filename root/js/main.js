@@ -1,6 +1,7 @@
 var editor;
 var dom;
 var last_text;
+var current_func;
 
 $(function() {
 	editor = ace.edit("source-code")
@@ -32,15 +33,24 @@ function show_func(full_name) {
 	full_name = full_name || ''
 
 	// clear current
-	$('#ast-view > .current').removeClass('current')
+	if (current_func) {
+		current_func.scroll = {
+			top: $('#ast-view').scrollTop(),
+			left: $('#ast-view').scrollLeft()
+		}
+		current_func.$dom.removeClass('current')
+	}
 	
 	var func = inspector.func_map[full_name]
+	current_func = func
 	
 	if (!func) return
 	
 	// constructerd already ?
 	if (func.$dom) {
 		func.$dom.addClass('current')
+		$('#ast-view').scrollTop(func.scroll.top)
+		$('#ast-view').scrollLeft(func.scroll.left)
 	}
 	else {
 		func.$dom = $(func.dom).clone().addClass('show').addClass('current').appendTo($('#ast-view'))
