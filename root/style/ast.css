@@ -38,11 +38,11 @@ span {
 }
 
 .ObjectExpression > .properties > .Property {
-	display: block;
+	display: block !important;
 }
 
 .ObjectExpression > .properties > .comma {
-	display: none;
+	display: none !important;
 }
 
 .ObjectExpression > .bracket {
@@ -140,11 +140,6 @@ span {
 }
 
 /* 点缀字符 */
-
-.VariableDeclarator > .equ,
-.IfStatement > .test > .bracket {
-	opacity: .5;
-}
 
 .VariableDeclarator > .equ,
 .comma,

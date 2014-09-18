@@ -83,7 +83,7 @@ var handler_map = {
 			return (
 				div(ast.type)
 					.append(span('id').append_ast(ast.id))
-					.append(span('equ').text(' = '))
+					.append(span('equ', 'pre').text(' = '))
 					.append(span('init').append_ast(ast.init))
 					.dom()
 			)
