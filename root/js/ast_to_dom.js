@@ -4,7 +4,6 @@ function Inspector() {
 	this.func_stack = []
 	this.func_list = []
 	this.func_map = {}
-	this.next_lamda_id = 0
 }
 
 Inspector.prototype.enter_program = function(ast, dom) {
@@ -14,7 +13,8 @@ Inspector.prototype.enter_program = function(ast, dom) {
 		full_name: '',
 		dom: dom,
 		outside: undefined,
-		inside: []
+		inside: [],
+		next_lamda_id: 0
 	}
 	this.func_stack.push(root)
 	this.func_list.push(root)
@@ -28,21 +28,22 @@ Inspector.prototype.leave_program = function() {
 Inspector.prototype.enter_func = function(ast, dom) {
 	var self = this
 
-	var is_lamda = !ast.id || !ast.id.name
-	var name = is_lamda ? 'λ-' + self.next_lamda_id++ : ast.id.name
+	var outside_func = self.func_stack[self.func_stack.length - 1]
 
-	var last_func = self.func_stack[self.func_stack.length - 1]
+	var is_lamda = !ast.id || !ast.id.name
+	var name = is_lamda ? 'λ-' + outside_func.next_lamda_id++ : ast.id.name
 
 	var func = {
 		is_lamda: is_lamda,
 		name: name,
-		full_name: last_func.full_name + '/' + name,
+		full_name: outside_func.full_name + '/' + name,
 		dom: dom,
-		outside: last_func,
-		inside: []
+		outside: outside_func,
+		inside: [],
+		next_lamda_id: 0
 	}
 
-	last_func.inside.push(func)
+	outside_func.inside.push(func)
 
 	self.func_stack.push(func)
 	self.func_list.push(func)
