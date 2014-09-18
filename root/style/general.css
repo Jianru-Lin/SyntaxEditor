@@ -70,6 +70,15 @@
 	display: block!important;
 }
 
+#ast-view span {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+#ast-view .pre {
+	white-space: pre;
+}
+
 .border {
 	border: solid 1px white;
 }
