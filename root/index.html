@@ -21,6 +21,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a data-toggle="tab" href="#before">Before</a></li>
 				<li><a data-toggle="tab" href="#after" onclick="compile();">After</a></li>
+				<li><a data-toggle="tab" href="#chat">Chat</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -32,10 +33,6 @@
 		</div>
 		<div class="tab-pane" id="after">
 			<ul id="path" class="breadcrumb">
-				<li><a href="javascript:">Program</a></li>
-				<li><a href="javascript:">funcA</a></li>
-				<li><a href="javascript:">funcB</a></li>
-				<li><a href="javascript:">funcC</a></li>
 			</ul>
 			<div class="container">
 				<div class="row">
@@ -58,7 +55,9 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="tab-pane" id="chat">
+			<iframe src="../chat"></iframe>
+		</div>
 	</div>
 
 	<!-- 自动刷新 -->
