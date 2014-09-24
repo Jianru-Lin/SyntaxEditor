@@ -1,137 +1,35 @@
-var editor;
-var dom;
-var last_text;
-var current_func;
+;(function(self) {
+	'use strict'
 
-$(function() {
-	editor = ace.edit("source-code")
-	editor.setTheme("ace/theme/idle_fingers")
-	editor.getSession().setMode("ace/mode/javascript")
-	editor.setValue('')
-})
+	var editor
+	var lastText
+	var ast
+	var astDom
 
-function compile() {
+	$(function() {
+		editor = ace.edit("source-code")
+		editor.setTheme("ace/theme/idle_fingers")
+		editor.getSession().setMode("ace/mode/javascript")
+		editor.setValue('')
 
-	if (!editor) return
+		self.compile = compile
+	})
 
-	var text = editor.getValue()
-	if (text === last_text) return
-	last_text = text
-	// try {
-		var ast = esprima.parse(text)
-		inspector = new Inspector()
-		dom = ast_to_dom(ast)
-	// }
-	// catch(e) {
-	// 	$('#ast-view').text(e.message)
-	// }
-
-	show_func('')
-}
-
-function show_func(full_name) {
-	full_name = full_name || ''
-
-	// clear current
-	if (current_func) {
-		current_func.scroll = {
-			top: $('#ast-view').scrollTop(),
-			left: $('#ast-view').scrollLeft()
+	function compile() {
+		var text = editor.getValue()
+		if (text === lastText) return
+		try {
+			ast = parse(text)
+		} catch (err) {
+			throw err
 		}
-		current_func.$dom.removeClass('current')
-	}
-	
-	var func = inspector.func_map[full_name]
-	current_func = func
-	
-	if (!func) return
-	
-	// constructerd already ?
-	if (func.$dom) {
-		func.$dom.addClass('current')
-		$('#ast-view').scrollTop(func.scroll.top)
-		$('#ast-view').scrollLeft(func.scroll.left)
-	}
-	else {
-		func.$dom = $(func.dom).clone().addClass('show').addClass('current').appendTo($('#ast-view'))
+		ast = self.analyze(ast)
+		astDom = self.render(ast)
+		gotoCode('Program/')
 	}
 
-	// update context
-	update_context(func)
-}
-
-function update_context(func) {
-
-	$('#outside-function').empty()
-	$('#inside-function').empty()
-	$('#current-function').empty()
-
-	// path
-	
-	var $path = $('#path')
-	$path.empty()
-
-	$path.prepend(
-		$('<li>').addClass('active').text(func.name || '<Program>'))
-
-	var outside = func.outside
-	while (outside) {
-		$path.prepend(
-			$('<li>').append(
-				$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<Program>')))
-		outside = outside.outside
+	function gotoCode(path) {
+		
 	}
 
-	// outside
-	// var outside = func.outside
-	// while (outside) {
-	// 	$('#outside-function')
-	// 		.prepend(
-	// 			$('<a>').attr('href', 'javascript:show_func(\'' + outside.full_name + '\');').text(outside.name || '<program>'))
-	// 	outside = outside.outside
-	// }
-
-	// inside
-	if (func.inside && func.inside.length > 0) {
-		func.inside
-			.filter(function(_) {
-				return !_.is_lamda
-			})
-			.sort(function(a, b) {
-				return a.name < b.name ? -1 : a.name === b.name ? 0 : 1
-			})
-			.forEach(function(_) {
-				$('#inside-function')
-					.append(
-						$('<a>').attr('href', 'javascript:show_func(\'' + _.full_name + '\');').text(_.name))
-			})
-	}
-
-	// current
-	// $('#current-function')
-	// 	.append(
-	// 		$('<a>').attr('href', 'javascript:show_func(\'' + func.full_name + '\');').text(func.name || '<program>'))
-
-	// function calc_relation(_, target) {
-	// 	if (_.length === target.length) { 
-	// 		return _ === target ? {same: true} : {neighbor: true}
-	// 	}
-	// 	else if (_.length > target.length) {
-	// 		var tail = _.substring(target.length)
-	// 		if (tail[0] === '/') {
-	// 			if (tail.substring(1).indexOf('/') === -1) {
-	// 				return {outside: true, parent: true}
-	// 			}
-	// 			else {
-	// 				return {outside: true, parent: false}
-	// 			}
-	// 		}
-	// 		else {
-	// 			return {neighbor: true}
-	// 		}
-	// 	}
-	// 	else {
-	// 		return calc_relation(target, _)
-	// 	}
-	// }
-}
+})(window);
