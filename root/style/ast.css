@@ -45,8 +45,26 @@ body {
 	display: inline-block;
 }
 
+/* 在 UnaryExpression 中的运算符前或后插入空格 */
+
 .UnaryExpression > .operator.prefix:after,
 .UnaryExpression > .operator.postfix:before {
+	content: ' ';
+	white-space: pre;
+}
+
+/* 使得 BinaryExpression 中的运算符和操作数显示在同一行上 */
+
+.BinaryExpression > .operator,
+.BinaryExpression > .left,
+.BinaryExpression > .right {
+	display: inline-block;
+}
+
+/* 在 BinaryExpression 中的运算符前后插入空格 */
+
+.BinaryExpression > .operator:after,
+.BinaryExpression > .operator:before {
 	content: ' ';
 	white-space: pre;
 }

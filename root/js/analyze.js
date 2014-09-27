@@ -154,6 +154,7 @@
 					break
 				case 'BinaryExpression':
 					walkProperty(node, 'left')
+					walkProperty(node, 'operator')
 					walkProperty(node, 'right')
 					break
 				case 'AssignmentExpression':

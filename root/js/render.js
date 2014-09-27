@@ -176,11 +176,14 @@
 
 				if (propName === 'operator') {
 					v.text = prop
-					if (node.prefix) {
-						v._class += ' prefix'
-					}
-					else {
-						v._class += ' postfix'
+
+					if (node.type === 'UnaryExpression') {
+						if (node.prefix) {
+							v._class += ' prefix'
+						}
+						else {
+							v._class += ' postfix'
+						}
 					}
 				}
 
