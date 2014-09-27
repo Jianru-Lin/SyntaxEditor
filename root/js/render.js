@@ -61,101 +61,137 @@
 
 		self.astToVast = astToVast
 
-		var enterLeaveMap = {
-				Program: [enterProgram, leaveProgram],
-				EmptyStatement: [enterEmptyStatement, leaveEmptyStatement],
-				BlockStatement: [enterBlockStatement, leaveBlockStatement],
-				ExpressionStatement: [enterExpressionStatement, leaveExpressionStatement],
-				IfStatement: [enterIfStatement, leaveIfStatement],
-				LabeledStatement: [enterLabeledStatement, leaveLabeledStatement],
-				BreakStatement: [enterBreakStatement, leaveBreakStatement],
-				ContinueStatement: [enterContinueStatement, leaveContinueStatement],
-				WithStatement: [enterWithStatement, leaveWithStatement],
-				SwitchStatement: [enterSwitchStatement, leaveSwitchStatement],
-				ReturnStatement: [enterReturnStatement, leaveReturnStatement],
-				ThrowStatement: [enterThrowStatement, leaveThrowStatement],
-				TryStatement: [enterTryStatement, leaveTryStatement],
-				WhileStatement: [enterWhileStatement, leaveWhileStatement],
-				DoWhileStatement: [enterDoWhileStatement, leaveDoWhileStatement],
-				ForStatement: [enterForStatement, leaveForStatement],
-				ForInStatement: [enterForInStatement, leaveForInStatement],
-				ForOfStatement: [enterForOfStatement, leaveForOfStatement],
-				LetStatement: [enterLetStatement, leaveLetStatement],
-				DebuggerStatement: [enterDebuggerStatement, leaveDebuggerStatement],
-				FunctionDeclaration: [enterFunctionDeclaration, leaveFunctionDeclaration],
-				VariableDeclaration: [enterVariableDeclaration, leaveVariableDeclaration],
-				VariableDeclarator: [enterVariableDeclarator, leaveVariableDeclarator],
-				ThisExpression: [enterThisExpression, leaveThisExpression],
-				ArrayExpression: [enterArrayExpression, leaveArrayExpression],
-				ObjectExpression: [enterObjectExpression, leaveObjectExpression],
-				Property: [enterProperty, leaveProperty],
-				FunctionExpression: [enterFunctionExpression, leaveFunctionExpression],
-				ArrowExpression: [enterArrowExpression, leaveArrowExpression],
-				SequenceExpression: [enterSequenceExpression, leaveSequenceExpression],
-				UnaryExpression: [enterUnaryExpression, leaveUnaryExpression],
-				BinaryExpression: [enterBinaryExpression, leaveBinaryExpression],
-				AssignmentExpression: [enterAssignmentExpression, leaveAssignmentExpression],
-				UpdateExpression: [enterUpdateExpression, leaveUpdateExpression],
-				LogicalExpression: [enterLogicalExpression, leaveLogicalExpression],
-				ConditionalExpression: [enterConditionalExpression, leaveConditionalExpression],
-				NewExpression: [enterNewExpression, leaveNewExpression],
-				CallExpression: [enterCallExpression, leaveCallExpression],
-				MemberExpression: [enterMemberExpression, leaveMemberExpression],
-				YieldExpression: [enterYieldExpression, leaveYieldExpression],
-				ComprehensionExpression: [enterComprehensionExpression, leaveComprehensionExpression],
-				GeneratorExpression: [enterGeneratorExpression, leaveGeneratorExpression],
-				GraphExpression: [enterGraphExpression, leaveGraphExpression],
-				GraphIndexExpression: [enterGraphIndexExpression, leaveGraphIndexExpression],
-				LetExpression: [enterLetExpression, leaveLetExpression],
-				ObjectPattern: [enterObjectPattern, leaveObjectPattern],
-				ArrayPattern: [enterArrayPattern, leaveArrayPattern],
-				SwitchCase: [enterSwitchCase, leaveSwitchCase],
-				CatchClause: [enterCatchClause, leaveCatchClause],
-				ComprehensionBlock: [enterComprehensionBlock, leaveComprehensionBlock],
-				Identifier: [enterIdentifier, leaveIdentifier],
-				Literal: [enterLiteral, leaveLiteral]
+		var enterExMap = {
+				'Program': undefined,
+				'EmptyStatement': undefined,
+				'BlockStatement': undefined,
+				'ExpressionStatement': undefined,
+				'IfStatement': undefined,
+				'LabeledStatement': undefined,
+				'BreakStatement': undefined,
+				'ContinueStatement': undefined,
+				'WithStatement': undefined,
+				'SwitchStatement': undefined,
+				'ReturnStatement': undefined,
+				'ThrowStatement': undefined,
+				'TryStatement': undefined,
+				'WhileStatement': undefined,
+				'DoWhileStatement': undefined,
+				'ForStatement': undefined,
+				'ForInStatement': undefined,
+				'ForOfStatement': undefined,
+				'LetStatement': undefined,
+				'DebuggerStatement': undefined,
+				'FunctionDeclaration': undefined,
+				'VariableDeclaration': undefined,
+				'VariableDeclarator': undefined,
+				'ThisExpression': undefined,
+				'ArrayExpression': undefined,
+				'ObjectExpression': undefined,
+				'Property': undefined,
+				'FunctionExpression': undefined,
+				'ArrowExpression': undefined,
+				'SequenceExpression': undefined,
+				'UnaryExpression': undefined,
+				'BinaryExpression': undefined,
+				'AssignmentExpression': undefined,
+				'UpdateExpression': undefined,
+				'LogicalExpression': undefined,
+				'ConditionalExpression': undefined,
+				'NewExpression': undefined,
+				'CallExpression': undefined,
+				'MemberExpression': undefined,
+				'YieldExpression': undefined,
+				'ComprehensionExpression': undefined,
+				'GeneratorExpression': undefined,
+				'GraphExpression': undefined,
+				'GraphIndexExpression': undefined,
+				'LetExpression': undefined,
+				'ObjectPattern': undefined,
+				'ArrayPattern': undefined,
+				'SwitchCase': undefined,
+				'CatchClause': undefined,
+				'ComprehensionBlock': undefined,
+				'Identifier': undefined,
+				'Literal': undefined
 		}
 
 		function astToVast(ast) {
 			
 			var root = {
 				name: 'div',
-				class: 'VAST',
+				_class: 'VAST',
 				children: []
 			}
 
 			vastStack = [root]
 
-			self.clearEnterLeave()
-			pushEnterLeaveForNode(ast)
-			self.walkAST(ast, enter, leave)
-			popEnterLeaveForNode(ast)
+			//self.clearEnterLeave()
+			//pushEnterLeaveForNode(ast)
+			self.walkAST(ast, enter, enterProp, leaveProp, leave)
+			//popEnterLeaveForNode(ast)
 
 			return root
 
-			function enter(target) {
-				self.currentEnter(target)
+			function enter(node) {
+				var v = {
+					name: 'div',
+					_class: node.type,
+					children: []
+				}
+
+				pushVast(v)
+
+				if (node.type === 'Identifier') {
+					v.text = node.name
+				}
+				else if (node.type === 'Literal') {
+					if (node.raw[0] === '"' || node.raw[0] === "'") {
+						v.text = "'" + node.value + "'"
+					}
+					else {
+						v.text = node.value
+					}
+				}
+
+				// var key = node.type
+				// var enterEx = enterExMap[key]
+				// if (enterEx) {
+				// 	enterEx(node)
+				// }
 			}
 
-			function leave() {
-				self.currentLeave()
+			function leave(node) {
+				popVast()
+			}
+
+			function enterProp(node, propName) {
+				pushVast({
+					name: 'div',
+					_class: propName,
+					children: []
+				})
+			}
+
+			function leaveProp(node, propName) {
+				popVast()
 			}
 		}
 
-		function pushEnterLeaveForNode(node) {
-			if (!node) return
-			var enterLeave = enterLeaveMap[node.type]
-			self.pushEnterLeave(enterLeave[0], enterLeave[1])
-		}
+		// function pushEnterLeaveForNode(node) {
+		// 	if (!node) return
+		// 	var enterLeave = enterLeaveMap[node.type]
+		// 	self.pushEnterLeave(enterLeave[0], enterLeave[1])
+		// }
 
-		function popEnterLeaveForNode(node) {
-			if (!node) return
-			self.popEnterLeave()
-		}
+		// function popEnterLeaveForNode(node) {
+		// 	if (!node) return
+		// 	self.popEnterLeave()
+		// }
 
-		function whatShouldIDo() {
-			throw new Error('What should I do? ' + target.name)
-		}
+		// function whatShouldIDo() {
+		// 	throw new Error('What should I do? ' + target.name)
+		// }
 
 		function pushVast(e) {
 			if (vastStack.length > 0) {
@@ -169,240 +205,6 @@
 			vastStack.pop()
 		}
 
-		function enterProgram(target) {
-			switch (target.name) {
-				case 'Program':
-					pushVast({
-						name: 'div',
-						_class: 'Program',
-						children: []
-					})
-					break
-				case '.body':
-					pushEnterLeaveForNode(target.node)
-					break
-				default:
-					whatShouldIDo()
-			}
-		}
-
-		function leaveProgram(target) {
-			switch (target.name) {
-				case 'Program':
-					popVast()
-					break
-				case '.body':
-					break
-				default:
-					whatShouldIDo()
-			}
-		}
-
-		function enterEmptyStatement(target) {}
-
-		function leaveEmptyStatement(target) {}
-
-		function enterBlockStatement(target) {}
-
-		function leaveBlockStatement(target) {}
-
-		function enterExpressionStatement(target) {}
-
-		function leaveExpressionStatement(target) {}
-
-		function enterIfStatement(target) {}
-
-		function leaveIfStatement(target) {}
-
-		function enterLabeledStatement(target) {}
-
-		function leaveLabeledStatement(target) {}
-
-		function enterBreakStatement(target) {}
-
-		function leaveBreakStatement(target) {}
-
-		function enterContinueStatement(target) {}
-
-		function leaveContinueStatement(target) {}
-
-		function enterWithStatement(target) {}
-
-		function leaveWithStatement(target) {}
-
-		function enterSwitchStatement(target) {}
-
-		function leaveSwitchStatement(target) {}
-
-		function enterReturnStatement(target) {}
-
-		function leaveReturnStatement(target) {}
-
-		function enterThrowStatement(target) {}
-
-		function leaveThrowStatement(target) {}
-
-		function enterTryStatement(target) {}
-
-		function leaveTryStatement(target) {}
-
-		function enterWhileStatement(target) {}
-
-		function leaveWhileStatement(target) {}
-
-		function enterDoWhileStatement(target) {}
-
-		function leaveDoWhileStatement(target) {}
-
-		function enterForStatement(target) {}
-
-		function leaveForStatement(target) {}
-
-		function enterForInStatement(target) {}
-
-		function leaveForInStatement(target) {}
-
-		function enterForOfStatement(target) {}
-
-		function leaveForOfStatement(target) {}
-
-		function enterLetStatement(target) {}
-
-		function leaveLetStatement(target) {}
-
-		function enterDebuggerStatement(target) {}
-
-		function leaveDebuggerStatement(target) {}
-
-		function enterFunctionDeclaration(target) {}
-
-		function leaveFunctionDeclaration(target) {}
-
-		function enterVariableDeclaration(target) {}
-
-		function leaveVariableDeclaration(target) {}
-
-		function enterVariableDeclarator(target) {}
-
-		function leaveVariableDeclarator(target) {}
-
-		function enterThisExpression(target) {}
-
-		function leaveThisExpression(target) {}
-
-		function enterArrayExpression(target) {}
-
-		function leaveArrayExpression(target) {}
-
-		function enterObjectExpression(target) {}
-
-		function leaveObjectExpression(target) {}
-
-		function enterProperty(target) {}
-
-		function leaveProperty(target) {}
-
-		function enterFunctionExpression(target) {}
-
-		function leaveFunctionExpression(target) {}
-
-		function enterArrowExpression(target) {}
-
-		function leaveArrowExpression(target) {}
-
-		function enterSequenceExpression(target) {}
-
-		function leaveSequenceExpression(target) {}
-
-		function enterUnaryExpression(target) {}
-
-		function leaveUnaryExpression(target) {}
-
-		function enterBinaryExpression(target) {}
-
-		function leaveBinaryExpression(target) {}
-
-		function enterAssignmentExpression(target) {}
-
-		function leaveAssignmentExpression(target) {}
-
-		function enterUpdateExpression(target) {}
-
-		function leaveUpdateExpression(target) {}
-
-		function enterLogicalExpression(target) {}
-
-		function leaveLogicalExpression(target) {}
-
-		function enterConditionalExpression(target) {}
-
-		function leaveConditionalExpression(target) {}
-
-		function enterNewExpression(target) {}
-
-		function leaveNewExpression(target) {}
-
-		function enterCallExpression(target) {}
-
-		function leaveCallExpression(target) {}
-
-		function enterMemberExpression(target) {}
-
-		function leaveMemberExpression(target) {}
-
-		function enterYieldExpression(target) {}
-
-		function leaveYieldExpression(target) {}
-
-		function enterComprehensionExpression(target) {}
-
-		function leaveComprehensionExpression(target) {}
-
-		function enterGeneratorExpression(target) {}
-
-		function leaveGeneratorExpression(target) {}
-
-		function enterGraphExpression(target) {}
-
-		function leaveGraphExpression(target) {}
-
-		function enterGraphIndexExpression(target) {}
-
-		function leaveGraphIndexExpression(target) {}
-
-		function enterLetExpression(target) {}
-
-		function leaveLetExpression(target) {}
-
-		function enterObjectPattern(target) {}
-
-		function leaveObjectPattern(target) {}
-
-		function enterArrayPattern(target) {}
-
-		function leaveArrayPattern(target) {}
-
-		function enterSwitchCase(target) {}
-
-		function leaveSwitchCase(target) {}
-
-		function enterCatchClause(target) {}
-
-		function leaveCatchClause(target) {}
-
-		function enterComprehensionBlock(target) {}
-
-		function leaveComprehensionBlock(target) {}
-
-		function enterIdentifier(target) {}
-
-		function leaveIdentifier(target) {}
-
-		function enterLiteral(target) {}
-
-		function leaveLiteral(target) {}
-
-
 	})(self);
 
 	;(function(self){
@@ -414,8 +216,11 @@
 			if (vast._class) {
 				e.setAttribute('class', vast._class)
 			}
-			if (vast.children) {
-				for (var i = 0, len = vast.children; i < len; ++i) {
+			if (vast.text) {
+				e.textContent = vast.text
+			}
+			else if (vast.children && vast.children.length > 0) {
+				for (var i = 0, len = vast.children.length; i < len; ++i) {
 					e.appendChild(vastToDom(vast.children[i]))
 				}
 			}

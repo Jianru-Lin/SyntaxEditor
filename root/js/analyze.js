@@ -14,15 +14,14 @@
 
 	self.walkAST = walkAST;
 
-	function walkAST(ast, enter_cb, leave_cb) {
+	function walkAST(ast, enterCb, enterPropCb, leavePropCb, leaveCb) {
 		return walkNode(ast)
 
 		function walkNode(node) {
 
 			if (!node) return
 
-			var target = {name: node.type, node: node}
-			enter(target)
+			enter(node)
 
 			switch (node.type) {
 				case 'Program':
@@ -227,47 +226,41 @@
 					throw new Error('Unknown Type ' + node.type)
 			}
 
-			leave(target)
+			leave(node)
 
 		}
 
 		function walkProperty(node, propName) {
 			var prop = node[propName]
+			enterPropCb(node, propName)
 			if (prop) {
 				if (Array.isArray(prop)) {
 					for (var i = 0, len = prop.length; i < len; ++i) {
-						var target = {name: '.' + propName, node: prop[i], index: i}
-						enter(target)
 						walkNode(prop[i])
-						leave(target)
 					}
 				}
 				else {
-					var target = {name: '.' + propName, node: prop}
-					enter(target)
 					walkNode(prop)
-					leave(target)
 				}
 			}
-			else {
-				var target = {name: '.' + propName}
-				enter(target)
-				leave(target)
-			}
+			leavePropCb(node, propName)
 		}
 
-		function enter(target) {
-			//setTimeout(function() {
-				enter_cb(target)
-			//}, 0)
+		function enter(node) {
+			enterCb(node)
 		}
 
-		function leave(target) {
-			//setTimeout(function() {
-				leave_cb(target)
-			//}, 0)
+		function leave(node) {
+			leaveCb(node)
 		}
 
+		function enterProp(node, propName) {
+			enterPropCb(node, propName)
+		}
+
+		function leaveProp(node, propName) {
+			leavePropCb(node, propName)
+		}
 	}
 
 })(window);

@@ -29,7 +29,7 @@
 	}
 
 	function gotoCode(path) {
-		
+		$('#ast-view').empty().append(astDom)
 	}
 
 })(window);

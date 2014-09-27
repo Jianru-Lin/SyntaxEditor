@@ -77,13 +77,13 @@
 	overflow: auto;
 }
 
-#ast-view > * {
+/*#ast-view > * {
 	display: none!important;
 }
 
 #ast-view > .current {
 	display: block!important;
-}
+}*/
 
 #ast-view span {
 	display: inline-block;
