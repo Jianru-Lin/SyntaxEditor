@@ -62,8 +62,8 @@ body {
 
 /* 在 UnaryExpression 中的运算符前或后插入空格 */
 
-.UnaryExpression > .operator.prefix:after,
-.UnaryExpression > .operator.postfix:before {
+.UnaryExpression.prefix > .operator:after,
+.UnaryExpression.postfix > .operator:before {
 	content: ' ';
 	white-space: pre;
 }
@@ -109,8 +109,8 @@ body {
 
 /* 在 UpdateExpression 中的运算符前或后插入空格 */
 
-.UpdateExpression > .operator.prefix:after,
-.UpdateExpression > .operator.postfix:before {
+.UpdateExpression.prefix > .operator:after,
+.UpdateExpression.postfix > .operator:before {
 	content: ' ';
 	white-space: pre;
 }
@@ -152,4 +152,25 @@ body {
 .ConditionalExpression > .consequent:after {
 	content: ' : ';
 	white-space: pre;
+}
+
+/* 使得 MemberExpression 中的运算符和操作数显示在同一行上 */
+
+.MemberExpression > .object,
+.MemberExpression > .property,
+.MemberExpression > .object > div,
+.MemberExpression > .property > div {
+	display: inline-block;
+}
+
+.MemberExpression > .property:before {
+	content: '.';
+}
+
+.MemberExpression.computed > .property:before {
+	content: '[';
+}
+
+.MemberExpression.computed > .property:after {
+	content: ']';
 }

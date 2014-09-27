@@ -153,6 +153,19 @@
 						v.text = node.value
 					}
 				}
+				else if (node.type === 'UnaryExpression' || node.type === 'UpdateExpression') {
+					if (node.prefix) {
+						v._class += ' prefix'
+					}
+					else {
+						v._class += ' postfix'
+					}
+				}
+				else if (node.type === 'MemberExpression') {
+					if (node.computed) {
+						v._class += ' computed'
+					}
+				}
 
 				// var key = node.type
 				// var enterEx = enterExMap[key]
@@ -176,15 +189,6 @@
 
 				if (propName === 'operator') {
 					v.text = prop
-
-					if (node.type === 'UnaryExpression' || node.type === 'UpdateExpression') {
-						if (node.prefix) {
-							v._class += ' prefix'
-						}
-						else {
-							v._class += ' postfix'
-						}
-					}
 				}
 
 			}
