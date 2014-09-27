@@ -163,7 +163,14 @@
 					walkProperty(node, 'right')
 					break
 				case 'UpdateExpression':
-					walkProperty(node, 'argument')
+					if (node.prefix) {
+						walkProperty(node, 'operator')
+						walkProperty(node, 'argument')
+					}
+					else {
+						walkProperty(node, 'argument')
+						walkProperty(node, 'operator')
+					}
 					break
 				case 'LogicalExpression':
 					walkProperty(node, 'left')

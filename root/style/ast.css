@@ -38,6 +38,21 @@ body {
 	white-space: pre;
 }
 
+/* 使得 SequenceExpression 中的运算符和操作数显示在同一行上 */
+
+.SequenceExpression > .expressions > * {
+	display: inline-block;
+}
+
+.SequenceExpression > .expressions > *:after {
+	content: ', ';
+	white-space: pre;
+}
+
+.SequenceExpression > .expressions > *:last-child:after {
+	content: '';
+}
+
 /* 使得 UnaryExpression 中的运算符和操作数显示在同一行上 */
 
 .UnaryExpression > .operator,
@@ -85,17 +100,17 @@ body {
 	white-space: pre;
 }
 
-/* 使得 SequenceExpression 中的运算符和操作数显示在同一行上 */
+/* 使得 UpdateExpression 中的运算符和操作数显示在同一行上 */
 
-.SequenceExpression > .expressions > * {
+.UpdateExpression > .operator,
+.UpdateExpression > .argument {
 	display: inline-block;
 }
 
-.SequenceExpression > .expressions > *:after {
-	content: ', ';
-	white-space: pre;
-}
+/* 在 UpdateExpression 中的运算符前或后插入空格 */
 
-.SequenceExpression > .expressions > *:last-child:after {
-	content: '';
+.UpdateExpression > .operator.prefix:after,
+.UpdateExpression > .operator.postfix:before {
+	content: ' ';
+	white-space: pre;
 }

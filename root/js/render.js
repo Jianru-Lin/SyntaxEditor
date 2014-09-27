@@ -177,7 +177,7 @@
 				if (propName === 'operator') {
 					v.text = prop
 
-					if (node.type === 'UnaryExpression') {
+					if (node.type === 'UnaryExpression' || node.type === 'UpdateExpression') {
 						if (node.prefix) {
 							v._class += ' prefix'
 						}
