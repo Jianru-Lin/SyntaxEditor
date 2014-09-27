@@ -179,8 +179,8 @@
 					break
 				case 'ConditionalExpression':
 					walkProperty(node, 'test')
-					walkProperty(node, 'alternate')
 					walkProperty(node, 'consequent')
+					walkProperty(node, 'alternate')
 					break
 				case 'NewExpression':
 					walkProperty(node, 'callee')

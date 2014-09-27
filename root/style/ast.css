@@ -130,3 +130,26 @@ body {
 	content: ' ';
 	white-space: pre;
 }
+
+/* 使得 ConditionalExpression 中的运算符和操作数显示在同一行上 */
+
+.ConditionalExpression > .test,
+.ConditionalExpression > .consequent,
+.ConditionalExpression > .alternate,
+.ConditionalExpression > .test > div,
+.ConditionalExpression > .consequent > div,
+.ConditionalExpression > .alternate > div {
+	display: inline-block;
+}
+
+/* 在 ConditionalExpression 中插入运算符 */
+
+.ConditionalExpression > .test:after {
+	content: ' ? ';
+	white-space: pre;
+}
+
+.ConditionalExpression > .consequent:after {
+	content: ' : ';
+	white-space: pre;
+}
