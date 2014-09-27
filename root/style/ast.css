@@ -186,7 +186,7 @@ body {
 	display: inline-block;
 }
 
-/* 在 MemberExpression 中插入运算符 */
+/* 在 CallExpression 中插入运算符 */
 
 .CallExpression > .arguments:before {
 	content: ' (';
@@ -209,5 +209,45 @@ body {
 }
 
 .CallExpression > .arguments > div:last-child:after {
+	content: ' ';
+}
+
+/* 使得 NewExpression 中的运算符和操作数显示在同一行上 */
+
+.NewExpression > .callee,
+.NewExpression > .arguments,
+.NewExpression > .callee > div,
+.NewExpression > .arguments > div {
+	display: inline-block;
+}
+
+/* 在 NewExpression 中插入运算符 */
+
+.NewExpression:before {
+	content: 'new ';
+	white-space: pre;
+}
+
+.NewExpression > .arguments:before {
+	content: ' (';
+	white-space: pre;
+}
+
+.NewExpression > .arguments:after {
+	content: ')';
+	white-space: pre;
+}
+
+.NewExpression > .arguments > div:first-child:before {
+	content: ' ';
+	white-space: pre;
+}
+
+.NewExpression > .arguments > div:after {
+	content: ', ';
+	white-space: pre;
+}
+
+.NewExpression > .arguments > div:last-child:after {
 	content: ' ';
 }
