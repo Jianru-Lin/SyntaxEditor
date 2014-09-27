@@ -84,3 +84,18 @@ body {
 	content: ' ';
 	white-space: pre;
 }
+
+/* 使得 SequenceExpression 中的运算符和操作数显示在同一行上 */
+
+.SequenceExpression > .expressions > * {
+	display: inline-block;
+}
+
+.SequenceExpression > .expressions > *:after {
+	content: ', ';
+	white-space: pre;
+}
+
+.SequenceExpression > .expressions > *:last-child:after {
+	content: '';
+}
