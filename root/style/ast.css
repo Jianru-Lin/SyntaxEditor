@@ -257,3 +257,35 @@ body {
 .ThisExpression:before {
 	content: 'this';
 }
+
+/* 使得 ArrayExpression 中的所有元素显示在同一行上 */
+
+.ArrayExpression > .elements,
+.ArrayExpression > .elements > div {
+	display: inline-block;
+}
+
+/* 在 ArrayExpression 中插入运算符 */
+
+.ArrayExpression > .elements:before {
+	content: '[';
+}
+
+.ArrayExpression > .elements:after {
+	content: ']';
+}
+
+.ArrayExpression > .elements > div:first-child:before {
+	content: ' ';
+	white-space: pre;
+}
+
+.ArrayExpression > .elements > div:after {
+	content: ', ';
+	white-space: pre;
+}
+
+.ArrayExpression > .elements > div:last-child:after {
+	content: ' ';
+	white-space: pre;
+}
