@@ -163,6 +163,8 @@ body {
 	display: inline-block;
 }
 
+/* 在 MemberExpression 中插入运算符 */
+
 .MemberExpression > .property:before {
 	content: '.';
 }
@@ -173,4 +175,39 @@ body {
 
 .MemberExpression.computed > .property:after {
 	content: ']';
+}
+
+/* 使得 CallExpression 中的运算符和操作数显示在同一行上 */
+
+.CallExpression > .callee,
+.CallExpression > .arguments,
+.CallExpression > .callee > div,
+.CallExpression > .arguments > div {
+	display: inline-block;
+}
+
+/* 在 MemberExpression 中插入运算符 */
+
+.CallExpression > .arguments:before {
+	content: ' (';
+	white-space: pre;
+}
+
+.CallExpression > .arguments:after {
+	content: ')';
+	white-space: pre;
+}
+
+.CallExpression > .arguments > div:first-child:before {
+	content: ' ';
+	white-space: pre;
+}
+
+.CallExpression > .arguments > div:after {
+	content: ', ';
+	white-space: pre;
+}
+
+.CallExpression > .arguments > div:last-child:after {
+	content: ' ';
 }
