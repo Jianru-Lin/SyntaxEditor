@@ -174,6 +174,7 @@
 					break
 				case 'LogicalExpression':
 					walkProperty(node, 'left')
+					walkProperty(node, 'operator')
 					walkProperty(node, 'right')
 					break
 				case 'ConditionalExpression':

@@ -114,3 +114,19 @@ body {
 	content: ' ';
 	white-space: pre;
 }
+
+/* 使得 LogicalExpression 中的运算符和操作数显示在同一行上 */
+
+.LogicalExpression > .operator,
+.LogicalExpression > .left,
+.LogicalExpression > .right {
+	display: inline-block;
+}
+
+/* 在 LogicalExpression 中的运算符前后插入空格 */
+
+.LogicalExpression > .operator:after,
+.LogicalExpression > .operator:before {
+	content: ' ';
+	white-space: pre;
+}
