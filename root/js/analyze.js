@@ -143,7 +143,14 @@
 					walkProperty(node, 'expressions')
 					break
 				case 'UnaryExpression':
-					walkProperty(node, 'argument')
+					if (node.prefix) {
+						walkProperty(node, 'operator')
+						walkProperty(node, 'argument')
+					}
+					else {
+						walkProperty(node, 'argument')
+						walkProperty(node, 'operator')
+					}
 					break
 				case 'BinaryExpression':
 					walkProperty(node, 'left')
@@ -232,8 +239,8 @@
 
 		function walkProperty(node, propName) {
 			var prop = node[propName]
-			enterPropCb(node, propName)
-			if (prop) {
+			enterPropCb(node, propName, prop)
+			if (prop && typeof prop === 'object') {
 				if (Array.isArray(prop)) {
 					for (var i = 0, len = prop.length; i < len; ++i) {
 						walkNode(prop[i])
@@ -243,7 +250,7 @@
 					walkNode(prop)
 				}
 			}
-			leavePropCb(node, propName)
+			leavePropCb(node, propName, prop)
 		}
 
 		function enter(node) {
@@ -254,12 +261,12 @@
 			leaveCb(node)
 		}
 
-		function enterProp(node, propName) {
-			enterPropCb(node, propName)
+		function enterProp(node, propName, prop) {
+			enterPropCb(node, propName, prop)
 		}
 
-		function leaveProp(node, propName) {
-			leavePropCb(node, propName)
+		function leaveProp(node, propName, prop) {
+			leavePropCb(node, propName, prop)
 		}
 	}
 

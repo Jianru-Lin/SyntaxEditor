@@ -165,15 +165,28 @@
 				popVast()
 			}
 
-			function enterProp(node, propName) {
-				pushVast({
+			function enterProp(node, propName, prop) {
+				var v = {
 					name: 'div',
 					_class: propName,
 					children: []
-				})
+				}
+
+				pushVast(v)
+
+				if (propName === 'operator') {
+					v.text = prop
+					if (node.prefix) {
+						v._class += ' prefix'
+					}
+					else {
+						v._class += ' postfix'
+					}
+				}
+
 			}
 
-			function leaveProp(node, propName) {
+			function leaveProp(node, propName, prop) {
 				popVast()
 			}
 		}

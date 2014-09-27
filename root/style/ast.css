@@ -37,3 +37,16 @@ body {
 	content: ' = ';
 	white-space: pre;
 }
+
+/* 使得 UnaryExpression 中的运算符和操作数显示在同一行上 */
+
+.UnaryExpression > .operator,
+.UnaryExpression > .argument {
+	display: inline-block;
+}
+
+.UnaryExpression > .operator.prefix:after,
+.UnaryExpression > .operator.postfix:before {
+	content: ' ';
+	white-space: pre;
+}
