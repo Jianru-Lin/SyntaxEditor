@@ -159,6 +159,7 @@
 					break
 				case 'AssignmentExpression':
 					walkProperty(node, 'left')
+					walkProperty(node, 'operator')
 					walkProperty(node, 'right')
 					break
 				case 'UpdateExpression':

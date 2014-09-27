@@ -68,3 +68,19 @@ body {
 	content: ' ';
 	white-space: pre;
 }
+
+/* 使得 AssignmentExpression 中的运算符和操作数显示在同一行上 */
+
+.AssignmentExpression > .operator,
+.AssignmentExpression > .left,
+.AssignmentExpression > .right {
+	display: inline-block;
+}
+
+/* 在 AssignmentExpression 中的运算符前后插入空格 */
+
+.AssignmentExpression > .operator:after,
+.AssignmentExpression > .operator:before {
+	content: ' ';
+	white-space: pre;
+}
