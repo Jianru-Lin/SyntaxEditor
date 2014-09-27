@@ -251,3 +251,9 @@ body {
 .NewExpression > .arguments > div:last-child:after {
 	content: ' ';
 }
+
+/* ThisExpression */
+
+.ThisExpression:before {
+	content: 'this';
+}
