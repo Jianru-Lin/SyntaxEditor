@@ -266,6 +266,12 @@
 
 			$(dom).find('.UnaryExpression > .operator').after(space())
 
+			$(dom)
+				.find('.SequenceExpression > .expressions > *:not(:last-child)')
+				.each(function(i) {
+					$(this).after(comma())
+				})
+
 			_ = $(dom).find('.BinaryExpression > .operator')
 			_.after(space())
 			_.before(space())
@@ -279,7 +285,23 @@
 			_ = $(dom).find('.UpdateExpression.postfix > .operator')
 			_.before(space())
 
+			_ = $(dom).find('.LogicalExpression > .operator')
+			_.after(space())
+			_.before(space())
+
 			return dom;
+		}
+
+		function pre(text) {
+			var e = document.createElement('span')
+			e.textContent = text
+			return $(e).addClass('pre')			
+		}
+
+		function comma() {
+			var e = document.createElement('span')
+			e.textContent = ', '
+			return $(e).addClass('pre')			
 		}
 
 		function space() {
