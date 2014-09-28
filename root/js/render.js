@@ -289,6 +289,9 @@
 			_.after(space())
 			_.before(space())
 
+			$(dom).find('.ConditionalExpression > .test').after(question())
+			$(dom).find('.ConditionalExpression > .consequent').after(colon())
+
 			return dom;
 		}
 
@@ -307,6 +310,18 @@
 		function space() {
 			var e = document.createElement('span')
 			e.textContent = ' '
+			return $(e).addClass('pre')
+		}
+
+		function question() {
+			var e = document.createElement('span')
+			e.textContent = ' ? '
+			return $(e).addClass('pre')
+		}
+
+		function colon() {
+			var e = document.createElement('span')
+			e.textContent = ' : '
 			return $(e).addClass('pre')
 		}
 

@@ -13,6 +13,10 @@
 		editor.setValue('')
 
 		self.compile = compile
+
+		$.get('test/demo.txt', function(text) {
+			editor.setValue(text)
+		})
 	})
 
 	function compile() {
