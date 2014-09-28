@@ -302,6 +302,11 @@
 			_.find('*:last-child').after(pre(' '))
 			_.after(pre(')'))
 
+			$(dom).find('.MemberExpression.computed > .object').after(pre('.'))
+			_ = $(dom).find('.MemberExpression:not(.computed) > .property')
+			_.before(pre('['))
+			_.after(pre(']'))
+
 			return dom;
 		}
 

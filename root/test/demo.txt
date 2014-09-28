@@ -69,3 +69,10 @@ new Object;
 new Object();
 new Object(a);
 new Object(a,b);
+
+// MemberExpression
+
+a.b
+a[b]
+a.b.c
+a[b][c]
