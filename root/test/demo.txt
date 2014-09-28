@@ -62,3 +62,10 @@ a || b
 // ConditionalExpression
 
 a ? b : c
+
+// NewExpression
+
+new Object;
+new Object();
+new Object(a);
+new Object(a,b);

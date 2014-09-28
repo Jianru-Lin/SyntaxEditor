@@ -292,6 +292,16 @@
 			$(dom).find('.ConditionalExpression > .test').after(question())
 			$(dom).find('.ConditionalExpression > .consequent').after(colon())
 
+			$(dom).find('.NewExpression > .callee').before(_new())
+			_ = $(dom).find('.NewExpression > .arguments')
+			_.before(pre(' ('))
+			_.find('*:not(:last-child)').each(function() {
+				$(this).after(pre(', '))
+			})
+			_.find('*:first-child').before(pre(' '))
+			_.find('*:last-child').after(pre(' '))
+			_.after(pre(')'))
+
 			return dom;
 		}
 
@@ -302,27 +312,23 @@
 		}
 
 		function comma() {
-			var e = document.createElement('span')
-			e.textContent = ', '
-			return $(e).addClass('pre')			
+			return pre(', ')
 		}
 
 		function space() {
-			var e = document.createElement('span')
-			e.textContent = ' '
-			return $(e).addClass('pre')
+			return pre(' ')
 		}
 
 		function question() {
-			var e = document.createElement('span')
-			e.textContent = ' ? '
-			return $(e).addClass('pre')
+			return pre(' ? ')
 		}
 
 		function colon() {
-			var e = document.createElement('span')
-			e.textContent = ' : '
-			return $(e).addClass('pre')
+			return pre(' : ')
+		}
+
+		function _new() {
+			return pre('new ')
 		}
 
 	})(self);
