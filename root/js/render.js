@@ -270,6 +270,15 @@
 			_.after(space())
 			_.before(space())
 
+			_ = $(dom).find('.AssignmentExpression > .operator')
+			_.after(space())
+			_.before(space())
+
+			_ = $(dom).find('.UpdateExpression.prefix > .operator')
+			_.after(space())
+			_ = $(dom).find('.UpdateExpression.postfix > .operator')
+			_.before(space())
+
 			return dom;
 		}
 

@@ -31,3 +31,25 @@ a & b
 a in b
 a instanceof b
 // a .. b
+
+// AssignmentExpression
+
+a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a <<= b
+a >>= b
+a >>>= b
+a = b
+a ^= b
+a &= b
+
+// UpdateExpression
+
+++a
+--a
+a++
+a--
