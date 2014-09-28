@@ -8,6 +8,7 @@
 	function render(ast) {
 		var vast = self.astToVast(ast)
 		var dom = self.vastToDom(vast)
+		dom = self.pretty(dom)
 		return dom
 	}
 
@@ -135,12 +136,19 @@
 
 			function enter(node) {
 				var v = {
-					name: 'div',
+					name: 'span',
 					_class: node.type,
 					children: []
 				}
 
 				pushVast(v)
+
+				if (/Statement$/.test(node.type)) {
+					v._class += ' Statement'
+				}
+				else if (/Expression$/.test(node.type)) {
+					v._class += ' Expression'
+				}
 
 				if (node.type === 'Identifier') {
 					v.text = node.name
@@ -180,7 +188,7 @@
 
 			function enterProp(node, propName, prop) {
 				var v = {
-					name: 'div',
+					name: 'span',
 					_class: propName,
 					children: []
 				}
@@ -245,6 +253,25 @@
 				}
 			}
 			return e
+		}
+
+	})(self);
+
+	;(function(self) {
+
+		self.pretty = pretty
+
+		function pretty(dom) {
+
+			$(dom).find('.UnaryExpression > .operator').after(space())
+
+			return dom;
+		}
+
+		function space() {
+			var e = document.createElement('span')
+			e.textContent = ' '
+			return $(e).addClass('pre')
 		}
 
 	})(self);
