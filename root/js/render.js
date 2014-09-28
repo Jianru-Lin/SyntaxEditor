@@ -262,8 +262,13 @@
 		self.pretty = pretty
 
 		function pretty(dom) {
+			var _
 
 			$(dom).find('.UnaryExpression > .operator').after(space())
+
+			_ = $(dom).find('.BinaryExpression > .operator')
+			_.after(space())
+			_.before(space())
 
 			return dom;
 		}
