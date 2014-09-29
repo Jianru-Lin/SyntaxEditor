@@ -23,8 +23,24 @@
 // VariableDeclarator
 // ThisExpression
 // ArrayExpression
+
 // ObjectExpression
 // Property
+
+a = {};
+a = {
+	name: 'blablabla',
+	age: 99
+};
+a = {
+	name: 'blablabla',
+	age: 99,
+	father: {
+		name: 'blablabla\'s father',
+		age: 199
+	}
+};
+
 // FunctionExpression
 
 a = function() {};

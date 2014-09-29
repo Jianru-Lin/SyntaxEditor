@@ -289,8 +289,21 @@
 			// VariableDeclarator
 			// ThisExpression
 			// ArrayExpression
+			
 			// ObjectExpression
 			// Property
+
+			$(dom).find('.ObjectExpression > .properties').before(pre('{')).after('}')
+			$(dom)
+				.find('.ObjectExpression > .properties > *:not(:last-child)')
+				.each(function() {
+					$(this).after(comma())
+				})
+			$(dom).find('.Property > .key').after(colon())
+			$(dom).find('.ObjectExpression > .properties > *:first-child').before(space())
+			$(dom).find('.ObjectExpression > .properties > *:last-child').after(space())
+
+
 			// FunctionExpression
 
 			$(dom).find('.FunctionExpression > .body').addClass('block')
