@@ -1,3 +1,49 @@
+// Program
+// EmptyStatement
+// BlockStatement
+// ExpressionStatement
+// IfStatement
+// LabeledStatement
+// Statement
+// ContinueStatement
+// WithStatement
+// SwitchStatement
+// ReturnStatement
+// ThrowStatement
+// TryStatement
+// WhileStatement
+// DoWhileStatement
+// ForStatement
+// ForInStatement
+// ForOfStatement
+// LetStatement
+// DebuggerStatement
+// FunctionDeclaration
+// VariableDeclaration
+// VariableDeclarator
+// ThisExpression
+// ArrayExpression
+// ObjectExpression
+// Property
+// FunctionExpression
+
+a = function() {};
+a = function f() {};
+a = function f(a,b) {};
+a = function f(a,b) {
+	x + y;
+};
+a = function(a,b) {
+	x + y;
+	u - v;
+
+	f = function sub() {
+		a + b;
+	};
+};
+
+// ArrowExpression
+
 // UnaryExpression
 
 - a;
@@ -76,3 +122,29 @@ a.b
 a[b]
 a.b.c
 a[b][c]
+
+// YieldExpression
+
+// ComprehensionExpression
+
+// GeneratorExpression
+
+// GraphExpression
+
+// GraphIndexExpression
+
+// LetExpression
+
+// ObjectPattern
+
+// ArrayPattern
+
+// SwitchCase
+
+// CatchClause
+
+// ComprehensionBlock
+
+// Identifier
+
+// Literal

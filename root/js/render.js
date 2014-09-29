@@ -264,7 +264,55 @@
 		function pretty(dom) {
 			var _
 
+			// Program
+			// EmptyStatement
+			// BlockStatement
+			// ExpressionStatement
+			// IfStatement
+			// LabeledStatement
+			// Statement
+			// ContinueStatement
+			// WithStatement
+			// SwitchStatement
+			// ReturnStatement
+			// ThrowStatement
+			// TryStatement
+			// WhileStatement
+			// DoWhileStatement
+			// ForStatement
+			// ForInStatement
+			// ForOfStatement
+			// LetStatement
+			// DebuggerStatement
+			// FunctionDeclaration
+			// VariableDeclaration
+			// VariableDeclarator
+			// ThisExpression
+			// ArrayExpression
+			// ObjectExpression
+			// Property
+			// FunctionExpression
+
+			$(dom).find('.FunctionExpression > .body').addClass('block')
+			$(dom).find('.FunctionExpression > .id').before(pre('function '))
+			$(dom).find('.FunctionExpression > .id > *:first-child').after(space())
+			_ = $(dom).find('.FunctionExpression > .params')
+			_.before(pre('('))
+			_.after(pre(')'))
+			$(dom)
+				.find('.FunctionExpression > .params > *:not(:last-child)')
+				.each(function() {
+					$(this).after(comma())
+				})
+			$(dom).find('.FunctionExpression > .body > *').addClass('indent')
+
+			// ArrowExpression
+
+			// UnaryExpression
+
 			$(dom).find('.UnaryExpression > .operator').after(space())
+
+			// SequenceExpression
 
 			$(dom)
 				.find('.SequenceExpression > .expressions > *:not(:last-child)')
@@ -272,25 +320,37 @@
 					$(this).after(comma())
 				})
 
+			// BinaryExpression
+
 			_ = $(dom).find('.BinaryExpression > .operator')
 			_.after(space())
 			_.before(space())
 
+			// AssignmentExpression
+
 			_ = $(dom).find('.AssignmentExpression > .operator')
 			_.after(space())
 			_.before(space())
+
+			// UpdateExpression
 
 			_ = $(dom).find('.UpdateExpression.prefix > .operator')
 			_.after(space())
 			_ = $(dom).find('.UpdateExpression.postfix > .operator')
 			_.before(space())
 
+			// LogicalExpression
+
 			_ = $(dom).find('.LogicalExpression > .operator')
 			_.after(space())
 			_.before(space())
 
+			// ConditionalExpression
+
 			$(dom).find('.ConditionalExpression > .test').after(question())
 			$(dom).find('.ConditionalExpression > .consequent').after(colon())
+
+			// NewExpression
 
 			$(dom).find('.NewExpression > .callee').before(_new())
 			_ = $(dom).find('.NewExpression > .arguments')
@@ -302,10 +362,41 @@
 			_.find('*:last-child').after(pre(' '))
 			_.after(pre(')'))
 
+			// CallExpression
+
+			// MemberExpression
+
 			$(dom).find('.MemberExpression.computed > .object').after(pre('.'))
 			_ = $(dom).find('.MemberExpression:not(.computed) > .property')
 			_.before(pre('['))
 			_.after(pre(']'))
+
+			// YieldExpression
+
+			// ComprehensionExpression
+
+			// GeneratorExpression
+
+			// GraphExpression
+
+			// GraphIndexExpression
+
+			// LetExpression
+
+			// ObjectPattern
+
+			// ArrayPattern
+
+			// SwitchCase
+
+			// CatchClause
+
+			// ComprehensionBlock
+
+			// Identifier
+
+			// Literal
+
 
 			return dom;
 		}

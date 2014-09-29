@@ -10,14 +10,27 @@ body {
 	vertical-align: top;
 }
 
-.pre {
-	white-space: pre;
-}
-
-.span {
+.VAST span {
 	display: inline-block;
 }
 
-.Statement {
+.VAST .pre {
+	white-space: pre;
+}
+
+.VAST .span {
+	display: inline-block;
+}
+
+.VAST .Statement {
 	display: block;
+}
+
+.VAST .block {
+	display: block;
+}
+
+.VAST .indent:before {
+	content: '    ';
+	white-space: pre;
 }
