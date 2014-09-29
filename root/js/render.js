@@ -289,6 +289,13 @@
 			// VariableDeclarator
 			// ThisExpression
 			// ArrayExpression
+
+			$(dom).find('.ArrayExpression > .elements').before('[').after(']')
+			$(dom)
+				.find('.ArrayExpression > .elements > *:not(:last-child)')
+				.each(function() {
+					$(this).after(comma())
+				})
 			
 			// ObjectExpression
 			// Property
