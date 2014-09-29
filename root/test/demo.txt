@@ -22,6 +22,9 @@
 // VariableDeclaration
 // VariableDeclarator
 // ThisExpression
+
+this;
+
 // ArrayExpression
 
 a = []

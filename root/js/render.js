@@ -288,6 +288,9 @@
 			// VariableDeclaration
 			// VariableDeclarator
 			// ThisExpression
+
+			$(dom).find('.ThisExpression').text('this')
+
 			// ArrayExpression
 
 			$(dom).find('.ArrayExpression > .elements').before('[').after(']')
