@@ -158,7 +158,7 @@
 						v.text = "'" + node.value + "'"
 					}
 					else {
-						v.text = node.value
+						v.text = node.value + ''
 					}
 				}
 				else if (node.type === 'UnaryExpression' || node.type === 'UpdateExpression') {
@@ -281,6 +281,16 @@
 			// DoWhileStatement
 
 			// ForStatement
+
+			$(dom).find('.ForStatement > .init').before(pre('for ( '))
+			$(dom).find('.ForStatement > .update').after(pre(')'))
+			$(dom).find('.ForStatement > .init').after(pre('; '))
+			$(dom).find('.ForStatement > .test').after(pre('; '))
+			$(dom).find('.ForStatement > .init > *:first-child').parent().after(pre(' '))
+			$(dom).find('.ForStatement > .test > *:first-child').parent().after(pre(' '))
+			$(dom).find('.ForStatement > .update > *:first-child').parent().after(pre(' '))
+			$(dom).find('.ForStatement > .body').addClass('block')
+			$(dom).find('.ForStatement > .body > *').addClass('indent')
 			
 			// ForInStatement
 

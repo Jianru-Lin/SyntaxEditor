@@ -16,6 +16,7 @@
 
 		$.get('test/demo.txt', function(text) {
 			editor.setValue(text)
+			$('a[href="#after"]').click()
 		})
 	})
 
