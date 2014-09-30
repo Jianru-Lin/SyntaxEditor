@@ -284,7 +284,21 @@
 			// ForOfStatement
 			// LetStatement
 			// DebuggerStatement
+			
 			// FunctionDeclaration
+
+			$(dom).find('.FunctionDeclaration > .body').addClass('block')
+			$(dom).find('.FunctionDeclaration > .id').before(pre('function '))
+			$(dom).find('.FunctionDeclaration > .id > *:first-child').after(space())
+			_ = $(dom).find('.FunctionDeclaration > .params')
+			_.before(pre('('))
+			_.after(pre(')'))
+			$(dom)
+				.find('.FunctionDeclaration > .params > *:not(:last-child)')
+				.each(function() {
+					$(this).after(comma())
+				})
+			$(dom).find('.FunctionDeclaration > .body > *').addClass('indent')
 			
 			// VariableDeclaration
 			// VariableDeclarator

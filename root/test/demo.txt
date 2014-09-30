@@ -20,6 +20,18 @@
 // DebuggerStatement
 // FunctionDeclaration
 
+function f () {};
+function f (a) {};
+function f (a, b) {
+	a = function a2() {
+		a + b;
+	};
+
+	function s() {
+
+	};
+}
+
 // VariableDeclaration
 // VariableDeclarator
 
