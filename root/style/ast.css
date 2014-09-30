@@ -36,3 +36,12 @@ body {
 	content: '    ';
 	white-space: pre;
 }
+
+.VAST .Identifier:hover {
+	background: white;
+	padding: 0 5px;
+	margin-left: -5px;
+	margin-right: -5px;
+	color: #333;
+	border-radius: 2px;
+}
