@@ -436,8 +436,8 @@
 
 			// MemberExpression
 
-			$(dom).find('.MemberExpression.computed > .object').after(pre('.'))
-			_ = $(dom).find('.MemberExpression:not(.computed) > .property')
+			$(dom).find('.MemberExpression:not(.computed) > .object').after(pre('.'))
+			_ = $(dom).find('.MemberExpression.computed > .property')
 			_.before(pre('['))
 			_.after(pre(']'))
 
