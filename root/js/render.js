@@ -279,10 +279,21 @@
 			// TryStatement
 			// WhileStatement
 			// DoWhileStatement
+
 			// ForStatement
+			
 			// ForInStatement
-			// ForOfStatement
-			// LetStatement
+
+			$(dom).find('.ForInStatement > .left').before(pre('for ( '))
+			$(dom).find('.ForInStatement > .left').after(pre(' in '))
+			$(dom).find('.ForInStatement > .right').after(pre(' )'))
+			$(dom).find('.ForInStatement > .body').addClass('block')
+			$(dom).find('.ForInStatement > .body > *').addClass('indent')
+
+			// ForOfStatement (TODO)
+
+			// LetStatement (TODO)
+
 			// DebuggerStatement
 
 			$(dom).find('.DebuggerStatement').text('debugger')

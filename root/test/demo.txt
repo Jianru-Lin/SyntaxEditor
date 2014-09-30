@@ -14,8 +14,19 @@
 // WhileStatement
 // DoWhileStatement
 // ForStatement
+
 // ForInStatement
+
+for (k in o);
+for (var k in o);
+for (var k in o) o[k];
+for (var k in o) {}
+for (var k in o) {
+	o[k];
+}
+
 // ForOfStatement
+
 // LetStatement
 
 // DebuggerStatement
