@@ -17,7 +17,11 @@
 // ForInStatement
 // ForOfStatement
 // LetStatement
+
 // DebuggerStatement
+
+debugger;
+
 // FunctionDeclaration
 
 function f () {};

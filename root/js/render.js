@@ -284,7 +284,9 @@
 			// ForOfStatement
 			// LetStatement
 			// DebuggerStatement
-			
+
+			$(dom).find('.DebuggerStatement').text('debugger')
+
 			// FunctionDeclaration
 
 			$(dom).find('.FunctionDeclaration > .body').addClass('block')
