@@ -22,7 +22,9 @@ body {
 	display: inline-block;
 }
 
-.VAST .Statement {
+.VAST .Statement,
+.VAST .VariableDeclaration,
+.VAST .VariableDeclarator {
 	display: block;
 }
 

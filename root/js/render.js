@@ -285,8 +285,16 @@
 			// LetStatement
 			// DebuggerStatement
 			// FunctionDeclaration
+			
 			// VariableDeclaration
 			// VariableDeclarator
+
+			$(dom).find('.VariableDeclaration > .declarations').before(pre('var '))
+			$(dom)
+				.find('.VariableDeclaration > .declarations > .VariableDeclarator > .init > *:first-child')
+				.parent()
+				.before(pre(' = '))
+
 			// ThisExpression
 
 			$(dom).find('.ThisExpression').text('this')

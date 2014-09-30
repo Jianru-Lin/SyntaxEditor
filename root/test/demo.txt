@@ -19,8 +19,16 @@
 // LetStatement
 // DebuggerStatement
 // FunctionDeclaration
+
 // VariableDeclaration
 // VariableDeclarator
+
+var a;
+var a, b;
+var a = 100;
+var a = 100, b;
+var a = 100, b = 200;
+
 // ThisExpression
 
 this;
