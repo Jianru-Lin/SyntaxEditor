@@ -278,7 +278,11 @@
 			// ThrowStatement
 			// TryStatement
 			// WhileStatement
-			
+
+			$(dom).find('.WhileStatement > .test').before(pre('while ( ')).after(pre(' )'))
+			$(dom).find('.WhileStatement > .body').addClass('block')
+			$(dom).find('.WhileStatement > .body > *').addClass('indent')
+
 			// DoWhileStatement
 
 			$(dom).find('.DoWhileStatement > .body').before(pre('do'))

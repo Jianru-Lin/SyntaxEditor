@@ -12,6 +12,13 @@
 // ThrowStatement
 // TryStatement
 // WhileStatement
+
+while (true) ;
+while (true) {}
+while (true) {
+	a + b;
+}
+
 // DoWhileStatement
 
 do {} while (true);
