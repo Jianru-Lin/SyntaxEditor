@@ -307,7 +307,9 @@
 				.each(function() {
 					$(this).after(comma())
 				})
-			
+			$(dom).find('.ArrayExpression > .elements > *:first-child').before(space())
+			$(dom).find('.ArrayExpression > .elements > *:last-child').after(space())
+
 			// ObjectExpression
 			// Property
 
