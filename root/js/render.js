@@ -263,6 +263,9 @@
 
 		function pretty(dom) {
 			var _
+			var $dom = $(dom)
+
+			$(dom).find('.Statement:not(.BlockStatement)').after($('<br>'))
 
 			// Program
 			// EmptyStatement
@@ -277,6 +280,45 @@
 			// ReturnStatement
 			// ThrowStatement
 			// TryStatement
+
+			$(dom)
+				.find('.TryStatement')
+				.each(function() {
+					$(this)
+						.children('.block')
+							.before(pre('try'))
+							.addClass('block')
+							.children()
+								.addClass('indent')
+
+					var handlers = $(this).children('.handlers')
+					var catchClauses = handlers.children()
+					if (catchClauses.length) {
+						catchClauses.children('.param').before(pre('catch ( ')).after(pre(' )'))
+						catchClauses.children('.body').addClass('block').children().addClass('indent')
+					}
+
+					var finalizer = $(this).children('.finalizer')
+					var finalizerChildren = finalizer.children()
+					if (finalizerChildren.length) {
+						finalizer.before($(pre('finally')).addClass('block'))
+						finalizerChildren.addClass('indent')
+					}
+				})
+
+			// $(dom).find('.TryStatement > .block').before(pre('try'))
+			// $(dom).find('.TryStatement > .block').addClass('block')
+			// $(dom).find('.TryStatement > .block > *').addClass('indent')
+			// $(dom)
+			// 	.find('.CatchClause > .param')
+			// 	.before(pre('catch ( '))
+			// 	.after(pre(' )'))
+			// $(dom).find('.CatchClause > .body').addClass('block')
+			// $(dom).find('.CatchClause > .body > *').addClass('indent')
+			// $(dom).find('.TryStatement > .finalizer').before($(pre('finally')).addClass('block'))
+			// $(dom).find('.TryStatement > .finalizer').addClass('block')
+			// $(dom).find('.TryStatement > .finalizer > *').addClass('indent')
+
 			// WhileStatement
 
 			$(dom).find('.WhileStatement > .test').before(pre('while ( ')).after(pre(' )'))
@@ -329,7 +371,7 @@
 			$(dom)
 				.find('.FunctionDeclaration > .params > *:not(:last-child)')
 				.each(function() {
-					$(this).after(comma())
+					$(this).after(comma(), sp())
 				})
 			$(dom).find('.FunctionDeclaration > .body > *').addClass('indent')
 			
@@ -352,7 +394,7 @@
 			$(dom)
 				.find('.ArrayExpression > .elements > *:not(:last-child)')
 				.each(function() {
-					$(this).after(comma())
+					$(this).after(comma(), sp())
 				})
 			$(dom).find('.ArrayExpression > .elements > *:first-child').before(space())
 			$(dom).find('.ArrayExpression > .elements > *:last-child').after(space())
@@ -364,7 +406,7 @@
 			$(dom)
 				.find('.ObjectExpression > .properties > *:not(:last-child)')
 				.each(function() {
-					$(this).after(comma())
+					$(this).after(comma(), sp())
 				})
 			$(dom).find('.Property > .key').after(colon())
 			$(dom).find('.ObjectExpression > .properties > *:first-child').before(space())
@@ -373,18 +415,15 @@
 
 			// FunctionExpression
 
-			$(dom).find('.FunctionExpression > .body').addClass('block')
-			$(dom).find('.FunctionExpression > .id').before(pre('function '))
-			$(dom).find('.FunctionExpression > .id > *:first-child').after(space())
-			_ = $(dom).find('.FunctionExpression > .params')
-			_.before(pre('('))
-			_.after(pre(')'))
-			$(dom)
-				.find('.FunctionExpression > .params > *:not(:last-child)')
-				.each(function() {
-					$(this).after(comma())
-				})
-			$(dom).find('.FunctionExpression > .body > *').addClass('indent')
+			var functionExpressions = find('.FunctionExpression')
+			find('.FunctionExpression > .id').before(keywork('function'), sp())
+			find('.FunctionExpression > .id:not(:empty)').after(sp())
+			find('.FunctionExpression > .params').before(lbracket()).after(rbracket())
+			find('.FunctionExpression > .params > *:first-child').before(sp())
+			find('.FunctionExpression > .params > *:not(:last-child)').after(comma(), sp())
+			find('.FunctionExpression > .params > *:last-child').after(sp())
+			find('.FunctionExpression > .body > .BlockStatement > .body').before(sp(), lbrace()).after(rbrace())
+			find('.FunctionExpression > .body > .BlockStatement > .body:not(:empty)').before(br())
 
 			// ArrowExpression
 
@@ -397,7 +436,7 @@
 			$(dom)
 				.find('.SequenceExpression > .expressions > *:not(:last-child)')
 				.each(function(i) {
-					$(this).after(comma())
+					$(this).after(comma(), sp())
 				})
 
 			// BinaryExpression
@@ -477,18 +516,58 @@
 
 			// Literal
 
-
 			return dom;
+
+			function find(selector) {
+				return $dom.find(selector).not('.x')
+			}
+		}
+
+		function keywork(text) {
+			return span(text).addClass('keywork')
+		}
+
+		function lbrace() {
+			return span('{')
+		}
+
+		function rbrace() {
+			return span('}')
+		}
+
+		function lbracket() {
+			return span('(')
+		}
+
+		function rbracket() {
+			return span(')')
+		}
+
+		function comma() {
+			return span(',')
+		}
+
+		function span(text) {
+			return $('<span>').text(text).addClass('x')
+		}
+
+		function sp(n) {
+			n = n === undefined ? 1 : n
+			var t = ''
+			while (n-- > 0) {
+				t += ' '
+			}
+			return pre(t)
 		}
 
 		function pre(text) {
 			var e = document.createElement('span')
 			e.textContent = text
-			return $(e).addClass('pre')			
+			return $(e).addClass('pre').addClass('x')
 		}
 
-		function comma() {
-			return pre(', ')
+		function br() {
+			return $('<br>')
 		}
 
 		function space() {

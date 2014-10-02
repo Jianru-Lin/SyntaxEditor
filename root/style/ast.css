@@ -11,33 +11,30 @@ body {
 }
 
 .VAST span {
-	display: inline-block;
+	/*display: inline-block;*/
 }
 
 .VAST .pre {
 	white-space: pre;
 }
 
-.VAST .span {
-	display: inline-block;
-}
-
 .VAST .Statement,
 .VAST .VariableDeclaration,
 .VAST .VariableDeclarator {
-	display: block;
+	/*display: block;*/
 }
 
 .VAST .block {
-	display: block;
+	/*display: block;*/
 }
 
-.VAST .indent:before {
+/*.VAST .indent:before {
 	content: '    ';
 	white-space: pre;
-}
+}*/
 
 .VAST .Identifier:hover {
+	display: inline-block;
 	background: white;
 	padding: 0 5px;
 	margin-left: -5px;

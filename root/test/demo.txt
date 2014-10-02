@@ -11,6 +11,29 @@
 // ReturnStatement
 // ThrowStatement
 // TryStatement
+
+try {
+	a + b;
+} catch(err) {
+	c - d;
+} finally {
+	u * v;
+}
+
+try {
+	a + b;
+} catch(err) {
+	c - d;
+}
+
+try {
+	a + b;
+} finally {
+	u * v;
+}
+
+
+
 // WhileStatement
 
 while (true) ;

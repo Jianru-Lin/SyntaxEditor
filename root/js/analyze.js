@@ -66,7 +66,7 @@
 					break
 				case 'TryStatement':
 					walkProperty(node, 'block')
-					walkProperty(node, 'handler')
+					walkProperty(node, 'handlers')
 					walkProperty(node, 'guardedHandlers')
 					walkProperty(node, 'finalizer')
 					break
