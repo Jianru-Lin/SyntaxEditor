@@ -4,7 +4,7 @@
 // ExpressionStatement
 // IfStatement
 // LabeledStatement
-// Statement
+// BreakStatement
 // ContinueStatement
 // WithStatement
 // SwitchStatement
