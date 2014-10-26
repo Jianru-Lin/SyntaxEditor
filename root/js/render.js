@@ -28,7 +28,7 @@
 			var ruleTable = {
 				'Program': [recursive('body')],
 					
-				'EmptyStatement': undefined,
+				'EmptyStatement': semicolon,
 					
 				'BlockStatement': [recursive('body')],
 					
@@ -318,6 +318,12 @@
 			function operator(text) {
 				return function () {
 					currentVast().children.push(span('Operator', text))
+				}
+			}
+
+			function semicolon() {
+				return function () {
+					currentVast().children.push(span('Semicolon', ';'))
 				}
 			}
 		}
