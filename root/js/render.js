@@ -66,10 +66,10 @@
 					
 				'FunctionDeclaration': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
 					
-				'VariableDeclaration': [keyword('var'), sp, recursive('declarations'), semicolon],
+				'VariableDeclaration': [keyword('var'), sp, recursive('declarations'), sp_opt, semicolon],
 					
 				'VariableDeclarator': function (ast) {
-					return ast.init ? [recursive('id'), operator('='), recursive('init')] : [recursive('id')]
+					return ast.init ? [recursive('id'), sp_opt, operator('='), sp_opt, recursive('init')] : [recursive('id')]
 				},
 					
 				'ThisExpression': keyword('this'),
@@ -353,6 +353,12 @@
 			function sp() {
 				return function () {
 					currentVast().children.push(span('space', ' '))
+				}				
+			}
+
+			function sp_opt() {
+				return function () {
+					currentVast().children.push(span('space optional', ' '))
 				}				
 			}
 
