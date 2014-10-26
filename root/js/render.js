@@ -27,65 +27,65 @@
 
 			var ruleTable = {
 				'Program': [recursive('body')],
-					
+
 				'EmptyStatement': semicolon,
-					
+
 				'BlockStatement': [recursive('body')],
-					
+
 				'ExpressionStatement': [recursive('expression'), semicolon],
-					
+
 				'IfStatement': [recursive('test'), recursive('consequent'), recursive('alternate')],
-					
+
 				'LabeledStatement': [recursive('label'), recursive('body')],
-											
+
 				'ContinueStatement': keyword('continue'),
-					
+
 				'WithStatement': [recursive('object'), recursive('body')],
-					
+
 				'SwitchStatement': [recursive('discriminant'), recursive('cases')],
-					
+
 				'ReturnStatement': [recursive('argument')],
-					
+
 				'ThrowStatement': [recursive('argument')],
-					
+
 				'TryStatement': [recursive('block'), recursive('handlers'), recursive('guardedHandlers'), recursive('finalizer')],
-					
+
 				'WhileStatement': [recursive('test'), recursive('body')],
-					
+
 				'DoWhileStatement': [recursive('body'), recursive('test')],
-					
+
 				'ForStatement': [recursive('init'), recursive('test'), recursive('update'), recursive('body')],
-					
+
 				'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
-					
+
 				'ForOfStatement': undefined,
-					
+
 				'LetStatement': undefined,
-					
+
 				'DebuggerStatement': keyword('debugger'),
-					
+
 				'FunctionDeclaration': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
-					
+
 				'VariableDeclaration': [keyword('var'), sp, recursive('declarations'), sp_opt, semicolon],
-					
+
 				'VariableDeclarator': function (ast) {
 					return ast.init ? [recursive('id'), sp_opt, operator('='), sp_opt, recursive('init')] : [recursive('id')]
 				},
-					
+
 				'ThisExpression': keyword('this'),
-					
+
 				'ArrayExpression': [recursive('elements')],
-					
+
 				'ObjectExpression': [recursive('properties')],
-					
+
 				'Property': [recursive('key'), recursive('value')],
-					
+
 				'FunctionExpression': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
-					
+
 				'ArrowExpression': undefined,
-					
+
 				'SequenceExpression': [recursive('expressions')],
-					
+
 				'UnaryExpression': function(node) {
 					if (node.prefix) {
 						return [operator_prop, recursive('argument')]
@@ -94,11 +94,11 @@
 						return [recursive('argument'), operator_prop]
 					}
 				},
-					
+
 				'BinaryExpression': [recursive('left'), operator_prop, recursive('right')],
-					
+
 				'AssignmentExpression': [recursive('left'), operator_prop, recursive('right')],
-					
+
 				'UpdateExpression': function(node) {
 					if (node.prefix) {
 						return [operator_prop, recursive('argument')]
@@ -107,44 +107,44 @@
 						return [recursive('argument'), operator_prop]
 					}
 				},
-					
+
 				'LogicalExpression': [recursive('left'), operator_prop, recursive('right')],
-					
+
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
-					
+
 				'NewExpression': [recursive('callee'), recursive('arguments')],
-					
+
 				'CallExpression': [recursive('callee'), recursive('arguments')],
-					
+
 				'MemberExpression': function (ast) {
 					if (ast.computed)
 						return [recursive('object'), left_square_bracket, recursive('property'), right_square_bracket]
 					else
 						return [recursive('object'), operator('.'), recursive('property')]
 				},
-					
+
 				'YieldExpression': undefined,
-					
+
 				'ComprehensionExpression': undefined,
-					
+
 				'GeneratorExpression': undefined,
-					
+
 				'GraphExpression': undefined,
-					
+
 				'GraphIndexExpression': undefined,
-					
+
 				'LetExpression': undefined,
-					
+
 				'ObjectPattern': undefined, // check Mozilla Doc before implement this
-					
+
 				'ArrayPattern': undefined,
-					
+
 				'SwitchCase': [recursive('test'), recursive('consequent')],
-					
+
 				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
-					
+
 				'ComprehensionBlock': undefined,
-					
+
 				'Identifier': function(astNode, parentVast) {
 					// esprima says undefined is an identifier not a literal. see issue #1
 					var vast = {
@@ -154,7 +154,7 @@
 					}
 					parentVast.children.push(vast)
 				},
-					
+
 				'Literal': function(astNode, parentVast) {
 					var raw = astNode.raw
 					var value = astNode.value
@@ -204,7 +204,7 @@
 						default:
 							throw new Error('unsupported type of Literal: ' + typeof value)
 					}
-					
+
 					parentVast.children.push(vast)
 				}
 			}
@@ -290,7 +290,7 @@
 					pushAst(ast)
 					execRule(rule)
 					popAst()
-				} 
+				}
 			}
 
 			function operator_prop(ast, parentVast) {
@@ -353,13 +353,13 @@
 			function sp() {
 				return function () {
 					currentVast().children.push(span('space', ' '))
-				}				
+				}
 			}
 
 			function sp_opt() {
 				return function () {
 					currentVast().children.push(span('space optional', ' '))
-				}				
+				}
 			}
 
 			function operator(text) {
