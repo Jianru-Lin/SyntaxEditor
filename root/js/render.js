@@ -58,9 +58,9 @@
 					
 				'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
 					
-				'ForOfStatement': [recursive('left'), recursive('right'), recursive('body')],
+				'ForOfStatement': undefined,
 					
-				'LetStatement': [recursive('head'), recursive('body')],
+				'LetStatement': undefined,
 					
 				'DebuggerStatement': keyword('debugger'),
 					
@@ -82,7 +82,7 @@
 					
 				'FunctionExpression': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
 					
-				'ArrowExpression': [recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
+				'ArrowExpression': undefined,
 					
 				'SequenceExpression': [recursive('expressions')],
 					
@@ -118,27 +118,27 @@
 					
 				'MemberExpression': [recursive('object'), recursive('property')],
 					
-				'YieldExpression': [recursive('argument')],
+				'YieldExpression': undefined,
 					
-				'ComprehensionExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
+				'ComprehensionExpression': undefined,
 					
-				'GeneratorExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
+				'GeneratorExpression': undefined,
 					
-				'GraphExpression': [recursive('expression')],
+				'GraphExpression': undefined,
 					
 				'GraphIndexExpression': undefined,
 					
-				'LetExpression': [recursive('head'), recursive('body')],
+				'LetExpression': undefined,
 					
 				'ObjectPattern': undefined, // check Mozilla Doc before implement this
 					
-				'ArrayPattern': [recursive('elements')],
+				'ArrayPattern': undefined,
 					
 				'SwitchCase': [recursive('test'), recursive('consequent')],
 					
 				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
 					
-				'ComprehensionBlock': [recursive('left'), recursive('right')],
+				'ComprehensionBlock': undefined,
 					
 				'Identifier': function(astNode, parentVast) {
 					var vast = {
@@ -311,19 +311,55 @@
 
 			function keyword(text) {
 				return function () {
-					currentVast().children.push(span('Keyword', text))
+					currentVast().children.push(span('keyword', text))
 				}
 			}
 
 			function operator(text) {
 				return function () {
-					currentVast().children.push(span('Operator', text))
+					currentVast().children.push(span('operator', text))
 				}
 			}
 
 			function semicolon() {
 				return function () {
-					currentVast().children.push(span('Semicolon', ';'))
+					currentVast().children.push(span('semicolon', ';'))
+				}
+			}
+
+			function left_brace() {
+				return function() {
+					currentVast().children.push(span('brace left', '{'))
+				}
+			}
+
+			function right_brace() {
+				return function() {
+					currentVast().children.push(span('brace right', '}'))
+				}
+			}
+
+			function left_bracket() {
+				return function() {
+					currentVast().children.push(span('bracket left', '('))
+				}
+			}
+
+			function right_bracket() {
+				return function() {
+					currentVast().children.push(span('bracket right', ')'))
+				}
+			}
+
+			function left_square_bracket() {
+				return function() {
+					currentVast().children.push(span('square_bracket left', '['))
+				}
+			}
+
+			function right_square_bracket() {
+				return function() {
+					currentVast().children.push(span('square_bracket right', ']'))
 				}
 			}
 		}
