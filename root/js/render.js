@@ -25,179 +25,170 @@
 
 			var vastStack = [div('vast')]
 
-			if (!self.ruleTable) {
-
-				self.ruleTable = {
-					'Program': [recursive('body')],
-						
-					'EmptyStatement': undefined,
-						
-					'BlockStatement': [recursive('body')],
-						
-					'ExpressionStatement': [recursive('expression')],
-						
-					'IfStatement': [recursive('test'), recursive('consequent'), recursive('alternate')],
-						
-					'LabeledStatement': [recursive('label'), recursive('body')],
-						
-					'Statement': [recursive('label')],
-						
-					'ContinueStatement': [recursive('label')],
-						
-					'WithStatement': [recursive('object'), recursive('body')],
-						
-					'SwitchStatement': [recursive('discriminant'), recursive('cases')],
-						
-					'ReturnStatement': [recursive('argument')],
-						
-					'ThrowStatement': [recursive('argument')],
-						
-					'TryStatement': [recursive('block'), recursive('handlers'), recursive('guardedHandlers'), recursive('finalizer')],
-						
-					'WhileStatement': [recursive('test'), recursive('body')],
-						
-					'DoWhileStatement': [recursive('body'), recursive('test')],
-						
-					'ForStatement': [recursive('init'), recursive('test'), recursive('update'), recursive('body')],
-						
-					'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
-						
-					'ForOfStatement': [recursive('left'), recursive('right'), recursive('body')],
-						
-					'LetStatement': [recursive('head'), recursive('body')],
-						
-					'DebuggerStatement': recursive('debugger'),
-						
-					'FunctionDeclaration': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
-						
-					'VariableDeclaration': [recursive('declarations')],
-						
-					'VariableDeclarator': [recursive('id'), recursive('init')],
-						
-					'ThisExpression': recursive('this'),
-						
-					'ArrayExpression': [recursive('elements')],
-						
-					'ObjectExpression': [recursive('properties')],
-						
-					'Property': [recursive('key'), recursive('value')],
-						
-					'FunctionExpression': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
-						
-					'ArrowExpression': [recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
-						
-					'SequenceExpression': [recursive('expressions')],
-						
-					'UnaryExpression': function(node) {
-						if (node.prefix) {
-							return [recursive('operator'), recursive('argument')]
-						}
-						else {
-							return [recursive('argument'), recursive('operator')]
-						}
-					},
-						
-					'BinaryExpression': [recursive('left'), recursive('operator'), recursive('right')],
-						
-					'AssignmentExpression': [recursive('left'), recursive('operator'), recursive('right')],
-						
-					'UpdateExpression': function(node) {
-						if (node.prefix) {
-							return [recursive('operator'), recursive('argument')]
-						}
-						else {
-							return [recursive('argument'), recursive('operator')]
-						}
-					},
-						
-					'LogicalExpression': [recursive('left'), recursive('operator'), recursive('right')],
-						
-					'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
-						
-					'NewExpression': [recursive('callee'), recursive('arguments')],
-						
-					'CallExpression': [recursive('callee'), recursive('arguments')],
-						
-					'MemberExpression': [recursive('object'), recursive('property')],
-						
-					'YieldExpression': [recursive('argument')],
-						
-					'ComprehensionExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
-						
-					'GeneratorExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
-						
-					'GraphExpression': [recursive('expression')],
-						
-					'GraphIndexExpression': undefined,
-						
-					'LetExpression': [recursive('head'), recursive('body')],
-						
-					'ObjectPattern': undefined, // check Mozilla Doc before implement this
-						
-					'ArrayPattern': [recursive('elements')],
-						
-					'SwitchCase': [recursive('test'), recursive('consequent')],
-						
-					'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
-						
-					'ComprehensionBlock': [recursive('left'), recursive('right')],
-						
-					'Identifier': function(astNode, parentVastNode) {
-						var vast = {
-							name: 'span',
-							_class: 'Identifier',
-							text: astNode.name
-						}
-
-						if (!parentVastNode.children) {
-							parentVastNode.children = [vast]
-						} else {
-							parentVastNode.children.push(vast)
-						}
-					},
-						
-					'Literal': function(astNode, parentVastNode) {
-						var raw = astNode.raw
-						var value = astNode.value
-
-						switch (typeof value) {
-							case 'string':
-								var vast = {
-									name: 'span',
-									_class: 'Literal String',
-									text: raw.length < 3 ? '' : "'" + raw.substring(1, text.length - 1) + "'"
-								}
-								break
-							case 'boolean':
-								var vast = {
-									name: 'span',
-									_class: 'Literal Boolean',
-									text: raw
-								}
-								break
-							case 'number':
-								var vast = {
-									name: 'span',
-									_class: 'Literal Number',
-									text: raw
-								}
-								break
-							default:
-								throw new Error('unsupported type of Literal: ' + typeof value)
-						}
-
-						if (!parentVastNode.children) {
-							parentVastNode.children = [vast]
-						} else {
-						parentVastNode.children.push(vast)
-						}
+			var ruleTable = {
+				'Program': [recursive('body')],
+					
+				'EmptyStatement': undefined,
+					
+				'BlockStatement': [recursive('body')],
+					
+				'ExpressionStatement': [recursive('expression')],
+					
+				'IfStatement': [recursive('test'), recursive('consequent'), recursive('alternate')],
+					
+				'LabeledStatement': [recursive('label'), recursive('body')],
+											
+				'ContinueStatement': keyword('continue'),
+					
+				'WithStatement': [recursive('object'), recursive('body')],
+					
+				'SwitchStatement': [recursive('discriminant'), recursive('cases')],
+					
+				'ReturnStatement': [recursive('argument')],
+					
+				'ThrowStatement': [recursive('argument')],
+					
+				'TryStatement': [recursive('block'), recursive('handlers'), recursive('guardedHandlers'), recursive('finalizer')],
+					
+				'WhileStatement': [recursive('test'), recursive('body')],
+					
+				'DoWhileStatement': [recursive('body'), recursive('test')],
+					
+				'ForStatement': [recursive('init'), recursive('test'), recursive('update'), recursive('body')],
+					
+				'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
+					
+				'ForOfStatement': [recursive('left'), recursive('right'), recursive('body')],
+					
+				'LetStatement': [recursive('head'), recursive('body')],
+					
+				'DebuggerStatement': keyword('debugger'),
+					
+				'FunctionDeclaration': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
+					
+				'VariableDeclaration': [keyword('var'), recursive('declarations')],
+					
+				'VariableDeclarator': function (ast) {
+					return ast.init ? [recursive('id'), operator('='), recursive('init')] : [recursive('id')]
+				},
+					
+				'ThisExpression': keyword('this'),
+					
+				'ArrayExpression': [recursive('elements')],
+					
+				'ObjectExpression': [recursive('properties')],
+					
+				'Property': [recursive('key'), recursive('value')],
+					
+				'FunctionExpression': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
+					
+				'ArrowExpression': [recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
+					
+				'SequenceExpression': [recursive('expressions')],
+					
+				'UnaryExpression': function(node) {
+					if (node.prefix) {
+						return [recursive('operator'), recursive('argument')]
 					}
+					else {
+						return [recursive('argument'), recursive('operator')]
+					}
+				},
+					
+				'BinaryExpression': [recursive('left'), recursive('operator'), recursive('right')],
+					
+				'AssignmentExpression': [recursive('left'), recursive('operator'), recursive('right')],
+					
+				'UpdateExpression': function(node) {
+					if (node.prefix) {
+						return [recursive('operator'), recursive('argument')]
+					}
+					else {
+						return [recursive('argument'), recursive('operator')]
+					}
+				},
+					
+				'LogicalExpression': [recursive('left'), recursive('operator'), recursive('right')],
+					
+				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
+					
+				'NewExpression': [recursive('callee'), recursive('arguments')],
+					
+				'CallExpression': [recursive('callee'), recursive('arguments')],
+					
+				'MemberExpression': [recursive('object'), recursive('property')],
+					
+				'YieldExpression': [recursive('argument')],
+					
+				'ComprehensionExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
+					
+				'GeneratorExpression': [recursive('body'), recursive('blocks'), recursive('filter')],
+					
+				'GraphExpression': [recursive('expression')],
+					
+				'GraphIndexExpression': undefined,
+					
+				'LetExpression': [recursive('head'), recursive('body')],
+					
+				'ObjectPattern': undefined, // check Mozilla Doc before implement this
+					
+				'ArrayPattern': [recursive('elements')],
+					
+				'SwitchCase': [recursive('test'), recursive('consequent')],
+					
+				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
+					
+				'ComprehensionBlock': [recursive('left'), recursive('right')],
+					
+				'Identifier': function(astNode, parentVast) {
+					var vast = {
+						name: 'span',
+						_class: 'Identifier',
+						text: astNode.name
+					}
+					parentVast.children.push(vast)
+				},
+					
+				'Literal': function(astNode, parentVast) {
+					var raw = astNode.raw
+					var value = astNode.value
+
+					switch (typeof value) {
+						case 'string':
+							var vast = {
+								name: 'span',
+								_class: 'Literal String',
+								text: raw.length < 3 ? '' : "'" + raw.substring(1, text.length - 1) + "'"
+							}
+							break
+						case 'boolean':
+							var vast = {
+								name: 'span',
+								_class: 'Literal Boolean',
+								text: raw
+							}
+							break
+						case 'number':
+							var vast = {
+								name: 'span',
+								_class: 'Literal Number',
+								text: raw
+							}
+							break
+						default:
+							throw new Error('unsupported type of Literal: ' + typeof value)
+					}
+					
+					parentVast.children.push(vast)
 				}
 			}
 
-			var rule = self.ruleTable[ast.type]
 
-			return execRule(rule)
+			var rule = ruleTable[ast.type]
+
+			execRule(rule)
+
+			return currentVast() // must be vastStack[0] the root
 
 			function execRule(rule) {
 
@@ -227,7 +218,7 @@
 				}
 
 				function execStringRule(strRule) {
-					appendVast(span(undefined, strRule))
+					currentVast().children.push(span(undefined, strRule))
 				}
 
 				function execArrayRule(arrayRule) {
@@ -236,16 +227,6 @@
 
 				function execFunctionRule(funcRule) {
 					return execRule(funcRule(currentAst(), currentVast()))
-				}
-
-				function appendVast(vast) {
-					var parent = currentVast()
-					if (!parent.children) {
-						parent.children = [vast]
-					}
-					else {
-						parent.children.push(vast)
-					}
 				}
 			}
 
@@ -275,7 +256,7 @@
 				}
 
 				function into(ast) {
-					var rule = self.ruleTable[ast.type]
+					var rule = ruleTable[ast.type]
 					if (!rule) {
 						console.log('rule not found: ' + ast.type)
 						return
@@ -314,7 +295,8 @@
 				return {
 					name: 'div',
 					_class: _class,
-					text: text
+					text: text,
+					children: []
 				}
 			}
 
@@ -322,7 +304,20 @@
 				return {
 					name: 'span',
 					_class: _class,
-					text: text
+					text: text,
+					children: []
+				}
+			}
+
+			function keyword(text) {
+				return function () {
+					currentVast().children.push(span('Keyword', text))
+				}
+			}
+
+			function operator(text) {
+				return function () {
+					currentVast().children.push(span('Operator', text))
 				}
 			}
 		}
