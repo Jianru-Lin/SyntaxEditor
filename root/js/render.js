@@ -341,6 +341,12 @@
 				}
 			}
 
+			function sp() {
+				return function () {
+					currentVast().children.push(span('space', ' '))
+				}				
+			}
+
 			function operator(text) {
 				return function () {
 					currentVast().children.push(span('operator', text))
