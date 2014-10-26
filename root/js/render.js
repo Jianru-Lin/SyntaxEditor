@@ -32,7 +32,7 @@
 					
 				'BlockStatement': [recursive('body')],
 					
-				'ExpressionStatement': [recursive('expression')],
+				'ExpressionStatement': [recursive('expression'), semicolon],
 					
 				'IfStatement': [recursive('test'), recursive('consequent'), recursive('alternate')],
 					
