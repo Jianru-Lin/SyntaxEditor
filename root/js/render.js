@@ -66,7 +66,7 @@
 					
 				'FunctionDeclaration': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
 					
-				'VariableDeclaration': [keyword('var'), recursive('declarations')],
+				'VariableDeclaration': [keyword('var'), recursive('declarations'), semicolon],
 					
 				'VariableDeclarator': function (ast) {
 					return ast.init ? [recursive('id'), operator('='), recursive('init')] : [recursive('id')]
