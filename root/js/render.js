@@ -116,7 +116,12 @@
 					
 				'CallExpression': [recursive('callee'), recursive('arguments')],
 					
-				'MemberExpression': [recursive('object'), operator('.'), recursive('property')],
+				'MemberExpression': function (ast) {
+					if (ast.computed)
+						return [recursive('object'), left_square_bracket, recursive('property'), right_square_bracket]
+					else
+						return [recursive('object'), operator('.'), recursive('property')]
+				},
 					
 				'YieldExpression': undefined,
 					
@@ -141,6 +146,7 @@
 				'ComprehensionBlock': undefined,
 					
 				'Identifier': function(astNode, parentVast) {
+					// esprima says undefined is an identifier not a literal. see issue #1
 					var vast = {
 						name: 'span',
 						_class: 'Identifier',
@@ -158,7 +164,7 @@
 							var vast = {
 								name: 'span',
 								_class: 'Literal String',
-								text: raw.length < 3 ? '' : "'" + raw.substring(1, text.length - 1) + "'"
+								text: raw.length < 3 ? '' : "'" + raw.substring(1, raw.length - 1) + "'"
 							}
 							break
 						case 'boolean':
@@ -173,6 +179,26 @@
 								name: 'span',
 								_class: 'Literal Number',
 								text: raw
+							}
+							break
+						case 'undefined':
+							// here won't be reached cause issue #1
+							var vast = {
+								name: 'span',
+								_class: 'Literal Undefined',
+								text: 'undefined'
+							}
+							break
+						case 'object':
+							if (value === null) {
+								var vast = {
+									name: 'span',
+									_class: 'Literal Null',
+									text: 'null'
+								}
+							}
+							else {
+								throw new Error('unsupported type of Literal: ' + typeof value)
 							}
 							break
 						default:

@@ -10,10 +10,6 @@ body {
 	vertical-align: top;
 }
 
-.vast span:after {
-	content: ' ';
-}
-
 .vast .Identifier:hover {
 	display: inline-block;
 	background: white;
