@@ -5,35 +5,16 @@ body {
 	line-height: 2em;
 }
 
-.VAST div,
-.VAST span {
+.vast span {
+	white-space: pre;
 	vertical-align: top;
 }
 
-.VAST span {
-	/*display: inline-block;*/
+.vast span:after {
+	content: ' ';
 }
 
-.VAST .pre {
-	white-space: pre;
-}
-
-.VAST .Statement,
-.VAST .VariableDeclaration,
-.VAST .VariableDeclarator {
-	/*display: block;*/
-}
-
-.VAST .block {
-	/*display: block;*/
-}
-
-/*.VAST .indent:before {
-	content: '    ';
-	white-space: pre;
-}*/
-
-.VAST .Identifier:hover {
+.vast .Identifier:hover {
 	display: inline-block;
 	background: white;
 	padding: 0 5px;
