@@ -116,7 +116,7 @@
 					
 				'CallExpression': [recursive('callee'), recursive('arguments')],
 					
-				'MemberExpression': [recursive('object'), recursive('property')],
+				'MemberExpression': [recursive('object'), operator('.'), recursive('property')],
 					
 				'YieldExpression': undefined,
 					
