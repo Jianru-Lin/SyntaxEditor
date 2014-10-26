@@ -88,27 +88,27 @@
 					
 				'UnaryExpression': function(node) {
 					if (node.prefix) {
-						return [recursive('operator'), recursive('argument')]
+						return [operator_prop, recursive('argument')]
 					}
 					else {
-						return [recursive('argument'), recursive('operator')]
+						return [recursive('argument'), operator_prop]
 					}
 				},
 					
-				'BinaryExpression': [recursive('left'), recursive('operator'), recursive('right')],
+				'BinaryExpression': [recursive('left'), operator_prop, recursive('right')],
 					
-				'AssignmentExpression': [recursive('left'), recursive('operator'), recursive('right')],
+				'AssignmentExpression': [recursive('left'), operator_prop, recursive('right')],
 					
 				'UpdateExpression': function(node) {
 					if (node.prefix) {
-						return [recursive('operator'), recursive('argument')]
+						return [operator_prop, recursive('argument')]
 					}
 					else {
-						return [recursive('argument'), recursive('operator')]
+						return [recursive('argument'), operator_prop]
 					}
 				},
 					
-				'LogicalExpression': [recursive('left'), recursive('operator'), recursive('right')],
+				'LogicalExpression': [recursive('left'), operator_prop, recursive('right')],
 					
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
 					
@@ -291,6 +291,15 @@
 					execRule(rule)
 					popAst()
 				} 
+			}
+
+			function operator_prop(ast, parentVast) {
+				var vast = {
+					name: 'span',
+					_class: 'operator',
+					text: ast.operator
+				}
+				parentVast.children.push(vast)
 			}
 
 			function pushVast(target) {
