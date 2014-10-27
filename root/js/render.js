@@ -401,15 +401,11 @@
 			}
 
 			function left_square_bracket() {
-				return function() {
-					currentVast().children.push(span('square_bracket left', '['))
-				}
+				currentVast().children.push(span('square_bracket left', '['))
 			}
 
 			function right_square_bracket() {
-				return function() {
-					currentVast().children.push(span('square_bracket right', ']'))
-				}
+				currentVast().children.push(span('square_bracket right', ']'))
 			}
 		}
 	})(self);
