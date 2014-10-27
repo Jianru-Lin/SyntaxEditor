@@ -7,6 +7,13 @@ new Object();
 new Object(a);
 new Object(a,b);
 
+// ConditionalExpression
+
+a ? b : c;
+(a ? b : c) ? d : e;
+a ? (b ? c : d) : e;
+a ? b : (c ? d : e);
+
 // CallExpression
 
 f();

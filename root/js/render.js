@@ -110,7 +110,8 @@
 
 				'LogicalExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
-				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
+				// done
+				'ConditionalExpression': [left_bracket, recursive('test'), sp_opt, operator('?'), sp_opt, recursive('consequent'), sp_opt, operator(':'), sp_opt, recursive('alternate'), right_bracket],
 
 				// done
 				'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
