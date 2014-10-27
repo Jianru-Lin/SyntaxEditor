@@ -357,9 +357,7 @@
 			}
 
 			function sp() {
-				return function () {
-					currentVast().children.push(span('space', ' '))
-				}
+				currentVast().children.push(span('space', ' '))
 			}
 
 			function sp_opt() {
