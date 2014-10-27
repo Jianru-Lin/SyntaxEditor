@@ -163,21 +163,21 @@
 						case 'string':
 							var vast = {
 								name: 'span',
-								_class: 'Literal String',
+								_class: 'literal string',
 								text: raw.length < 3 ? '' : "'" + raw.substring(1, raw.length - 1) + "'"
 							}
 							break
 						case 'boolean':
 							var vast = {
 								name: 'span',
-								_class: 'Literal Boolean',
+								_class: 'literal boolean',
 								text: raw
 							}
 							break
 						case 'number':
 							var vast = {
 								name: 'span',
-								_class: 'Literal Number',
+								_class: 'literal number',
 								text: raw
 							}
 							break
@@ -185,7 +185,7 @@
 							// here won't be reached cause issue #1
 							var vast = {
 								name: 'span',
-								_class: 'Literal Undefined',
+								_class: 'literal undefined',
 								text: 'undefined'
 							}
 							break
@@ -193,16 +193,16 @@
 							if (value === null) {
 								var vast = {
 									name: 'span',
-									_class: 'Literal Null',
+									_class: 'literal null',
 									text: 'null'
 								}
 							}
 							else {
-								throw new Error('unsupported type of Literal: ' + typeof value)
+								throw new Error('unsupported type of literal: ' + typeof value)
 							}
 							break
 						default:
-							throw new Error('unsupported type of Literal: ' + typeof value)
+							throw new Error('unsupported type of literal: ' + typeof value)
 					}
 
 					parentVast.children.push(vast)
