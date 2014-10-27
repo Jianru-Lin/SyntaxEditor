@@ -112,9 +112,11 @@
 
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
 
+				// done
 				'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
 
-				'CallExpression': [recursive('callee'), recursive('arguments')],
+				// done
+				'CallExpression': [recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
 
 				'MemberExpression': function (ast) {
 					if (ast.computed)

@@ -7,6 +7,14 @@ new Object();
 new Object(a);
 new Object(a,b);
 
+// CallExpression
+
+f();
+f(1);
+f(1,2);
+f()();
+f(f());
+
 // UnaryExpression
 
 - a;
