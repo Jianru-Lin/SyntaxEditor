@@ -1,4 +1,12 @@
 
+
+// NewExpression
+
+new Object;
+new Object();
+new Object(a);
+new Object(a,b);
+
 // UnaryExpression
 
 - a;

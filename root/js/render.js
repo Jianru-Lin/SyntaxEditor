@@ -112,7 +112,7 @@
 
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
 
-				'NewExpression': [recursive('callee'), recursive('arguments')],
+				'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', comma), right_bracket],
 
 				'CallExpression': [recursive('callee'), recursive('arguments')],
 
@@ -256,7 +256,7 @@
 				}
 			}
 
-			function recursive(prop) {
+			function recursive(prop, between) {
 				return function() {
 					var subAst = currentAst()[prop]
 
@@ -270,7 +270,18 @@
 								return
 							}
 							else if (Array.isArray(subAst)) {
-								subAst.forEach(into)
+								if (typeof between === 'function') {
+									var subAstList = subAst
+									subAstList.forEach(function(subAstItem, i) {
+										into(subAstItem)
+										if (i < subAst.length - 1) {
+											between()
+										}
+									})				
+								}
+								else {
+									subAst.forEach(into)
+								}
 							}
 							else {
 								into(subAst)
@@ -290,6 +301,20 @@
 					pushAst(ast)
 					execRule(rule)
 					popAst()
+				}
+
+				function join(arr, sep) {
+					if (sep === undefined || sep === null) {
+						return arr
+					}
+
+					var result = []
+					arr.forEach(function(arrItem) {
+						result.push(arrItem)
+						result.push(sep)
+					})
+					result.pop() // remove last sep
+					return result
 				}
 			}
 
@@ -396,6 +421,10 @@
 
 			function right_square_bracket() {
 				currentVast().children.push(span('square_bracket right', ']'))
+			}
+
+			function comma() {
+				currentVast().children.push(span('comma', ','))				
 			}
 		}
 	})(self);
