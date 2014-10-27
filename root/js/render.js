@@ -108,7 +108,7 @@
 					}
 				},
 
-				'LogicalExpression': [recursive('left'), operator_prop, recursive('right')],
+				'LogicalExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
 
