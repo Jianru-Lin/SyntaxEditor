@@ -101,10 +101,10 @@
 
 				'UpdateExpression': function(node) {
 					if (node.prefix) {
-						return [operator_prop, recursive('argument')]
+						return [operator_prop, sp_opt, recursive('argument')]
 					}
 					else {
-						return [recursive('argument'), operator_prop]
+						return [recursive('argument'), sp_opt, operator_prop]
 					}
 				},
 
