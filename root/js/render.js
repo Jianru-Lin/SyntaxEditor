@@ -389,15 +389,11 @@
 			}
 
 			function left_bracket() {
-				return function() {
-					currentVast().children.push(span('bracket left', '('))
-				}
+				currentVast().children.push(span('bracket left', '('))
 			}
 
 			function right_bracket() {
-				return function() {
-					currentVast().children.push(span('bracket right', ')'))
-				}
+				currentVast().children.push(span('bracket right', ')'))
 			}
 
 			function left_square_bracket() {
