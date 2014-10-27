@@ -97,7 +97,7 @@
 
 				'BinaryExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
-				'AssignmentExpression': [recursive('left'), operator_prop, recursive('right')],
+				'AssignmentExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
 				'UpdateExpression': function(node) {
 					if (node.prefix) {
