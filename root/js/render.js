@@ -371,9 +371,7 @@
 			}
 
 			function semicolon() {
-				return function () {
-					currentVast().children.push(span('semicolon', ';'))
-				}
+				currentVast().children.push(span('semicolon', ';'))
 			}
 
 			function left_brace() {
