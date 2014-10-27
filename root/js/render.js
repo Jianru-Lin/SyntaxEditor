@@ -361,9 +361,7 @@
 			}
 
 			function sp_opt() {
-				return function () {
-					currentVast().children.push(span('space optional', ' '))
-				}
+				currentVast().children.push(span('space optional', ' '))
 			}
 
 			function operator(text) {
