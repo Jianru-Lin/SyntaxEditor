@@ -112,7 +112,7 @@
 
 				'ConditionalExpression': [recursive('test'), recursive('consequent'), recursive('alternate')],
 
-				'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', comma), right_bracket],
+				'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
 
 				'CallExpression': [recursive('callee'), recursive('arguments')],
 
@@ -315,6 +315,15 @@
 					})
 					result.pop() // remove last sep
 					return result
+				}
+			}
+
+			function combine() {
+				var a = arguments
+				return function() {
+					for (var i = 0, len = a.length; i < len; ++i) {
+						a[i]()
+					}
 				}
 			}
 
