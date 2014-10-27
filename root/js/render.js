@@ -32,7 +32,7 @@
 
 				'BlockStatement': [recursive('body')],
 
-				'ExpressionStatement': [recursive('expression'), semicolon],
+				'ExpressionStatement': [recursive('expression'), semicolon, br],
 
 				'IfStatement': [recursive('test'), recursive('consequent'), recursive('alternate')],
 
@@ -348,6 +348,12 @@
 				return function () {
 					currentVast().children.push(span('keyword', text))
 				}
+			}
+
+			function br() {
+				currentVast().children.push({
+					name: 'br'
+				})
 			}
 
 			function sp() {
