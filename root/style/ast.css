@@ -10,7 +10,7 @@ body {
 	vertical-align: top;
 }
 
-.vast .Identifier:hover {
+.vast .identifier:hover {
 	display: inline-block;
 	background: white;
 	padding: 0 5px;

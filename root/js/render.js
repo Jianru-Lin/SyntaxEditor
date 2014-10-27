@@ -149,7 +149,7 @@
 					// esprima says undefined is an identifier not a literal. see issue #1
 					var vast = {
 						name: 'span',
-						_class: 'Identifier',
+						_class: 'identifier',
 						text: astNode.name
 					}
 					parentVast.children.push(vast)
