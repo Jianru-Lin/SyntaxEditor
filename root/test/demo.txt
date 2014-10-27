@@ -1,1 +1,61 @@
-1+2;3+4;
+
+// UnaryExpression
+
+- a;
++ a;
+! a;
+~ a;
+typeof a;
+void a;
+delete a;
+
+// BinaryExpression
+
+a == b
+a != b
+a === b
+a !== b
+a < b
+a <= b
+a > b
+a >= b
+a << b
+a >> b
+a >>> b
+a + b
+a - b
+a * b
+a / b
+a % b
+a ^ b
+a & b
+a in b
+a instanceof b
+// a .. b
+
+// AssignmentExpression
+
+a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a <<= b
+a >>= b
+a >>>= b
+a = b
+a ^= b
+a &= b
+
+// UpdateExpression
+
+++a
+--a
+a++
+a--
+
+// LogicalExpression
+
+a && b
+a || b

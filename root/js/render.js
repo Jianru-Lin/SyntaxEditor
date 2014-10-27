@@ -88,10 +88,10 @@
 
 				'UnaryExpression': function(node) {
 					if (node.prefix) {
-						return [operator_prop, recursive('argument')]
+						return [operator_prop, sp, recursive('argument')]
 					}
 					else {
-						return [recursive('argument'), operator_prop]
+						return [recursive('argument'), sp, operator_prop]
 					}
 				},
 
