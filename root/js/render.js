@@ -377,15 +377,11 @@
 			}
 
 			function left_brace() {
-				return function() {
-					currentVast().children.push(span('brace left', '{'))
-				}
+				currentVast().children.push(span('brace left', '{'))
 			}
 
 			function right_brace() {
-				return function() {
-					currentVast().children.push(span('brace right', '}'))
-				}
+				currentVast().children.push(span('brace right', '}'))
 			}
 
 			function left_bracket() {
