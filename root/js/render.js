@@ -95,7 +95,7 @@
 					}
 				},
 
-				'BinaryExpression': [recursive('left'), operator_prop, recursive('right')],
+				'BinaryExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
 				'AssignmentExpression': [recursive('left'), operator_prop, recursive('right')],
 
