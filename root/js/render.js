@@ -62,7 +62,7 @@
 
 				'LetStatement': undefined,
 
-				'DebuggerStatement': keyword('debugger'),
+				'DebuggerStatement': [keyword('debugger'), sp_opt, semicolon, br],
 
 				'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace, br],
 
