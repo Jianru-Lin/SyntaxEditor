@@ -155,7 +155,12 @@
 
 				'SwitchStatement': [recursive('discriminant'), recursive('cases')],
 
-				'ReturnStatement': [recursive('argument')],
+				'ReturnStatement': function (ast) {
+					if (ast.argument)
+						return [keyword('return'), sp, recursive('argument'), sp_opt, semicolon, br]
+					else
+						return [keyword('return'), sp_opt, semicolon, br]
+				},
 
 				'ThrowStatement': [recursive('argument')],
 
