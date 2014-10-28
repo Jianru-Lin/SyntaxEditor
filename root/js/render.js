@@ -452,16 +452,33 @@
 				var funcs = arguments
 				return function () {
 					
-					var eIndent = span('indent')
-					currentVast().children.push(eIndent)
-					pushVast(eIndent)
+					var indentSection = sectionMark('indent')
+					currentVast().children.push(indentSection.enter)
 
 					for (var i = 0, len = funcs.length; i < len; ++i) {
 						funcs[i].apply(undefined, arguments)
 					}
 
-					popVast()
+					currentVast().children.push(indentSection.leave)
 				}
+			}
+
+			function sectionMark(name, data) {
+				var o = {
+					enter: {
+						notDom: true,
+						name: name,
+						type: 'enter',
+						data: data
+					},
+					leave: {
+						notDom: true,
+						name: name,
+						type: 'leave',
+						data: data
+					}
+				}
+				return o
 			}
 		}
 	})(self);
@@ -471,7 +488,10 @@
 		self.vastToDom = vastToDom
 
 		function vastToDom(vast) {
+			if (vast.notDom) return
+
 			var e = document.createElement(vast.name)
+		console.log('e: ' + vast.name)
 			if (vast._class) {
 				e.setAttribute('class', vast._class)
 			}
@@ -480,7 +500,8 @@
 			}
 			else if (vast.children && vast.children.length > 0) {
 				for (var i = 0, len = vast.children.length; i < len; ++i) {
-					e.appendChild(vastToDom(vast.children[i]))
+					var childDom = vastToDom(vast.children[i])
+					if (childDom) e.appendChild(childDom)
 				}
 			}
 			return e
