@@ -1,3 +1,9 @@
+// FunctionDeclaration
+
+function f () {};
+function f (a) {};
+function f (a, b) {
+}
 
 
 // NewExpression
