@@ -22,8 +22,112 @@
 		}
 
 		function fillIndent(vast) {
-			// TODO
+			if (!vast.children || vast.children.length < 1) return vast
+
+			var i = 0
+			var current
+			var indentLevel = 0
+			var willIndentList = []
+
+			// calculate the position will be inserted indent
+
+			while (eat()) {
+				console.log('eat: ' + current.name)
+				if (isIndentEnter(current)) {
+					++indentLevel
+					if (!peekNext(isIndentLeave)) {
+						willIndentNext()
+					}
+				}
+				else if (isIndentLeave(current)) {
+					--indentLevel
+				}
+				else if (isBr(current)) {
+					if (!peekNext(isIndentLeave)) {
+						willIndentNext()
+					}
+				}
+				else {
+					// nothing to do
+				}
+			}
+
+			// do insert indent
+
+			var indentMap = []
+			willIndentList.forEach(function(willIndent) {
+				indentMap[willIndent.i] = {
+					name: 'span',
+					text: makeIndentSpace(willIndent.indentLevel)
+				}
+			})
+
+			var newChildren = []
+			vast.children.forEach(function(c, i) {
+				var indent = indentMap[i]
+				if (indent) newChildren.push(indent)
+				newChildren.push(c)
+			})
+			console.log(newChildren)
+			vast.children = newChildren
+
+			// return result
+
 			return vast
+
+			function eat() {
+				if (i < vast.children.length) {
+					current = vast.children[i]
+					++i
+					return true
+				}
+				else {
+					return false
+				}
+			}
+
+			function peekNext(cb) {
+				if (!cb) debugger
+				var target = vast.children[i]
+				if (!target) return false
+				else return cb(target)
+			}
+
+			function isIndentEnter(target) {
+				return target.notDom && target.name === 'indent' && target.type === 'enter'
+			}
+
+			function isIndentLeave(target) {
+				return target.notDom && target.name === 'indent' && target.type === 'leave'
+			}
+
+			function isBr(target) {
+				return !target.notDom && target.name === 'br'
+			}
+
+			function willIndentNext() {
+				if (indentLevel < 1) return
+
+				willIndentList.push({
+					i: i,
+					indentLevel: indentLevel
+				})
+				console.log(willIndentList[willIndentList.length - 1])
+			}
+
+			function makeIndentSpace(level) {
+				if (level < 1) {
+					return ''
+				}
+				else {
+					var unit = '    '
+					var list = []
+					for (var i = 0; i < level; ++i) {
+						list.push(unit)
+					}
+					return list.join('')
+				}
+			}
 		}
 
 		function execRuleTable(ast) {
@@ -495,6 +599,7 @@
 		self.vastToDom = vastToDom
 
 		function vastToDom(vast) {
+			if (!vast) debugger
 			if (vast.notDom) return
 
 			var e = document.createElement(vast.name)
