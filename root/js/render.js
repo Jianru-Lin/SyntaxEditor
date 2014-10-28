@@ -64,6 +64,7 @@
 
 				'DebuggerStatement': [keyword('debugger'), sp_opt, semicolon, br],
 
+				// done
 				'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace, br],
 
 				'VariableDeclaration': [keyword('var'), sp, recursive('declarations'), sp_opt, semicolon],
@@ -80,7 +81,15 @@
 
 				'Property': [recursive('key'), recursive('value')],
 
-				'FunctionExpression': [recursive('id'), recursive('params'), recursive('defaults'), recursive('rest'), recursive('body')],
+				// done
+				'FunctionExpression': function (ast) {
+					if (ast.id) {
+						return [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace]
+					}
+					else {
+						return [keyword('function'), sp, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace]
+					}
+				},
 
 				'ArrowExpression': undefined,
 
