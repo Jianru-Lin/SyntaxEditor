@@ -491,7 +491,6 @@
 			if (vast.notDom) return
 
 			var e = document.createElement(vast.name)
-		console.log('e: ' + vast.name)
 			if (vast._class) {
 				e.setAttribute('class', vast._class)
 			}
