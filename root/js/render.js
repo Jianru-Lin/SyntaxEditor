@@ -16,7 +16,14 @@
 
 
 		function astToVast(ast) {
-			return execRuleTable(ast)
+			var vast = execRuleTable(ast)
+			vast = fillIndent(vast)
+			return vast
+		}
+
+		function fillIndent(vast) {
+			// TODO
+			return vast
 		}
 
 		function execRuleTable(ast) {
