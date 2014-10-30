@@ -232,7 +232,7 @@
 					}
 				},
 
-				'LabeledStatement': [recursive('label'), recursive('body')],
+				'LabeledStatement': [recursive('label'), colon, sp_opt, recursive('body')],
 
 				'ContinueStatement': keyword('continue'),
 
@@ -647,6 +647,10 @@
 
 			function comma() {
 				currentVast().children.push(span('comma', ','))				
+			}
+
+			function colon() {
+				currentVast().children.push(span('colon', ':'))				
 			}
 
 			function indent() {
