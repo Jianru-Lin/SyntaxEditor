@@ -234,7 +234,7 @@
 
 				'LabeledStatement': [recursive('label'), colon, sp_opt, recursive('body')],
 
-				'ContinueStatement': keyword('continue'),
+				'ContinueStatement': [keyword('continue'), sp_opt, semicolon, br],
 
 				'WithStatement': [recursive('object'), recursive('body')],
 

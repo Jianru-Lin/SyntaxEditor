@@ -1,4 +1,2 @@
-
-// LabeledStatement
-
-label: a = b + c;
+while (1)
+continue
