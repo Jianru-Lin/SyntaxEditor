@@ -274,10 +274,10 @@
 				// done
 				'FunctionExpression': function (ast) {
 					if (ast.id) {
-						return [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace]
+						return [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace]
 					}
 					else {
-						return [keyword('function'), sp, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace]
+						return [keyword('function'), sp, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace]
 					}
 				},
 

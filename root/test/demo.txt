@@ -3,6 +3,8 @@
 
 function f (a, b) {
     function f (a, b) {
-        return
+        return function (a, b) {
+            return
+        }
     }
 }
