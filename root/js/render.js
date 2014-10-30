@@ -276,7 +276,12 @@
 					}
 				},
 
-				'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
+				'ForInStatement': function (ast) {
+					if (ast.left.type === 'VariableDeclaration') {
+						ast.left.parentIsForInStatement = true
+					}
+					return [keyword('for'), sp_opt, left_bracket, recursive('left'), sp, keyword('in'), sp, recursive('right'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
+				},
 
 				'ForOfStatement': undefined,
 
@@ -287,7 +292,14 @@
 				// done
 				'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
-				'VariableDeclaration': [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), sp_opt, semicolon],
+				'VariableDeclaration': function(ast) {
+					if (ast.parentIsForInStatement) {
+						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt))]
+					}
+					else {
+						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), sp_opt, semicolon]
+					}
+				},
 
 				'VariableDeclarator': function (ast) {
 					return ast.init ? [recursive('id'), sp_opt, operator('='), sp_opt, recursive('init')] : [recursive('id')]

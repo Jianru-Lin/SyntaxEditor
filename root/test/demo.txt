@@ -1,9 +1,11 @@
 
-// ForStatement
 
-for (;;);
-for (;;) {}
-for (var i = 0, len = list.length; i < len; ++i) {
-	a + b;
-	c * d;
+// ForInStatement
+
+for (k in o);
+for (var k in o);
+for (var k in o) o[k];
+for (var k in o) {}
+for (var k in o) {
+	o[k];
 }
