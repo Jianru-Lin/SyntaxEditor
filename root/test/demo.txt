@@ -1,9 +1,11 @@
 
-// WithStatement
+// SwitchStatement
 
-with (obj) ;
-with (obj) {}
-with (obj) {
-	exp;
+switch (exp) {
+	case a:
+		break;
+	case b:
+		break;
+	default:
+		a + b;
 }
-with (obj) exp;

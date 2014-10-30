@@ -238,7 +238,7 @@
 
 				'WithStatement': [keyword('with'), sp_opt, left_bracket, recursive('object'), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace, br],
 
-				'SwitchStatement': [recursive('discriminant'), recursive('cases')],
+				'SwitchStatement': [keyword('switch'), sp_opt, left_bracket, recursive('discriminant'), right_bracket, sp_opt, left_brace, br, indent(recursive('cases')), right_brace, br],
 
 				'ReturnStatement': function (ast) {
 					if (ast.argument)

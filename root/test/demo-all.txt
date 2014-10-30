@@ -46,6 +46,16 @@ with (obj) {
 with (obj) exp;
 
 // SwitchStatement
+
+switch (exp) {
+	case a:
+		break;
+	case b:
+		break;
+	default:
+		a + b;
+}
+
 // ReturnStatement
 // ThrowStatement
 // TryStatement
