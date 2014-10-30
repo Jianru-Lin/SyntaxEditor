@@ -251,7 +251,7 @@
 
 				'TryStatement': [recursive('block'), recursive('handlers'), recursive('guardedHandlers'), recursive('finalizer')],
 
-				'WhileStatement': [recursive('test'), recursive('body')],
+				'WhileStatement': [keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
 				'DoWhileStatement': [recursive('body'), recursive('test')],
 

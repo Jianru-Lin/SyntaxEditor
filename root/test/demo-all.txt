@@ -31,6 +31,11 @@ label: a = b + c;
 
 // BreakStatement
 // ContinueStatement
+
+while (1) {
+	continue;
+}
+
 // WithStatement
 // SwitchStatement
 // ReturnStatement
