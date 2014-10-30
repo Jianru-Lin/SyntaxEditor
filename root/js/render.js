@@ -352,7 +352,15 @@
 
 				'ArrayPattern': undefined,
 
-				'SwitchCase': [recursive('test'), recursive('consequent')],
+				'SwitchCase': function(ast) {
+					console.log(ast)
+					if (ast.test) {
+						return [keyword('case'), sp, recursive('test'), colon, br, indent(recursive('consequent'))]
+					}
+					else {
+						return [keyword('default'), colon, br, indent(recursive('consequent'))]
+					}
+				},
 
 				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
 
