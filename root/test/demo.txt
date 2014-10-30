@@ -1,1 +1,7 @@
-a, b, c
+
+// DoWhileStatement
+
+do {} while (true);
+do {
+	a + b
+} while (true);
