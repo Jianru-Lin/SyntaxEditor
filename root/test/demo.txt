@@ -1,21 +1,4 @@
 
-if (a) {
-	b;
-}
-else if (c) {
-	d;
-}
-else {
-    e;
-}
+// LabeledStatement
 
-if (a) {
-	b;
-}
-
-if (a) {
-	b;
-}
-else {
-	c;
-}
+label: a = b + c;
