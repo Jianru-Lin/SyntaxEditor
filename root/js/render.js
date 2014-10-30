@@ -24,61 +24,148 @@
 		function fillIndent(vast) {
 			if (!vast.children || vast.children.length < 1) return vast
 
-			var i = 0
-			var current
-			var indentLevel = 0
 			var willIndentList = []
 
-			// calculate the position will be inserted indent
-
-			while (eat()) {
-				console.log('eat: ' + current.name)
-				if (isIndentEnter(current)) {
-					++indentLevel
-					if (!peekNext(isIndentLeave)) {
-						willIndentNext()
-					}
-				}
-				else if (isIndentLeave(current)) {
-					--indentLevel
-				}
-				else if (isBr(current)) {
-					if (!peekNext(isIndentLeave)) {
-						willIndentNext()
-					}
-				}
-				else {
-					// nothing to do
-				}
-			}
-
-			// do insert indent
-
-			var indentMap = []
-			willIndentList.forEach(function(willIndent) {
-				indentMap[willIndent.i] = {
-					name: 'span',
-					text: makeIndentSpace(willIndent.indentLevel)
-				}
-			})
-
-			var newChildren = []
-			vast.children.forEach(function(c, i) {
-				var indent = indentMap[i]
-				if (indent) newChildren.push(indent)
-				newChildren.push(c)
-			})
-			console.log(newChildren)
-			vast.children = newChildren
-
-			// return result
+			calcIndentDetail()
+			applyIndent()
 
 			return vast
 
-			function eat() {
-				if (i < vast.children.length) {
-					current = vast.children[i]
-					++i
+			function calcIndentDetail() {
+				var ctx = {
+					elementList: vast.children
+				}
+
+				var lastLineNo
+				var lastIndentId
+
+				while (lineOrientedEat(ctx)) {
+					var currentLineNo = ctx.lineNo
+					var currentIndentId = ctx.indentStack[ctx.indentStack.length - 1]
+					if ((currentLineNo !== lastLineNo) || (currentIndentId !== lastIndentId)) {
+						// this is where we want to do indent :)
+						// but indent zero is meaningless so we will ignore it
+						var indentLevel = ctx.indentStack.length
+						var elementPos = ctx.nextElementPos - 1
+						if (indentLevel > 0) {
+							willIndentList.push({
+								elementPos: elementPos,
+								indentLevel: indentLevel
+							})							
+						}
+					}
+					lastLineNo = currentLineNo
+					lastIndentId = currentIndentId
+				}
+			}
+
+			function lineOrientedEat(ctx) {
+				// ctx:
+				// - [out]     lineNo
+				// ...
+				// (base on indentOrientedEat)
+
+				if (ctx.lineNo === undefined)
+					ctx.lineNo = 0
+
+				while (indentOrientedEat(ctx)) {
+					if (isBr(ctx.element)) {
+						++ctx.lineNo
+					}
+					else {
+						return true
+					}
+				}
+
+				// meet the end
+				return false
+			}
+
+			function indentOrientedEat(ctx) {
+				// ctx:
+				// - [out]     indentStack
+				// - [*]       nextIndentId
+				// ...
+				// (base on eat)
+
+				if (ctx.indentStack === undefined)
+					ctx.indentStack = []
+
+				while (eat(ctx)) {
+					if (isIndentEnter(ctx.element)) {
+						enter()
+					}
+					else if (isIndentLeave(ctx.element)) {
+						leave()
+					}
+					else {
+						// ok, done
+						return true
+					}
+				}
+
+				// end
+				return false
+
+				function enter() {
+					if (ctx.nextIndentId === undefined)
+						ctx.nextIndentId = 0
+
+					ctx.indentStack.push(ctx.nextIndentId++)
+				}
+
+				function leave() {
+					ctx.indentStack.pop()
+				}
+			}
+
+			function applyIndent() {
+				// do insert indent
+
+				var indentMap = []
+				willIndentList.forEach(function(willIndent) {
+					indentMap[willIndent.elementPos] = {
+						name: 'span',
+						text: makeIndentSpace(willIndent.indentLevel)
+					}
+				})
+
+				var newChildren = []
+				vast.children.forEach(function(c, i) {
+					var indent = indentMap[i]
+					if (indent) newChildren.push(indent)
+					newChildren.push(c)
+				})
+				vast.children = newChildren
+
+				function makeIndentSpace(level) {
+					if (level < 1) {
+						return ''
+					}
+					else {
+						var unit = '    '
+						var list = []
+						for (var i = 0; i < level; ++i) {
+							list.push(unit)
+						}
+						return list.join('')
+					}
+				}
+			}
+
+			function eat(ctx) {
+				// ctx:
+				// - [in]      elementList
+				// - [out]     element
+				// - [*]       nextElementPos
+
+				if (ctx.nextElementPos === undefined) {
+					ctx.nextElementPos = 0
+				}
+
+				if (ctx.nextElementPos < ctx.elementList.length) {
+					ctx.element = ctx.elementList[ctx.nextElementPos]
+					++ctx.nextElementPos
 					return true
 				}
 				else {
@@ -86,12 +173,12 @@
 				}
 			}
 
-			function peekNext(cb) {
-				if (!cb) debugger
-				var target = vast.children[i]
-				if (!target) return false
-				else return cb(target)
-			}
+			// function peekNext(cb) {
+			// 	if (!cb) debugger
+			// 	var target = vast.children[i]
+			// 	if (!target) return false
+			// 	else return cb(target)
+			// }
 
 			function isIndentEnter(target) {
 				return target.notDom && target.name === 'indent' && target.type === 'enter'
@@ -105,29 +192,16 @@
 				return !target.notDom && target.name === 'br'
 			}
 
-			function willIndentNext() {
-				if (indentLevel < 1) return
+			// function willIndentNext() {
+			// 	if (indentLevel < 1) return
 
-				willIndentList.push({
-					i: i,
-					indentLevel: indentLevel
-				})
-				console.log(willIndentList[willIndentList.length - 1])
-			}
+			// 	willIndentList.push({
+			// 		i: i,
+			// 		indentLevel: indentLevel
+			// 	})
+			// 	console.log(willIndentList[willIndentList.length - 1])
+			// }
 
-			function makeIndentSpace(level) {
-				if (level < 1) {
-					return ''
-				}
-				else {
-					var unit = '    '
-					var list = []
-					for (var i = 0; i < level; ++i) {
-						list.push(unit)
-					}
-					return list.join('')
-				}
-			}
 		}
 
 		function execRuleTable(ast) {
