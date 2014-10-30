@@ -11,13 +11,7 @@ body {
 }
 
 .vast .identifier:hover {
-	display: inline-block;
-	background: white;
-	padding: 0 5px;
-	margin-left: -5px;
-	margin-right: -5px;
-	color: #333;
-	border-radius: 2px;
+	text-decoration: underline;
 }
 
 .vast .keyword {
