@@ -311,12 +311,12 @@
 
 				'ObjectExpression': function(ast) {
 					if (ast.properties && ast.properties.length > 0)
-						return [left_brace, br, indent(recursive('properties')), right_brace]
+						return [left_brace, br, indent(recursive('properties', combine(comma, br))), br, right_brace]
 					else
 						return [left_brace, right_brace]
 				},
 
-				'Property': [recursive('key'), recursive('value')],
+				'Property': [recursive('key'), colon, sp_opt, recursive('value')],
 
 				// done
 				'FunctionExpression': function (ast) {

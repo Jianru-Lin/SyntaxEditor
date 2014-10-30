@@ -3,7 +3,7 @@
 
 var o = {}
 var o = {a: b}
-var o = {a: {c: d}}
+var o = {a: {b: c}}
 var o = {
 	a: b,
 	c: {
