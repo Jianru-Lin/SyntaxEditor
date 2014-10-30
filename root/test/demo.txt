@@ -1,7 +1,9 @@
 
-// DoWhileStatement
+// ForStatement
 
-do {} while (true);
-do {
-	a + b
-} while (true);
+for (;;);
+for (;;) {}
+for (var i = 0, len = list.length; i < len; ++i) {
+	a + b;
+	c * d;
+}

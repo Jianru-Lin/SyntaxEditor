@@ -266,7 +266,15 @@
 
 				'DoWhileStatement': [keyword('do'), sp_opt, left_brace, br, indent(recursive('body')), right_brace, sp_opt, keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, br],
 
-				'ForStatement': [recursive('init'), recursive('test'), recursive('update'), recursive('body')],
+				'ForStatement': function(ast) {
+					return [keyword('for'), sp_opt, left_bracket, recursive('init'), sp_opt, semicolon, dynamic_sp_opt, recursive('test'), sp_opt, semicolon, sp_opt, recursive('update'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
+
+					function dynamic_sp_opt() {
+						if (ast.test) {
+							return sp_opt
+						}
+					}
+				},
 
 				'ForInStatement': [recursive('left'), recursive('right'), recursive('body')],
 
