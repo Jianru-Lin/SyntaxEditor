@@ -305,7 +305,10 @@
 
 				'ArrowExpression': undefined,
 
-				'SequenceExpression': [recursive('expressions')],
+				'SequenceExpression': function () {
+					// TODO Priority Problem
+					return [left_bracket, recursive('expressions', combine(comma, sp_opt)), right_bracket]
+				},
 
 				'UnaryExpression': function(node) {
 					if (node.prefix) {
