@@ -1,8 +1,9 @@
 
-// WhileStatement
+// WithStatement
 
-while (true) ;
-while (true) {}
-while (true) {
-	a + b;
+with (obj) ;
+with (obj) {}
+with (obj) {
+	exp;
 }
+with (obj) exp;

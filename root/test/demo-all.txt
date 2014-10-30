@@ -37,6 +37,14 @@ while (1) {
 }
 
 // WithStatement
+
+with (obj) ;
+with (obj) {}
+with (obj) {
+	exp;
+}
+with (obj) exp;
+
 // SwitchStatement
 // ReturnStatement
 // ThrowStatement

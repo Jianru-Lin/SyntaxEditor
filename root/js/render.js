@@ -236,7 +236,7 @@
 
 				'ContinueStatement': [keyword('continue'), sp_opt, semicolon, br],
 
-				'WithStatement': [recursive('object'), recursive('body')],
+				'WithStatement': [keyword('with'), sp_opt, left_bracket, recursive('object'), right_bracket, sp_opt, left_brace, br, recursive('body'), right_brace, br],
 
 				'SwitchStatement': [recursive('discriminant'), recursive('cases')],
 
