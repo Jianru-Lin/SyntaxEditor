@@ -3,6 +3,11 @@
 // BlockStatement
 // ExpressionStatement
 // IfStatement
+
+if (a) {
+	b;
+}
+
 // LabeledStatement
 // BreakStatement
 // ContinueStatement

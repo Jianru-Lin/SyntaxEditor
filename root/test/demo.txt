@@ -1,10 +1,18 @@
 
-// FunctionDeclaration
+if (a) {
+	b;
+}
 
-function f (a, b) {
-    function f (a, b) {
-        return function (a, b) {
-            return
-        }
-    }
+if (a) {
+	b;
+}
+else {
+	c;
+}
+
+if (a) {
+	c;
+}
+else if (d) {
+	e;
 }
