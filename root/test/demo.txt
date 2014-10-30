@@ -2,17 +2,20 @@
 if (a) {
 	b;
 }
+else if (c) {
+	d;
+}
+else {
+    e;
+}
+
+if (a) {
+	b;
+}
 
 if (a) {
 	b;
 }
 else {
 	c;
-}
-
-if (a) {
-	c;
-}
-else if (d) {
-	e;
 }

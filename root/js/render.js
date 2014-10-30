@@ -192,16 +192,6 @@
 				return !target.notDom && target.name === 'br'
 			}
 
-			// function willIndentNext() {
-			// 	if (indentLevel < 1) return
-
-			// 	willIndentList.push({
-			// 		i: i,
-			// 		indentLevel: indentLevel
-			// 	})
-			// 	console.log(willIndentList[willIndentList.length - 1])
-			// }
-
 		}
 
 		function execRuleTable(ast) {
@@ -230,8 +220,14 @@
 						return [
 							keyword('if'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, 
 							indent(recursive('consequent')), right_brace, br,
-							keyword('else'), sp_opt, left_brace, br,
-							indent(recursive('alternate')), right_brace, br
+							function() {
+								if (ast.alternate.type !== 'IfStatement') {
+									return [keyword('else'), sp_opt, left_brace, br, indent(recursive('alternate')), right_brace, br]
+								}
+								else {
+									return [keyword('else'), sp, recursive('alternate')]
+								}
+							}
 						]
 					}
 				},
