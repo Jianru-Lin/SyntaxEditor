@@ -1,11 +1,6 @@
 
-
-// ForInStatement
-
-for (k in o);
-for (var k in o);
-for (var k in o) o[k];
-for (var k in o) {}
-for (var k in o) {
-	o[k];
-}
+a = []
+a = [1]
+a = [1,2,3]
+a = [1,[2],3]
+a = [1, [2,3]]

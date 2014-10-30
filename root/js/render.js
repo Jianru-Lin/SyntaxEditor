@@ -307,7 +307,7 @@
 
 				'ThisExpression': keyword('this'),
 
-				'ArrayExpression': [recursive('elements')],
+				'ArrayExpression': [left_square_bracket, recursive('elements', combine(comma, sp_opt)), right_square_bracket],
 
 				'ObjectExpression': [recursive('properties')],
 
