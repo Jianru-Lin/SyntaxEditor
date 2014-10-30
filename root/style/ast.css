@@ -19,3 +19,11 @@ body {
 	color: #333;
 	border-radius: 2px;
 }
+
+.vast .keyword {
+	color: yellow;
+}
+
+.vast .literal.string {
+	color: rgb(255, 184, 0);
+}
