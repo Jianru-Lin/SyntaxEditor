@@ -169,6 +169,18 @@ a = [1,[2],3]
 a = [1, [2,3]]
 
 // ObjectExpression
+
+var o = {}
+var o = {a: b}
+var o = {a: {c: d}}
+var o = {
+	a: b,
+	c: {
+		d: e,
+		f: g
+	}
+}
+
 // Property
 
 a = {};

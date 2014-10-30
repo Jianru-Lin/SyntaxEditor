@@ -297,7 +297,7 @@
 						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt))]
 					}
 					else {
-						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), sp_opt, semicolon]
+						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), sp_opt, semicolon, br]
 					}
 				},
 
@@ -309,7 +309,12 @@
 
 				'ArrayExpression': [left_square_bracket, recursive('elements', combine(comma, sp_opt)), right_square_bracket],
 
-				'ObjectExpression': [recursive('properties')],
+				'ObjectExpression': function(ast) {
+					if (ast.properties && ast.properties.length > 0)
+						return [left_brace, br, indent(recursive('properties')), right_brace]
+					else
+						return [left_brace, right_brace]
+				},
 
 				'Property': [recursive('key'), recursive('value')],
 
