@@ -362,6 +362,8 @@
 					}
 				},
 
+				'BreakStatement': [keyword('break'), sp_opt, semicolon, br],
+
 				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
 
 				'ComprehensionBlock': undefined,
