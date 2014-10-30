@@ -375,7 +375,7 @@
 
 				'BreakStatement': [keyword('break'), sp_opt, semicolon, br],
 
-				'CatchClause': [recursive('param'), recursive('guard'), recursive('body')],
+				'CatchClause': [keyword('catch'), sp_opt, left_bracket, recursive('param'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
 				'ComprehensionBlock': undefined,
 
