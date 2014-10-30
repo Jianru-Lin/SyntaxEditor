@@ -57,7 +57,16 @@ switch (exp) {
 }
 
 // ReturnStatement
+
+function f() {
+	return;
+	return exp;
+}
+
 // ThrowStatement
+
+throw exp;
+
 // TryStatement
 
 try {

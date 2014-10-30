@@ -1,11 +1,22 @@
 
-// SwitchStatement
+// TryStatement
 
-switch (exp) {
-	case a:
-		break;
-	case b:
-		break;
-	default:
-		a + b;
+try {
+	a + b;
+} catch(err) {
+	c - d;
+} finally {
+	u * v;
+}
+
+try {
+	a + b;
+} catch(err) {
+	c - d;
+}
+
+try {
+	a + b;
+} finally {
+	u * v;
 }

@@ -247,9 +247,20 @@
 						return [keyword('return'), sp_opt, semicolon, br]
 				},
 
-				'ThrowStatement': [recursive('argument')],
+				'ThrowStatement': [keyword('throw'), sp, recursive('argument'), sp_opt, semicolon, br],
 
-				'TryStatement': [recursive('block'), recursive('handlers'), recursive('guardedHandlers'), recursive('finalizer')],
+				'TryStatement': function(ast) {
+					return [
+						keyword('try'), sp_opt, left_brace, br, 
+						indent(recursive('block')), right_brace, br,
+						recursive('handlers'), 
+						function() {
+							if (ast.finalizer) {
+								return [keyword('finally'), sp_opt, left_brace, br, indent(recursive('finalizer')), right_brace, br]
+							}
+						}
+					]
+				},
 
 				'WhileStatement': [keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
