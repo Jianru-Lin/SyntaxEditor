@@ -5,6 +5,10 @@ body {
 	line-height: 2em;
 }
 
+.vast {
+	cursor: text;
+}
+
 .vast span {
 	white-space: pre;
 	vertical-align: top;
