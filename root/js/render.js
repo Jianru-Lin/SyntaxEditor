@@ -392,7 +392,6 @@
 				'ArrayPattern': undefined,
 
 				'SwitchCase': function(ast) {
-					console.log(ast)
 					if (ast.test) {
 						return [keyword('case'), sp, recursive('test'), colon, br, indent(recursive('consequent'))]
 					}
