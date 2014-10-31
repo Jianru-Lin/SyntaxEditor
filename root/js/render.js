@@ -641,7 +641,7 @@
 
 			function keyword(text) {
 				return function () {
-					currentVast().children.push(span('keyword', text))
+					currentVast().children.push(span('keyword ' + text, text))
 				}
 			}
 
