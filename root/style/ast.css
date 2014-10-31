@@ -19,7 +19,8 @@ body {
 }
 
 .vast .keyword.function,
-.vast .keyword:hover {
+.vast .keyword:hover,
+.vast .operator:hover {
 	color: yellow;
 }
 
