@@ -18,6 +18,10 @@ body {
 	text-decoration: underline;
 }
 
+.vast .keyword {
+	font-style: italic;
+}
+
 .vast .keyword.function,
 .vast .keyword:hover,
 .vast .operator:hover {
