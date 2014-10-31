@@ -18,11 +18,12 @@ body {
 	text-decoration: underline;
 }
 
-.vast .keyword {
+.vast .keyword.function,
+.vast .keyword:hover {
 	color: yellow;
 }
 
-.vast .literal.string {
+.vast .literal.string:hover {
 	color: rgb(255, 184, 0);
 }
 
