@@ -35,3 +35,10 @@ body {
 .vast .semicolon {
 	opacity: .5;
 }
+
+.vast .brace:hover,
+.vast .bracket:hover,
+.vast .square_bracket:hover {
+	background: rgba(255, 255, 255, 0.27);
+	cursor: pointer;
+}
