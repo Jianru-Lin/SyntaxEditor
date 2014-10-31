@@ -207,7 +207,7 @@
 
 				'BlockStatement': [recursive('body')],
 
-				'ExpressionStatement': [recursive('expression'), sp_opt, semicolon, br],
+				'ExpressionStatement': [recursive('expression'), semicolon, br],
 
 				'IfStatement': function(ast) {
 					if (!ast.alternate) {
@@ -234,7 +234,7 @@
 
 				'LabeledStatement': [recursive('label'), colon, sp_opt, recursive('body')],
 
-				'ContinueStatement': [keyword('continue'), sp_opt, semicolon, br],
+				'ContinueStatement': [keyword('continue'), semicolon, br],
 
 				'WithStatement': [keyword('with'), sp_opt, left_bracket, recursive('object'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
@@ -242,12 +242,12 @@
 
 				'ReturnStatement': function (ast) {
 					if (ast.argument)
-						return [keyword('return'), sp, recursive('argument'), sp_opt, semicolon, br]
+						return [keyword('return'), sp, recursive('argument'), semicolon, br]
 					else
-						return [keyword('return'), sp_opt, semicolon, br]
+						return [keyword('return'), semicolon, br]
 				},
 
-				'ThrowStatement': [keyword('throw'), sp, recursive('argument'), sp_opt, semicolon, br],
+				'ThrowStatement': [keyword('throw'), sp, recursive('argument'), semicolon, br],
 
 				'TryStatement': function(ast) {
 					return [
@@ -267,7 +267,7 @@
 				'DoWhileStatement': [keyword('do'), sp_opt, left_brace, br, indent(recursive('body')), right_brace, sp_opt, keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, br],
 
 				'ForStatement': function(ast) {
-					return [keyword('for'), sp_opt, left_bracket, recursive('init'), sp_opt, semicolon, dynamic_sp_opt, recursive('test'), sp_opt, semicolon, sp_opt, recursive('update'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
+					return [keyword('for'), sp_opt, left_bracket, recursive('init'), semicolon, dynamic_sp_opt, recursive('test'), semicolon, sp_opt, recursive('update'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
 
 					function dynamic_sp_opt() {
 						if (ast.test) {
@@ -287,7 +287,7 @@
 
 				'LetStatement': undefined,
 
-				'DebuggerStatement': [keyword('debugger'), sp_opt, semicolon, br],
+				'DebuggerStatement': [keyword('debugger'), semicolon, br],
 
 				// done
 				'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
@@ -297,7 +297,7 @@
 						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt))]
 					}
 					else {
-						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), sp_opt, semicolon, br]
+						return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), semicolon, br]
 					}
 				},
 
@@ -400,7 +400,7 @@
 					}
 				},
 
-				'BreakStatement': [keyword('break'), sp_opt, semicolon, br],
+				'BreakStatement': [keyword('break'), semicolon, br],
 
 				'CatchClause': [keyword('catch'), sp_opt, left_bracket, recursive('param'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
