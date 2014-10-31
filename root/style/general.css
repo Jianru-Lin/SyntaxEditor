@@ -19,99 +19,12 @@
 	overflow: auto;
 }
 
-#after > .container {
-	width: 100%;
-	position: absolute;
-	left: 0;
-	top: 44px;
-	right: 0;
-	bottom: 0;
-}
-
-#after > .container > .row {
-	margin: 0;
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-}
-
 #source-code {
 	height: 100%;
 	font-size: inherit;
 }
 
-#context a {
-	display: block;
-	color: inherit;
-	text-decoration: none;
-}
-
-#context a:hover {
-	color: yellow;
-	background: rgba(255, 255, 255, 0.06);
-}
-
-#current-function {
-	color: yellow;
-}
-
-/* 让 function context 固定显示在左侧 */
-
-/*#after > .container,
-#after > .container > .row {
-	height: 100%;
-}*/
-
-#context {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	overflow: auto;
-	overflow-y: scroll;
-}
-
 #ast-view {
 	height: 100%;
 	overflow: auto;
-}
-
-/*#ast-view > * {
-	display: none!important;
-}
-
-#ast-view > .current {
-	display: block!important;
-}*/
-
-.border {
-	border: solid 1px white;
-}
-
-.marg-bt {
-	margin-bottom: 10px;
-}
-
-.marg-tp {
-	margin-top: 10px;
-}
-
-#path {
-	border-radius: 0;
-}
-
-#chat {
-	width: 100%;
-	height: 100%;
-	background: white;
-}
-
-#chat > iframe {
-	display: block;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	border: none;
 }
