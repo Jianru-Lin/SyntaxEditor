@@ -21,3 +21,7 @@ body {
 .vast .literal.string {
 	color: rgb(255, 184, 0);
 }
+
+.vast .semicolon {
+	opacity: .5;
+}
