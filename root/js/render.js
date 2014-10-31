@@ -458,7 +458,15 @@
 									text: 'null'
 								}
 							}
+							else if (value.constructor === RegExp) {
+								var vast = {
+									name: 'span',
+									_class: 'literal regexp',
+									text: value.toString()
+								}
+							}
 							else {
+								console.log(value)
 								throw new Error('unsupported type of literal: ' + typeof value)
 							}
 							break
