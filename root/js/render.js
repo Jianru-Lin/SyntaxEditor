@@ -68,7 +68,7 @@
 					ctx.lineNo = 0
 
 				while (indentOrientedEat(ctx)) {
-					if (isBr(ctx.element)) {
+					if (Vast.isBr(ctx.element)) {
 						++ctx.lineNo
 					}
 					else {
@@ -185,10 +185,6 @@
 
 			function isIndentLeave(target) {
 				return target.notDom && target.name === 'indent' && target.type === 'leave'
-			}
-
-			function isBr(target) {
-				return !target.notDom && target.name === 'br'
 			}
 
 		}
