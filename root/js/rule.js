@@ -233,7 +233,7 @@
 						var vast = {
 							name: 'span',
 							_class: 'literal string',
-							text: raw.length < 3 ? "''" : "'" + raw.substring(1, raw.length - 1) + "'"
+							text: raw
 						}
 						break
 					case 'boolean':
