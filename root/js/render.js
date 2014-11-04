@@ -123,10 +123,7 @@
 
 				var indentMap = []
 				willIndentList.forEach(function(willIndent) {
-					indentMap[willIndent.elementPos] = {
-						name: 'span',
-						text: makeIndentSpace(willIndent.indentLevel)
-					}
+					indentMap[willIndent.elementPos] = Vast.span(undefined, makeIndentSpace(willIndent.indentLevel))
 				})
 
 				var newChildren = []
