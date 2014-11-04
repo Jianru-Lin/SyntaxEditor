@@ -7,7 +7,7 @@
 
 	function render(ast) {
 		var vast = self.astToVast(ast)
-		var dom = self.vastToDom(vast)
+		var dom = Vast.toDom(vast)
 		return dom
 	}
 
@@ -187,31 +187,4 @@
 		}
 
 	})(self);
-
-	;(function(self) {
-
-		self.vastToDom = vastToDom
-
-		function vastToDom(vast) {
-			if (!vast) debugger
-			if (vast.notDom) return
-
-			var e = document.createElement(vast.name)
-			if (vast._class) {
-				e.setAttribute('class', vast._class)
-			}
-			if (vast.text) {
-				e.textContent = vast.text
-			}
-			else if (vast.children && vast.children.length > 0) {
-				for (var i = 0, len = vast.children.length; i < len; ++i) {
-					var childDom = vastToDom(vast.children[i])
-					if (childDom) e.appendChild(childDom)
-				}
-			}
-			return e
-		}
-
-	})(self);
-
 })(window);

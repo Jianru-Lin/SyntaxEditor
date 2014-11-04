@@ -38,7 +38,28 @@
 				}
 			}
 			return o
+		},
+
+		toDom: function vastToDom(vast) {
+			if (!vast) debugger
+			if (vast.notDom) return
+
+			var e = document.createElement(vast.name)
+			if (vast._class) {
+				e.setAttribute('class', vast._class)
+			}
+			if (vast.text) {
+				e.textContent = vast.text
+			}
+			else if (vast.children && vast.children.length > 0) {
+				for (var i = 0, len = vast.children.length; i < len; ++i) {
+					var childDom = vastToDom(vast.children[i])
+					if (childDom) e.appendChild(childDom)
+				}
+			}
+			return e
 		}
+
 	}
 
 })(window);
