@@ -219,11 +219,7 @@
 
 			'Identifier': function(astNode, parentVast) {
 				// esprima says undefined is an identifier not a literal. see issue #1
-				var vast = {
-					name: 'span',
-					_class: 'identifier',
-					text: astNode.name
-				}
+				var vast = Vast.span('identifier', astNode.name)
 				parentVast.children.push(vast)
 			},
 
@@ -233,48 +229,24 @@
 
 				switch (typeof value) {
 					case 'string':
-						var vast = {
-							name: 'span',
-							_class: 'literal string',
-							text: raw
-						}
+						var vast = Vast.span('literal string', raw)
 						break
 					case 'boolean':
-						var vast = {
-							name: 'span',
-							_class: 'literal boolean',
-							text: raw
-						}
+						var vast = Vast.span('literal boolean', raw)
 						break
 					case 'number':
-						var vast = {
-							name: 'span',
-							_class: 'literal number',
-							text: raw
-						}
+						var vast = Vast.span('literal number', raw)
 						break
 					case 'undefined':
 						// here won't be reached cause issue #1
-						var vast = {
-							name: 'span',
-							_class: 'literal undefined',
-							text: 'undefined'
-						}
+						var vast = Vast.span('literal undefined', 'undefined')
 						break
 					case 'object':
 						if (value === null) {
-							var vast = {
-								name: 'span',
-								_class: 'literal null',
-								text: 'null'
-							}
+							var vast = Vast.span('literal null', 'null')
 						}
 						else if (value.constructor === RegExp) {
-							var vast = {
-								name: 'span',
-								_class: 'literal regexp',
-								text: value.toString()
-							}
+							var vast = Vast.span('literal regexp', value.toString())
 						}
 						else {
 							console.log(value)
@@ -408,11 +380,7 @@
 		}
 
 		function operator_prop(ast, parentVast) {
-			var vast = {
-				name: 'span',
-				_class: 'operator',
-				text: ast.operator
-			}
+			var vast = Vast.span('operator', ast.operator)
 			parentVast.children.push(vast)
 		}
 
