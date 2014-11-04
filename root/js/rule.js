@@ -474,7 +474,7 @@
 			var funcs = arguments
 			return function () {
 				
-				var indentSection = sectionMark('indent')
+				var indentSection = Vast.sectionMark('indent')
 				currentVast().children.push(indentSection.enter)
 
 				for (var i = 0, len = funcs.length; i < len; ++i) {
@@ -483,24 +483,6 @@
 
 				currentVast().children.push(indentSection.leave)
 			}
-		}
-
-		function sectionMark(name, data) {
-			var o = {
-				enter: {
-					notDom: true,
-					name: name,
-					type: 'enter',
-					data: data
-				},
-				leave: {
-					notDom: true,
-					name: name,
-					type: 'leave',
-					data: data
-				}
-			}
-			return o
 		}
 	}
 }) (window);

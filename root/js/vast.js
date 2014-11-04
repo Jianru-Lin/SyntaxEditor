@@ -20,6 +20,24 @@
 				text: text,
 				children: []
 			}
+		},
+
+		sectionMark: function(name, data) {
+			var o = {
+				enter: {
+					notDom: true,
+					name: name,
+					type: 'enter',
+					data: data
+				},
+				leave: {
+					notDom: true,
+					name: name,
+					type: 'leave',
+					data: data
+				}
+			}
+			return o
 		}
 	}
 
