@@ -6,7 +6,7 @@
 
 		var astStack = [ast]
 
-		var vastStack = [div('vast')]
+		var vastStack = [Vast.div('vast')]
 
 		var ruleTable = {
 			'Program': [recursive('body')],
@@ -324,7 +324,7 @@
 			}
 
 			function execStringRule(strRule) {
-				currentVast().children.push(span(undefined, strRule))
+				currentVast().children.push(Vast.span(undefined, strRule))
 			}
 
 			function execArrayRule(arrayRule) {
@@ -440,27 +440,9 @@
 			return astStack[astStack.length - 1]
 		}
 
-		function div(_class, text) {
-			return {
-				name: 'div',
-				_class: _class,
-				text: text,
-				children: []
-			}
-		}
-
-		function span(_class, text) {
-			return {
-				name: 'span',
-				_class: _class,
-				text: text,
-				children: []
-			}
-		}
-
 		function keyword(text) {
 			return function () {
-				currentVast().children.push(span('keyword ' + text, text))
+				currentVast().children.push(Vast.span('keyword ' + text, text))
 			}
 		}
 
@@ -471,53 +453,53 @@
 		}
 
 		function sp() {
-			currentVast().children.push(span('space', ' '))
+			currentVast().children.push(Vast.span('space', ' '))
 		}
 
 		function sp_opt() {
-			currentVast().children.push(span('space optional', ' '))
+			currentVast().children.push(Vast.span('space optional', ' '))
 		}
 
 		function operator(text) {
 			return function () {
-				currentVast().children.push(span('operator', text))
+				currentVast().children.push(Vast.span('operator', text))
 			}
 		}
 
 		function semicolon() {
-			currentVast().children.push(span('semicolon', ';'))
+			currentVast().children.push(Vast.span('semicolon', ';'))
 		}
 
 		function left_brace() {
-			currentVast().children.push(span('brace left', '{'))
+			currentVast().children.push(Vast.span('brace left', '{'))
 		}
 
 		function right_brace() {
-			currentVast().children.push(span('brace right', '}'))
+			currentVast().children.push(Vast.span('brace right', '}'))
 		}
 
 		function left_bracket() {
-			currentVast().children.push(span('bracket left', '('))
+			currentVast().children.push(Vast.span('bracket left', '('))
 		}
 
 		function right_bracket() {
-			currentVast().children.push(span('bracket right', ')'))
+			currentVast().children.push(Vast.span('bracket right', ')'))
 		}
 
 		function left_square_bracket() {
-			currentVast().children.push(span('square_bracket left', '['))
+			currentVast().children.push(Vast.span('square_bracket left', '['))
 		}
 
 		function right_square_bracket() {
-			currentVast().children.push(span('square_bracket right', ']'))
+			currentVast().children.push(Vast.span('square_bracket right', ']'))
 		}
 
 		function comma() {
-			currentVast().children.push(span('comma', ','))				
+			currentVast().children.push(Vast.span('comma', ','))				
 		}
 
 		function colon() {
-			currentVast().children.push(span('colon', ':'))				
+			currentVast().children.push(Vast.span('colon', ':'))				
 		}
 
 		function indent() {
