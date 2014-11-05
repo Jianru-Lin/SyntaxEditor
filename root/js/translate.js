@@ -1,8 +1,8 @@
 ;(function(self) {
 
-	self.execRuleTable = execRuleTable
+	self.translate = translate
 
-	function execRuleTable(ast) {
+	function translate(ast) {
 
 		var astStack = [ast]
 

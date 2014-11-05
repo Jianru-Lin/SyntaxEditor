@@ -15,7 +15,7 @@
 		self.astToVast = astToVast
 
 		function astToVast(ast) {
-			var vast = execRuleTable(ast)
+			var vast = translate(ast)
 			vast = fillIndent(vast)
 			return vast
 		}
