@@ -1,9 +1,6 @@
 ;(function(self) {
 
 	self.render = render
-	self = {
-		walkAST: self.walkAST
-	}
 
 	function render(ast) {
 		var vast = self.astToVast(ast)
