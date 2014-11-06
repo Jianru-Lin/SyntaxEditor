@@ -20,13 +20,13 @@
 			'IfStatement': function(ast) {
 				if (!ast.alternate) {
 					return [
-						keyword('if'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, 
+						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, left_brace, br, 
 						indent(recursive('consequent')), right_brace, br
 					]
 				}
 				else {
 					return [
-						keyword('if'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, 
+						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, left_brace, br, 
 						indent(recursive('consequent')), right_brace, br,
 						function() {
 							if (ast.alternate.type !== 'IfStatement') {
@@ -394,6 +394,17 @@
 
 		function right_brace() {
 			ctx.vastStack.top().children.push(Vast.span('brace right', '}'))
+		}
+
+		function bracket() {
+			var funcs = arguments
+			return function () {
+				ctx.vastStack.top().children.push(Vast.span('bracket left', '('))
+				for (var i = 0, len = funcs.length; i < len; ++i) {
+					funcs[i].apply(undefined, arguments)
+				}
+				ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
+			}
 		}
 
 		function left_bracket() {
