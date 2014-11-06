@@ -14,7 +14,7 @@
 
 		self.compile = compile
 
-		$.get('test/demo.txt', function(text) {
+		$.get('js/translate.js', function(text) {
 			editor.setValue(text)
 			$('a[href="#after"]').click()
 		})

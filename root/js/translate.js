@@ -115,7 +115,7 @@
 
 			'ThisExpression': keyword('this'),
 
-			'ArrayExpression': [left_square_bracket, recursive('elements', combine(comma, sp_opt)), right_square_bracket],
+			'ArrayExpression': [square_bracket(recursive('elements', combine(comma, sp_opt)))],
 
 			'ObjectExpression': function(ast) {
 				if (ast.properties && ast.properties.length > 0)
@@ -174,7 +174,7 @@
 
 			'MemberExpression': function (ast) {
 				if (ast.computed)
-					return [recursive('object'), left_square_bracket, recursive('property'), right_square_bracket]
+					return [recursive('object'), square_bracket(recursive('property'))]
 				else
 					return [recursive('object'), operator('.'), recursive('property')]
 			},
@@ -422,6 +422,17 @@
 
 		function right_bracket() {
 			ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
+		}
+
+		function square_bracket() {
+			var funcs = arguments
+			return function () {
+				ctx.vastStack.top().children.push(Vast.span('square_bracket left', '['))
+				for (var i = 0, len = funcs.length; i < len; ++i) {
+					funcs[i].apply(undefined, arguments)
+				}
+				ctx.vastStack.top().children.push(Vast.span('square_bracket right', ']'))
+			}
 		}
 
 		function left_square_bracket() {
