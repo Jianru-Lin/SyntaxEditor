@@ -20,17 +20,15 @@
 			'IfStatement': function(ast) {
 				if (!ast.alternate) {
 					return [
-						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, left_brace, br, 
-						indent(recursive('consequent')), right_brace, br
+						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, brace(br, indent(recursive('consequent'))), br
 					]
 				}
 				else {
 					return [
-						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, left_brace, br, 
-						indent(recursive('consequent')), right_brace, br,
+						keyword('if'), sp_opt, bracket(recursive('test')), sp_opt, brace(br, indent(recursive('consequent'))), br,
 						function() {
 							if (ast.alternate.type !== 'IfStatement') {
-								return [keyword('else'), sp_opt, left_brace, br, indent(recursive('alternate')), right_brace, br]
+								return [keyword('else'), sp_opt, brace(br, indent(recursive('alternate'))), br]
 							}
 							else {
 								return [keyword('else'), sp, recursive('alternate')]
@@ -386,6 +384,17 @@
 
 		function semicolon() {
 			ctx.vastStack.top().children.push(Vast.span('semicolon', ';'))
+		}
+
+		function brace() {
+			var funcs = arguments
+			return function () {
+				ctx.vastStack.top().children.push(Vast.span('brace left', '{'))
+				for (var i = 0, len = funcs.length; i < len; ++i) {
+					funcs[i].apply(undefined, arguments)
+				}
+				ctx.vastStack.top().children.push(Vast.span('brace right', '}'))
+			}
 		}
 
 		function left_brace() {
