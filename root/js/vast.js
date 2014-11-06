@@ -51,7 +51,7 @@
 			return o
 		},
 
-		toDom: function vastToDom(vast, gMetaData) {
+		toDom: function vastToDom(vast, metaDataTable) {
 			if (!vast) debugger
 			if (vast.notDom) return
 
@@ -59,7 +59,7 @@
 			if (vast.id !== undefined) {
 				e.setAttribute('id', vast.id)
 				// if vast dont't have an id, then we will ignore it's metaData
-				if (vast.metaData) gMetaData[vast.id] = vast.metaData
+				if (vast.metaData) metaDataTable[vast.id] = vast.metaData
 			}
 			if (vast._class) {
 				e.setAttribute('class', vast._class)
@@ -69,7 +69,7 @@
 			}
 			else if (vast.children && vast.children.length > 0) {
 				for (var i = 0, len = vast.children.length; i < len; ++i) {
-					var childDom = vastToDom(vast.children[i], gMetaData)
+					var childDom = vastToDom(vast.children[i], metaDataTable)
 					if (childDom) e.appendChild(childDom)
 				}
 			}
