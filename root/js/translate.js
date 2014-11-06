@@ -100,7 +100,6 @@
 
 			'DebuggerStatement': [keyword('debugger'), semicolon, br],
 
-			// done
 			'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
 
 			'VariableDeclaration': function(ast) {
@@ -129,7 +128,6 @@
 
 			'Property': [recursive('key'), colon, sp_opt, recursive('value')],
 
-			// done
 			'FunctionExpression': function (ast) {
 				if (ast.id) {
 					return [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace]
@@ -170,13 +168,10 @@
 
 			'LogicalExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
-			// done
 			'ConditionalExpression': [left_bracket, recursive('test'), sp_opt, operator('?'), sp_opt, recursive('consequent'), sp_opt, operator(':'), sp_opt, recursive('alternate'), right_bracket],
 
-			// done
 			'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
 
-			// done
 			'CallExpression': [recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
 
 			'MemberExpression': function (ast) {
