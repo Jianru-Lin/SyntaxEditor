@@ -273,9 +273,6 @@
 				case 'undefined':
 					// ignore
 					break
-				case 'string':
-					execStringRule(rule)
-					break
 				case 'object':
 					if (rule === null) {
 						// ignore
@@ -292,10 +289,6 @@
 					break
 				default:
 					throw new Error('unsupported type of rule: ' + typeof rule)
-			}
-
-			function execStringRule(strRule) {
-				ctx.vastStack.top().children.push(Vast.span(undefined, strRule))
 			}
 
 			function execArrayRule(arrayRule) {
