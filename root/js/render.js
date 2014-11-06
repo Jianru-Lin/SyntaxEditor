@@ -6,7 +6,10 @@
 		var vast = self.astToVast(ast)
 		var metaDataTable = {}
 		var dom = Vast.toDom(vast, metaDataTable)
-		return dom
+		return {
+			dom: dom,
+			metaDataTable: metaDataTable
+		}
 	}
 
 	;(function(self) {

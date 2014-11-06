@@ -28,12 +28,7 @@
 		} catch (err) {
 			throw err
 		}
-		ast = self.analyze(ast)
-		astDom = self.render(ast)
-		gotoCode('Program/')
-	}
-
-	function gotoCode(path) {
+		astDom = self.render(ast).dom
 		$('#ast-view').empty().append(astDom)
 	}
 
