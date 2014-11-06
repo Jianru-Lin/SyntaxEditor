@@ -42,9 +42,9 @@
 
 			'ContinueStatement': [keyword('continue'), semicolon, br],
 
-			'WithStatement': [keyword('with'), sp_opt, left_bracket, recursive('object'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
+			'WithStatement': [keyword('with'), sp_opt, bracket(recursive('object')), sp_opt, brace(br, indent(recursive('body'))), br],
 
-			'SwitchStatement': [keyword('switch'), sp_opt, left_bracket, recursive('discriminant'), right_bracket, sp_opt, left_brace, br, indent(recursive('cases')), right_brace, br],
+			'SwitchStatement': [keyword('switch'), sp_opt, bracket(recursive('discriminant')), sp_opt, brace(br, indent(recursive('cases'))), br],
 
 			'ReturnStatement': function (ast) {
 				if (ast.argument)
@@ -57,26 +57,25 @@
 
 			'TryStatement': function(ast) {
 				return [
-					keyword('try'), sp_opt, left_brace, br, 
-					indent(recursive('block')), right_brace, br,
+					keyword('try'), sp_opt, brace(br, indent(recursive('block'))), br,
 					recursive('handlers'), 
 					function() {
 						if (ast.finalizer) {
-							return [keyword('finally'), sp_opt, left_brace, br, indent(recursive('finalizer')), right_brace, br]
+							return [keyword('finally'), sp_opt, brace(br, indent(recursive('finalizer'))), br]
 						}
 					}
 				]
 			},
 
-			'WhileStatement': [keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
+			'WhileStatement': [keyword('while'), sp_opt, bracket(recursive('test')), sp_opt, brace(br, indent(recursive('body'))), br],
 
-			'DoWhileStatement': [keyword('do'), sp_opt, left_brace, br, indent(recursive('body')), right_brace, sp_opt, keyword('while'), sp_opt, left_bracket, recursive('test'), right_bracket, br],
+			'DoWhileStatement': [keyword('do'), sp_opt, brace(br, indent(recursive('body'))), sp_opt, keyword('while'), sp_opt, bracket(recursive('test')), br],
 
 			'ForStatement': function(ast) {
 				if (ast.init.type === 'VariableDeclaration') {
 					ast.init.parentIsForInStatement = true
 				}
-				return [keyword('for'), sp_opt, left_bracket, recursive('init'), semicolon, dynamic_sp_opt, recursive('test'), semicolon, sp_opt, recursive('update'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
+				return [keyword('for'), sp_opt, bracket(recursive('init'), semicolon, dynamic_sp_opt, recursive('test'), semicolon, sp_opt, recursive('update')), sp_opt, brace(br, indent(recursive('body'))), br]
 
 				function dynamic_sp_opt() {
 					if (ast.test) {
@@ -89,7 +88,7 @@
 				if (ast.left.type === 'VariableDeclaration') {
 					ast.left.parentIsForInStatement = true
 				}
-				return [keyword('for'), sp_opt, left_bracket, recursive('left'), sp, keyword('in'), sp, recursive('right'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br]
+				return [keyword('for'), sp_opt, bracket(recursive('left'), sp, keyword('in'), sp, recursive('right')), sp_opt, brace(br, indent(recursive('body'))), br]
 			},
 
 			'ForOfStatement': undefined,
@@ -98,7 +97,7 @@
 
 			'DebuggerStatement': [keyword('debugger'), semicolon, br],
 
-			'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
+			'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body'))), br],
 
 			'VariableDeclaration': function(ast) {
 				if (ast.parentIsForInStatement) {
@@ -119,19 +118,19 @@
 
 			'ObjectExpression': function(ast) {
 				if (ast.properties && ast.properties.length > 0)
-					return [left_brace, br, indent(recursive('properties', combine(comma, br))), br, right_brace]
+					return [brace(br, indent(recursive('properties', combine(comma, br))), br)]
 				else
-					return [left_brace, right_brace]
+					return [brace()]
 			},
 
 			'Property': [recursive('key'), colon, sp_opt, recursive('value')],
 
 			'FunctionExpression': function (ast) {
 				if (ast.id) {
-					return [keyword('function'), sp, recursive('id'), sp_opt, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace]
+					return [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body')))]
 				}
 				else {
-					return [keyword('function'), sp, left_bracket, recursive('params', combine(comma, sp_opt)), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace]
+					return [keyword('function'), sp, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body')))]
 				}
 			},
 
@@ -139,7 +138,7 @@
 
 			'SequenceExpression': function () {
 				// TODO Priority Problem
-				return [left_bracket, recursive('expressions', combine(comma, sp_opt)), right_bracket]
+				return [bracket(recursive('expressions', combine(comma, sp_opt)))]
 			},
 
 			'UnaryExpression': function(node) {
@@ -166,11 +165,11 @@
 
 			'LogicalExpression': [recursive('left'), sp_opt, operator_prop, sp_opt, recursive('right')],
 
-			'ConditionalExpression': [left_bracket, recursive('test'), sp_opt, operator('?'), sp_opt, recursive('consequent'), sp_opt, operator(':'), sp_opt, recursive('alternate'), right_bracket],
+			'ConditionalExpression': [bracket(recursive('test'), sp_opt, operator('?'), sp_opt, recursive('consequent'), sp_opt, operator(':'), sp_opt, recursive('alternate'))],
 
-			'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
+			'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, bracket(recursive('arguments', combine(comma, sp_opt)))],
 
-			'CallExpression': [recursive('callee'), sp_opt, left_bracket, recursive('arguments', combine(comma, sp_opt)), right_bracket],
+			'CallExpression': [recursive('callee'), sp_opt, bracket(recursive('arguments', combine(comma, sp_opt)))],
 
 			'MemberExpression': function (ast) {
 				if (ast.computed)
@@ -206,7 +205,7 @@
 
 			'BreakStatement': [keyword('break'), semicolon, br],
 
-			'CatchClause': [keyword('catch'), sp_opt, left_bracket, recursive('param'), right_bracket, sp_opt, left_brace, br, indent(recursive('body')), right_brace, br],
+			'CatchClause': [keyword('catch'), sp_opt, bracket(recursive('param')), sp_opt, brace(br, indent(recursive('body'))), br],
 
 			'ComprehensionBlock': undefined,
 
@@ -397,14 +396,6 @@
 			}
 		}
 
-		function left_brace() {
-			ctx.vastStack.top().children.push(Vast.span('brace left', '{'))
-		}
-
-		function right_brace() {
-			ctx.vastStack.top().children.push(Vast.span('brace right', '}'))
-		}
-
 		function bracket() {
 			var funcs = arguments
 			return function () {
@@ -414,14 +405,6 @@
 				}
 				ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
 			}
-		}
-
-		function left_bracket() {
-			ctx.vastStack.top().children.push(Vast.span('bracket left', '('))
-		}
-
-		function right_bracket() {
-			ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
 		}
 
 		function square_bracket() {
