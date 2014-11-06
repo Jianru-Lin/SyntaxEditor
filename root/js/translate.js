@@ -268,27 +268,15 @@
 		return ctx.vastStack.top()
 
 		function execRule(rule) {
-
-			switch (typeof rule) {
-				case 'undefined':
-					// ignore
-					break
-				case 'object':
-					if (rule === null) {
-						// ignore
-					}
-					else if (Array.isArray(rule)) {
-						execArrayRule(rule)
-					}
-					else {
-						throw new Error('object is not a rule.')
-					}
-					break
-				case 'function':
-					execFunctionRule(rule)
-					break
-				default:
-					throw new Error('unsupported type of rule: ' + typeof rule)
+			if (rule === undefined || rule === null) return;
+			if (Array.isArray(rule)) {
+				execArrayRule(rule)
+			}
+			else if (typeof rule === 'function') {
+				execFunctionRule(rule)
+			}
+			else {
+				throw new Error('unsupported type of rule: ' + typeof rule)
 			}
 
 			function execArrayRule(arrayRule) {
