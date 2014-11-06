@@ -421,10 +421,10 @@
 			var left = Vast.span('brace left', '{')
 			var right = Vast.span('brace right', '}')
 			left.metaData = {
-				folderTo: right.id
+				foldingTo: right.id
 			}
 			right.metaData = {
-				folderTo: left.id
+				foldingTo: left.id
 			}
 			
 			ctx.vastStack.top().children.push(left)
