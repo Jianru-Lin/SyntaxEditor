@@ -68,7 +68,7 @@
 		'DoWhileStatement': [keyword('do'), sp_opt, brace(br, indent(recursive('body'))), sp_opt, keyword('while'), sp_opt, bracket(recursive('test')), br],
 
 		'ForStatement': function(ast) {
-			if (ast.init.type === 'VariableDeclaration') {
+			if (ast.init && ast.init.type === 'VariableDeclaration') {
 				ast.init.parentIsForInStatement = true
 			}
 			return [keyword('for'), sp_opt, bracket(recursive('init'), semicolon, dynamic_sp_opt, recursive('test'), semicolon, sp_opt, recursive('update')), sp_opt, brace(br, indent(recursive('body'))), br]
