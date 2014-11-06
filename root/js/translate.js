@@ -362,9 +362,7 @@
 		}
 
 		function br() {
-			ctx.vastStack.top().children.push({
-				name: 'br'
-			})
+			ctx.vastStack.top().children.push(Vast.br())
 		}
 
 		function sp() {

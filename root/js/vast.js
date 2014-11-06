@@ -22,6 +22,12 @@
 			}
 		},
 
+		br: function() {
+			return {
+				name: 'br'
+			}
+		},
+
 		sectionMark: function(name, data) {
 			var o = {
 				enter: {
