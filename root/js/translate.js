@@ -285,6 +285,10 @@
 		return this.list[this.list.length - 1]
 	}
 
+	Stack.prototype.bottom = function() {
+		return this.list[0]
+	}
+
 
 	function execRule(rule) {
 		if (rule === undefined || rule === null) return;
@@ -414,11 +418,21 @@
 	function brace() {
 		var funcs = arguments
 		return function () {
-			ctx.vastStack.top().children.push(Vast.span('brace left', '{'))
+			var left = Vast.span('brace left', '{')
+			var right = Vast.span('brace right', '}')
+			left.metaData = {
+				folderTo: right.id
+			}
+			right.metaData = {
+				folderTo: left.id
+			}
+			
+			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
 				funcs[i].apply(undefined, arguments)
 			}
-			ctx.vastStack.top().children.push(Vast.span('brace right', '}'))
+			ctx.vastStack.top().children.push(right)
+			
 		}
 	}
 

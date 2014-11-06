@@ -4,7 +4,9 @@
 
 	function render(ast) {
 		var vast = self.astToVast(ast)
-		var dom = Vast.toDom(vast)
+		var gMetaData = {}
+		var dom = Vast.toDom(vast, gMetaData)
+		console.log(gMetaData)
 		return dom
 	}
 
