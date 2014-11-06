@@ -4,9 +4,9 @@
 
 	function translate(ast) {
 
-		var astStack = [ast]
-
-		var vastStack = [Vast.div('vast')]
+		var ctx = new TranslateContext()
+		ctx.astStack.push(ast)
+		ctx.vastStack.push(Vast.div('vast'))
 
 		var ruleTable = {
 			'Program': [recursive('body')],
@@ -266,7 +266,7 @@
 
 		execRule(rule)
 
-		return currentVast() // must be vastStack[0] the root
+		return ctx.vastStack.top() // must be vastStack[0] the root
 
 		function execRule(rule) {
 
@@ -296,7 +296,7 @@
 			}
 
 			function execStringRule(strRule) {
-				currentVast().children.push(Vast.span(undefined, strRule))
+				ctx.vastStack.top().children.push(Vast.span(undefined, strRule))
 			}
 
 			function execArrayRule(arrayRule) {
@@ -304,13 +304,13 @@
 			}
 
 			function execFunctionRule(funcRule) {
-				return execRule(funcRule(currentAst(), currentVast()))
+				return execRule(funcRule(ctx.astStack.top(), ctx.vastStack.top()))
 			}
 		}
 
 		function recursive(prop, between) {
 			return function() {
-				var subAst = currentAst()[prop]
+				var subAst = ctx.astStack.top()[prop]
 
 				switch (typeof subAst) {
 					case 'undefined':
@@ -350,9 +350,9 @@
 					console.log('rule not found: ' + ast.type)
 					return
 				}
-				pushAst(ast)
+				ctx.astStack.push(ast)
 				execRule(rule)
-				popAst()
+				ctx.astStack.pop()
 			}
 
 			function join(arr, sep) {
@@ -384,90 +384,66 @@
 			parentVast.children.push(vast)
 		}
 
-		function pushVast(target) {
-			return vastStack.push(target)
-		}
-
-		function popVast() {
-			return vastStack.pop()
-		}
-
-		function currentVast() {
-			return vastStack[vastStack.length - 1]
-		}
-
-		function pushAst(target) {
-			return astStack.push(target)
-		}
-
-		function popAst() {
-			return astStack.pop()
-		}
-
-		function currentAst() {
-			return astStack[astStack.length - 1]
-		}
-
 		function keyword(text) {
 			return function () {
-				currentVast().children.push(Vast.span('keyword ' + text, text))
+				ctx.vastStack.top().children.push(Vast.span('keyword ' + text, text))
 			}
 		}
 
 		function br() {
-			currentVast().children.push({
+			ctx.vastStack.top().children.push({
 				name: 'br'
 			})
 		}
 
 		function sp() {
-			currentVast().children.push(Vast.span('space', ' '))
+			ctx.vastStack.top().children.push(Vast.span('space', ' '))
 		}
 
 		function sp_opt() {
-			currentVast().children.push(Vast.span('space optional', ' '))
+			ctx.vastStack.top().children.push(Vast.span('space optional', ' '))
 		}
 
 		function operator(text) {
 			return function () {
-				currentVast().children.push(Vast.span('operator', text))
+				ctx.vastStack.top().children.push(Vast.span('operator', text))
 			}
 		}
 
 		function semicolon() {
-			currentVast().children.push(Vast.span('semicolon', ';'))
+			ctx.vastStack.top().children.push(Vast.span('semicolon', ';'))
 		}
 
 		function left_brace() {
-			currentVast().children.push(Vast.span('brace left', '{'))
+			ctx.vastStack.top().children.push(Vast.span('brace left', '{'))
 		}
 
 		function right_brace() {
-			currentVast().children.push(Vast.span('brace right', '}'))
+			ctx.vastStack.top().children.push(Vast.span('brace right', '}'))
 		}
 
 		function left_bracket() {
-			currentVast().children.push(Vast.span('bracket left', '('))
+			ctx.vastStack.top().children.push(Vast.span('bracket left', '('))
 		}
 
 		function right_bracket() {
-			currentVast().children.push(Vast.span('bracket right', ')'))
+			ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
 		}
 
 		function left_square_bracket() {
-			currentVast().children.push(Vast.span('square_bracket left', '['))
+			ctx.vastStack.top().children.push(Vast.span('square_bracket left', '['))
 		}
 
 		function right_square_bracket() {
-			currentVast().children.push(Vast.span('square_bracket right', ']'))
+			ctx.vastStack.top().children.push(Vast.span('square_bracket right', ']'))
 		}
 
 		function comma() {
-			currentVast().children.push(Vast.span('comma', ','))				
+			ctx.vastStack.top().children.push(Vast.span('comma', ','))				
 		}
 
 		function colon() {
-			currentVast().children.push(Vast.span('colon', ':'))				
+			ctx.vastStack.top().children.push(Vast.span('colon', ':'))				
 		}
 
 		function indent() {
@@ -475,14 +451,36 @@
 			return function () {
 				
 				var indentSection = Vast.sectionMark('indent')
-				currentVast().children.push(indentSection.enter)
+				ctx.vastStack.top().children.push(indentSection.enter)
 
 				for (var i = 0, len = funcs.length; i < len; ++i) {
 					funcs[i].apply(undefined, arguments)
 				}
 
-				currentVast().children.push(indentSection.leave)
+				ctx.vastStack.top().children.push(indentSection.leave)
 			}
 		}
 	}
+
+	function TranslateContext() {
+		this.astStack = new Stack()
+		this.vastStack = new Stack()
+	}
+
+	function Stack() {
+		this.list = []
+	}
+
+	Stack.prototype.push = function(e) {
+		this.list.push(e)
+	}
+
+	Stack.prototype.pop = function() {
+		this.list.pop()
+	}
+
+	Stack.prototype.top = function() {
+		return this.list[this.list.length - 1]
+	}
+
 }) (window);
