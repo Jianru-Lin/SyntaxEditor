@@ -249,7 +249,6 @@
 							var vast = Vast.span('literal regexp', value.toString())
 						}
 						else {
-							console.log(value)
 							throw new Error('unsupported type of literal: ' + typeof value)
 						}
 						break
