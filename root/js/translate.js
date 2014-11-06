@@ -261,12 +261,11 @@
 			}
 		}
 
-
 		var rule = ruleTable[ast.type]
 
 		execRule(rule)
 
-		return ctx.vastStack.top() // must be vastStack[0] the root
+		return ctx.vastStack.top()
 
 		function execRule(rule) {
 
