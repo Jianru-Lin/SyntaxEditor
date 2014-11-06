@@ -435,14 +435,6 @@
 			}
 		}
 
-		function left_square_bracket() {
-			ctx.vastStack.top().children.push(Vast.span('square_bracket left', '['))
-		}
-
-		function right_square_bracket() {
-			ctx.vastStack.top().children.push(Vast.span('square_bracket right', ']'))
-		}
-
 		function comma() {
 			ctx.vastStack.top().children.push(Vast.span('comma', ','))				
 		}
