@@ -2,9 +2,9 @@
 
 	self.translate = translate
 
-	var ctx
+	var ctx = new TranslateContext()
 
-	var ruleTable = {
+	var ruleTable = self.ruleTable = self.ruleTable || {
 		'Program': [recursive('body')],
 
 		'EmptyStatement': undefined,
@@ -250,7 +250,7 @@
 
 	function translate(ast) {
 
-		ctx = new TranslateContext()
+		ctx.reset()
 		ctx.astStack.push(ast)
 		ctx.vastStack.push(Vast.div('vast'))
 		var rule = ruleTable[ast.type]
@@ -260,6 +260,11 @@
 	}
 
 	function TranslateContext() {
+		this.astStack = new Stack()
+		this.vastStack = new Stack()
+	}
+
+	TranslateContext.prototype.reset = function() {
 		this.astStack = new Stack()
 		this.vastStack = new Stack()
 	}
