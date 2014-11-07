@@ -28,8 +28,9 @@ body {
 	color: yellow;
 }
 
-.vast .literal.string:hover {
-	color: rgb(255, 184, 0);
+.vast .literal:hover {
+	background: rgb(255, 116, 0);
+	border-radius: 2px;
 }
 
 .vast .semicolon {
