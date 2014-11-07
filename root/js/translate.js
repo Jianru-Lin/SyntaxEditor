@@ -450,11 +450,21 @@
 	function square_bracket() {
 		var funcs = arguments
 		return function () {
-			ctx.vastStack.top().children.push(Vast.span('square_bracket left', '['))
+			var left = Vast.span('square_bracket left', '[')
+			var right = Vast.span('square_bracket right', ']')
+			left.metaData = {
+				foldingTo: right.id
+			}
+			right.metaData = {
+				foldingTo: left.id
+			}
+			
+			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
 				funcs[i].apply(undefined, arguments)
 			}
-			ctx.vastStack.top().children.push(Vast.span('square_bracket right', ']'))
+			ctx.vastStack.top().children.push(right)
+			
 		}
 	}
 
