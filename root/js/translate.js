@@ -71,10 +71,22 @@
 			if (ast.init && ast.init.type === 'VariableDeclaration') {
 				ast.init.parentIsForInStatement = true
 			}
-			return [keyword('for'), sp_opt, bracket(recursive('init'), semicolon, dynamic_sp_opt, recursive('test'), semicolon, sp_opt, recursive('update')), sp_opt, brace(br, indent(recursive('body'))), br]
+			return [
+				keyword('for'), sp_opt, 
+				bracket(
+					recursive('init'), semicolon, 
+					test_leading_sp, recursive('test'), semicolon, 
+					update_leading_sp, recursive('update')), sp_opt, 
+				brace(br, indent(recursive('body'))), br]
 
-			function dynamic_sp_opt() {
+			function test_leading_sp() {
 				if (ast.test) {
+					return sp_opt
+				}
+			}
+
+			function update_leading_sp() {
+				if (ast.update) {
 					return sp_opt
 				}
 			}
@@ -434,7 +446,7 @@
 			
 			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
-				funcs[i].apply(undefined, arguments)
+				execRule(funcs[i].apply(undefined, arguments))
 			}
 			ctx.vastStack.top().children.push(right)
 			
@@ -460,7 +472,7 @@
 			
 			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
-				funcs[i].apply(undefined, arguments)
+				execRule(funcs[i].apply(undefined, arguments))
 			}
 			ctx.vastStack.top().children.push(right)
 			
@@ -486,7 +498,7 @@
 			
 			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
-				funcs[i].apply(undefined, arguments)
+				execRule(funcs[i].apply(undefined, arguments))
 			}
 			ctx.vastStack.top().children.push(right)
 			
