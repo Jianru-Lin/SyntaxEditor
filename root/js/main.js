@@ -3,7 +3,6 @@
 
 	var editor
 	var lastText
-	var ast
 	var astDom
 
 	$(function() {
@@ -24,11 +23,13 @@
 		var text = editor.getValue()
 		if (text === lastText) return
 		try {
-			ast = parse(text)
+			var ast = parse(text)
 		} catch (err) {
 			throw err
 		}
-		astDom = self.render(ast).dom
+		var o = self.render(ast)
+		astDom = o.dom
+		window.metaDataTable = o.metaDataTable
 		$('#ast-view').empty().append(astDom)
 	}
 

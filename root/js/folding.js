@@ -1,10 +1,13 @@
 ;(function (self){
-	self.folding = {
-		init: function() {
-			$('#ast-view span').off('click')
-			$('#ast-view span').on('click', function() {
-				alert('click')
-			})
-		}
-	}
+	$(function() {
+		$('#ast-view').on('mouseenter mouseleave', 'span', function() {
+			var id = $(this).attr('id')
+			var metaData = metaDataTable[id]
+			if (metaData) {
+				var targetId = metaData.foldingTo
+				$(this).toggleClass('highlight')
+				$('#' + targetId).toggleClass('highlight')
+			}
+		})
+	})
 })(window);
