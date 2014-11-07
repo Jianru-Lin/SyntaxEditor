@@ -421,10 +421,15 @@
 			var left = Vast.span('brace left', '{')
 			var right = Vast.span('brace right', '}')
 			left.metaData = {
-				foldingTo: right.id
+				folding: {
+					to: right.id
+				}
 			}
 			right.metaData = {
-				foldingTo: left.id
+				folding: {
+					backward: true,
+					to: left.id
+				}
 			}
 			
 			ctx.vastStack.top().children.push(left)
@@ -442,10 +447,15 @@
 			var left = Vast.span('bracket left', '(')
 			var right = Vast.span('bracket right', ')')
 			left.metaData = {
-				foldingTo: right.id
+				folding: {
+					to: right.id
+				}
 			}
 			right.metaData = {
-				foldingTo: left.id
+				folding: {
+					backward: true,
+					to: left.id
+				}
 			}
 			
 			ctx.vastStack.top().children.push(left)
@@ -463,10 +473,15 @@
 			var left = Vast.span('square_bracket left', '[')
 			var right = Vast.span('square_bracket right', ']')
 			left.metaData = {
-				foldingTo: right.id
+				folding: {
+					to: right.id
+				}
 			}
 			right.metaData = {
-				foldingTo: left.id
+				folding: {
+					backward: true,
+					to: left.id
+				}
 			}
 			
 			ctx.vastStack.top().children.push(left)
