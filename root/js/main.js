@@ -25,6 +25,7 @@
 		try {
 			var ast = parse(text)
 		} catch (err) {
+			$('#ast-view').empty()
 			throw err
 		}
 		var o = self.render(ast)
