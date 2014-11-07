@@ -439,11 +439,21 @@
 	function bracket() {
 		var funcs = arguments
 		return function () {
-			ctx.vastStack.top().children.push(Vast.span('bracket left', '('))
+			var left = Vast.span('bracket left', '(')
+			var right = Vast.span('bracket right', ')')
+			left.metaData = {
+				foldingTo: right.id
+			}
+			right.metaData = {
+				foldingTo: left.id
+			}
+			
+			ctx.vastStack.top().children.push(left)
 			for (var i = 0, len = funcs.length; i < len; ++i) {
 				funcs[i].apply(undefined, arguments)
 			}
-			ctx.vastStack.top().children.push(Vast.span('bracket right', ')'))
+			ctx.vastStack.top().children.push(right)
+			
 		}
 	}
 
