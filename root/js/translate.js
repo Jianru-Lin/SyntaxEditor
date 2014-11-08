@@ -325,66 +325,11 @@
 
 	function recursive(prop, between) {
 		return function() {
-			var subAst = ctx.astStack.top()[prop]
-
-			switch (typeof subAst) {
-				case 'undefined':
-					// ignore
-					break
-				case 'object':
-					if (subAst === null) {
-						// ignore
-						return
-					}
-					else if (Array.isArray(subAst)) {
-						if (typeof between === 'function') {
-							var subAstList = subAst
-							subAstList.forEach(function(subAstItem, i) {
-								into(subAstItem)
-								if (i < subAst.length - 1) {
-									between()
-								}
-							})				
-						}
-						else {
-							subAst.forEach(into)
-						}
-					}
-					else {
-						into(subAst)
-					}
-					break
-				default:
-					throw new Error('u can not recursive on type: ' + typeof subAst)
-			}
-		}
-
-		function into(ast) {
-			var rule = ruleTable[ast.type]
-			if (!rule) {
-				console.log('rule not found: ' + ast.type)
-				return
-			}
-			ctx.astStack.push(ast)
-			execRule(rule)
-			ctx.astStack.pop()
-		}
-
-		function join(arr, sep) {
-			if (sep === undefined || sep === null) {
-				return arr
-			}
-
-			var result = []
-			arr.forEach(function(arrItem) {
-				result.push(arrItem)
-				result.push(sep)
-			})
-			result.pop() // remove last sep
-			return result
+			return join(children(prop), between)
 		}
 	}
 
+	// * expansible
 	function children(name) {
 		return function() {
 			var children = ctx.astStack.top()[name]
@@ -411,6 +356,7 @@
 		}
 	}
 
+	// * basic
 	function access(ast) {
 		return function() {
 			var rule = ruleTable[ast.type]
@@ -424,12 +370,32 @@
 		}
 	}
 
-	function combine() {
-		var a = arguments
+	// * expansible
+	function join(arr, sep) {
 		return function() {
-			for (var i = 0, len = a.length; i < len; ++i) {
-				a[i]()
+			if (arr === undefined || arr === null) {
+				return
 			}
+
+			if (arr.length < 1 || sep === undefined || sep === null) {
+				return arr
+			}
+
+			var result = []
+			arr.forEach(function(arrItem) {
+				result.push(arrItem)
+				result.push(sep)
+			})
+			result.pop() // remove last sep
+			return result
+		}
+	}
+
+	// use less
+	function combine() {
+		var funcs = toArray(arguments)
+		return function() {
+			return funcs
 		}
 	}
 
@@ -438,91 +404,59 @@
 		parentVast.children.push(vast)
 	}
 
+	// * basic
 	function keyword(text) {
 		return function () {
 			ctx.vastStack.top().children.push(Vast.span('keyword ' + text, text))
 		}
 	}
 
+	// * basic
 	function br() {
 		ctx.vastStack.top().children.push(Vast.br())
 	}
 
+	// * basic
 	function sp() {
 		ctx.vastStack.top().children.push(Vast.span('space', ' '))
 	}
 
+	// * basic
 	function sp_opt() {
 		ctx.vastStack.top().children.push(Vast.span('space optional', ' '))
 	}
 
+	// * basic
 	function operator(text) {
 		return function () {
 			ctx.vastStack.top().children.push(Vast.span('operator', text))
 		}
 	}
 
+	// * basic
 	function semicolon() {
 		ctx.vastStack.top().children.push(Vast.span('semicolon', ';'))
 	}
 
+	// * expansible
 	function brace() {
-		var funcs = arguments
-		return function () {
-			var left = Vast.span('brace left', '{')
-			var right = Vast.span('brace right', '}')
-			left.metaData = {
-				folding: {
-					to: right.id
-				}
-			}
-			right.metaData = {
-				folding: {
-					backward: true,
-					to: left.id
-				}
-			}
-			
-			ctx.vastStack.top().children.push(left)
-			for (var i = 0, len = funcs.length; i < len; ++i) {
-				execRule(funcs[i].apply(undefined, arguments))
-			}
-			ctx.vastStack.top().children.push(right)
-			
-		}
+		return _folding_pair('brace', '{', '}', toArray(arguments))
 	}
 
+	// * expansible
 	function bracket() {
-		var funcs = arguments
-		return function () {
-			var left = Vast.span('bracket left', '(')
-			var right = Vast.span('bracket right', ')')
-			left.metaData = {
-				folding: {
-					to: right.id
-				}
-			}
-			right.metaData = {
-				folding: {
-					backward: true,
-					to: left.id
-				}
-			}
-			
-			ctx.vastStack.top().children.push(left)
-			for (var i = 0, len = funcs.length; i < len; ++i) {
-				execRule(funcs[i].apply(undefined, arguments))
-			}
-			ctx.vastStack.top().children.push(right)
-			
-		}
+		return _folding_pair('bracket', '(', ')', toArray(arguments))
 	}
 
+	// * expansible
 	function square_bracket() {
-		var funcs = arguments
+		return _folding_pair('square_bracket', '[', ']', toArray(arguments))
+	}
+
+	function _folding_pair(name, pair_left, pair_right, funcs) {
 		return function () {
-			var left = Vast.span('square_bracket left', '[')
-			var right = Vast.span('square_bracket right', ']')
+			var left = Vast.span(name + ' left', pair_left)
+			var right = Vast.span(name + ' right', pair_right)
 			left.metaData = {
 				folding: {
 					to: right.id
@@ -535,35 +469,46 @@
 				}
 			}
 			
-			ctx.vastStack.top().children.push(left)
-			for (var i = 0, len = funcs.length; i < len; ++i) {
-				execRule(funcs[i].apply(undefined, arguments))
-			}
-			ctx.vastStack.top().children.push(right)
-			
+			return [
+				function() {
+					ctx.vastStack.top().children.push(left)
+				},
+				funcs,
+				function() {
+					ctx.vastStack.top().children.push(right)
+				}
+			]
 		}
 	}
 
+	// * basic
 	function comma() {
 		ctx.vastStack.top().children.push(Vast.span('comma', ','))				
 	}
 
+	// * basic
 	function colon() {
 		ctx.vastStack.top().children.push(Vast.span('colon', ':'))				
 	}
 
+	// * expansible
 	function indent() {
-		var funcs = arguments
+		var funcs = toArray(arguments)
 		return function () {
-			
 			var indentSection = Vast.sectionMark('indent')
-			ctx.vastStack.top().children.push(indentSection.enter)
-
-			for (var i = 0, len = funcs.length; i < len; ++i) {
-				funcs[i].apply(undefined, arguments)
-			}
-
-			ctx.vastStack.top().children.push(indentSection.leave)
+			return [
+				function() {
+					ctx.vastStack.top().children.push(indentSection.enter)
+				},
+				funcs,
+				function() {
+					ctx.vastStack.top().children.push(indentSection.leave)
+				}
+			]
 		}
+	}
+
+	function toArray(args) {
+		return [].slice.apply(args)
 	}
 }) (window);

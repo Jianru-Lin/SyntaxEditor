@@ -13,10 +13,10 @@
 
 		self.compile = compile
 
-		// $.get('js/translate.js', function(text) {
-		// 	editor.setValue(text)
-		// 	$('a[href="#after"]').click()
-		// })
+		$.get('test/demo-all.txt', function(text) {
+			editor.setValue(text)
+			$('a[href="#after"]').click()
+		})
 	})
 
 	function compile() {
