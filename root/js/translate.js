@@ -5,7 +5,7 @@
 	var ctx = new TranslateContext()
 
 	var ruleTable = self.ruleTable = self.ruleTable || {
-		'Program': [recursive('body')],
+		'Program': [children('body')],
 
 		'EmptyStatement': undefined,
 
@@ -382,6 +382,45 @@
 			})
 			result.pop() // remove last sep
 			return result
+		}
+	}
+
+	function children(name) {
+		return function() {
+			var children = ctx.astStack.top()[name]
+
+			if (children === null || children === undefined) {
+				// ignore
+				return
+			}
+
+			if (Array.isArray(children)) {
+				var list = []
+				children.forEach(function(child) {
+					list.push(access(child))
+				})
+				return list
+			}
+			else if (typeof children === 'object') {
+				return access(children)
+			}
+			else {
+				debugger
+				throw new Error('children(): unknown children type: ' + typeof children)
+			}
+		}
+	}
+
+	function access(ast) {
+		return function() {
+			var rule = ruleTable[ast.type]
+			if (!rule) {
+				console.log('rule not found: ' + ast.type)
+				return
+			}
+			ctx.astStack.push(ast)
+			execRule(rule)
+			ctx.astStack.pop()
 		}
 	}
 
