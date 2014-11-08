@@ -105,14 +105,14 @@
 
 		'DebuggerStatement': [keyword('debugger'), semicolon, br],
 
-		'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body'))), br],
+		'FunctionDeclaration': [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(recursive('body'))), br],
 
 		'VariableDeclaration': function(ast) {
 			if (ast.parentIsForInStatement) {
-				return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt))]
+				return [keyword('var'), sp, recursive('declarations', [comma, sp_opt])]
 			}
 			else {
-				return [keyword('var'), sp, recursive('declarations', combine(comma, sp_opt)), semicolon, br]
+				return [keyword('var'), sp, recursive('declarations', [comma, sp_opt]), semicolon, br]
 			}
 		},
 
@@ -122,11 +122,11 @@
 
 		'ThisExpression': keyword('this'),
 
-		'ArrayExpression': [square_bracket(recursive('elements', combine(comma, sp_opt)))],
+		'ArrayExpression': [square_bracket(recursive('elements', [comma, sp_opt]))],
 
 		'ObjectExpression': function(ast) {
 			if (ast.properties && ast.properties.length > 0)
-				return [brace(br, indent(recursive('properties', combine(comma, br))), br)]
+				return [brace(br, indent(recursive('properties', [comma, br])), br)]
 			else
 				return [brace()]
 		},
@@ -135,10 +135,10 @@
 
 		'FunctionExpression': function (ast) {
 			if (ast.id) {
-				return [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body')))]
+				return [keyword('function'), sp, recursive('id'), sp_opt, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(recursive('body')))]
 			}
 			else {
-				return [keyword('function'), sp, bracket(recursive('params', combine(comma, sp_opt))), sp_opt, brace(br, indent(recursive('body')))]
+				return [keyword('function'), sp, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(recursive('body')))]
 			}
 		},
 
@@ -146,7 +146,7 @@
 
 		'SequenceExpression': function () {
 			// TODO Priority Problem
-			return [bracket(recursive('expressions', combine(comma, sp_opt)))]
+			return [bracket(recursive('expressions', [comma, sp_opt]))]
 		},
 
 		'UnaryExpression': function(node) {
@@ -175,9 +175,9 @@
 
 		'ConditionalExpression': [bracket(recursive('test'), sp_opt, operator('?'), sp_opt, recursive('consequent'), sp_opt, operator(':'), sp_opt, recursive('alternate'))],
 
-		'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, bracket(recursive('arguments', combine(comma, sp_opt)))],
+		'NewExpression': [keyword('new'), sp, recursive('callee'), sp_opt, bracket(recursive('arguments', [comma, sp_opt]))],
 
-		'CallExpression': [recursive('callee'), sp_opt, bracket(recursive('arguments', combine(comma, sp_opt)))],
+		'CallExpression': [recursive('callee'), sp_opt, bracket(recursive('arguments', [comma, sp_opt]))],
 
 		'MemberExpression': function (ast) {
 			if (ast.computed)
@@ -388,14 +388,6 @@
 			})
 			result.pop() // remove last sep
 			return result
-		}
-	}
-
-	// use less
-	function combine() {
-		var funcs = toArray(arguments)
-		return function() {
-			return funcs
 		}
 	}
 
