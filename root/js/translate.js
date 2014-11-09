@@ -325,7 +325,7 @@
 
 	function recursive(prop, between) {
 		return function() {
-			return join(children(prop), between)
+			return join(children(prop)(), between)
 		}
 	}
 
