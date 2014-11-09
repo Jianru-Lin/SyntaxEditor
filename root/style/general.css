@@ -41,6 +41,16 @@ body {
 	width: 105px;
 }
 
+.inline-block {
+	display: inline-block;
+}
+
+.breadcrumb.transform-path {
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
 .panel.main {
 	margin: 0;
 	position: absolute;
