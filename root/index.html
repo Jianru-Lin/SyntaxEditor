@@ -21,7 +21,18 @@
 <body>
 
 	<div class="main absolute panel panel-default">
-		<div class="panel-heading">λ-VIEW</div>
+		<div class="panel-heading">
+			<div class="btn-group">
+				<button class="btn btn-default w105">
+					<i class="glyphicon glyphicon-pencil"></i>
+					&nbsp;code
+				</button>
+				<button class="btn btn-default w105">
+					<i class="glyphicon glyphicon-eye-open"></i>
+					&nbsp;analyze
+				</button>
+			</div>
+		</div>
 		<div class="panel-body">
 			content
 		</div>
@@ -54,7 +65,7 @@
 	<!-- 自动刷新 -->
 	<script type="text/javascript">
 		setTimeout(function() {
-			//location.reload(true);
+			location.reload(true);
 		}, 1000);
 	</script>
 </body>

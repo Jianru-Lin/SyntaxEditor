@@ -37,6 +37,10 @@ body {
 	overflow: auto;
 }*/
 
+.w105 {
+	width: 105px;
+}
+
 .panel.main {
 	margin: 0;
 	position: absolute;
