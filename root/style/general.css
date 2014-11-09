@@ -49,6 +49,10 @@ body {
 	display: inline-block;
 }
 
+.padding0 {
+	padding: 0;
+}
+
 .breadcrumb.transform-path {
 	margin: 0;
 	padding-top: 0;
@@ -77,9 +81,9 @@ body {
 .panel.absolute > .panel-body {
 	position: absolute;
 	left: 0;
-	top: 41px;
+	top: 51px;
 	right: 0;
-	bottom: 41px;
+	bottom: 55px;
 	overflow: auto;
 }
 
