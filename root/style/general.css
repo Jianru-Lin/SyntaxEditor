@@ -41,6 +41,10 @@ body {
 	width: 105px;
 }
 
+.h100p {
+	height: 100%;
+}
+
 .inline-block {
 	display: inline-block;
 }
