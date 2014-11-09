@@ -60,6 +60,16 @@ body {
 	bottom: 15px;
 }
 
+.panel.main.maximium {
+	margin: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	border: none;
+}
+
 .panel.absolute > .panel-body {
 	position: absolute;
 	left: 0;
