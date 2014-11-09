@@ -105,14 +105,14 @@
 
 		'DebuggerStatement': [keyword('debugger'), semicolon, br],
 
-		'FunctionDeclaration': [keyword('function'), sp, children('id'), sp_opt, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body'))), br],
+		'FunctionDeclaration': [keyword('function'), sp, children('id'), sp_opt, bracket(childrenJoin('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body'))), br],
 
 		'VariableDeclaration': function(ast) {
 			if (ast.parentIsForInStatement) {
-				return [keyword('var'), sp, recursive('declarations', [comma, sp_opt])]
+				return [keyword('var'), sp, childrenJoin('declarations', [comma, sp_opt])]
 			}
 			else {
-				return [keyword('var'), sp, recursive('declarations', [comma, sp_opt]), semicolon, br]
+				return [keyword('var'), sp, childrenJoin('declarations', [comma, sp_opt]), semicolon, br]
 			}
 		},
 
@@ -122,11 +122,11 @@
 
 		'ThisExpression': keyword('this'),
 
-		'ArrayExpression': [square_bracket(recursive('elements', [comma, sp_opt]))],
+		'ArrayExpression': [square_bracket(childrenJoin('elements', [comma, sp_opt]))],
 
 		'ObjectExpression': function(ast) {
 			if (ast.properties && ast.properties.length > 0)
-				return [brace(br, indent(recursive('properties', [comma, br])), br)]
+				return [brace(br, indent(childrenJoin('properties', [comma, br])), br)]
 			else
 				return [brace()]
 		},
@@ -135,10 +135,10 @@
 
 		'FunctionExpression': function (ast) {
 			if (ast.id) {
-				return [keyword('function'), sp, children('id'), sp_opt, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body')))]
+				return [keyword('function'), sp, children('id'), sp_opt, bracket(childrenJoin('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body')))]
 			}
 			else {
-				return [keyword('function'), sp, bracket(recursive('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body')))]
+				return [keyword('function'), sp, bracket(childrenJoin('params', [comma, sp_opt])), sp_opt, brace(br, indent(children('body')))]
 			}
 		},
 
@@ -146,7 +146,7 @@
 
 		'SequenceExpression': function () {
 			// TODO Priority Problem
-			return [bracket(recursive('expressions', [comma, sp_opt]))]
+			return [bracket(childrenJoin('expressions', [comma, sp_opt]))]
 		},
 
 		'UnaryExpression': function(node) {
@@ -175,9 +175,9 @@
 
 		'ConditionalExpression': [bracket(children('test'), sp_opt, operator('?'), sp_opt, children('consequent'), sp_opt, operator(':'), sp_opt, children('alternate'))],
 
-		'NewExpression': [keyword('new'), sp, children('callee'), sp_opt, bracket(recursive('arguments', [comma, sp_opt]))],
+		'NewExpression': [keyword('new'), sp, children('callee'), sp_opt, bracket(childrenJoin('arguments', [comma, sp_opt]))],
 
-		'CallExpression': [children('callee'), sp_opt, bracket(recursive('arguments', [comma, sp_opt]))],
+		'CallExpression': [children('callee'), sp_opt, bracket(childrenJoin('arguments', [comma, sp_opt]))],
 
 		'MemberExpression': function (ast) {
 			if (ast.computed)
@@ -323,9 +323,9 @@
 		}
 	}
 
-	function recursive(prop, between) {
+	function childrenJoin(name, between) {
 		return function() {
-			return join(children(prop)(), between)
+			return join(children(name)(), between)
 		}
 	}
 
