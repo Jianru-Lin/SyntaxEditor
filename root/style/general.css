@@ -1,3 +1,11 @@
+/*
+body {
+	font-family: Consolas, Menlo;
+	background: #333333;
+	color: #f1f1f1;
+	line-height: 2em;
+}
+
 .navbar {
 	border-radius: 0;
 	position: absolute;
@@ -27,4 +35,29 @@
 #ast-view {
 	height: 100%;
 	overflow: auto;
+}*/
+
+.panel.main {
+	margin: 0;
+	position: absolute;
+	left: 15px;
+	top: 15px;
+	right: 15px;
+	bottom: 15px;
+}
+
+.panel.absolute > .panel-body {
+	position: absolute;
+	left: 0;
+	top: 41px;
+	right: 0;
+	bottom: 41px;
+	overflow: auto;
+}
+
+.panel.absolute > .panel-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }

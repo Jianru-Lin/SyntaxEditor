@@ -6,6 +6,7 @@
 	var astDom
 
 	$(function() {
+		return
 		editor = ace.edit("source-code")
 		editor.setTheme("ace/theme/idle_fingers")
 		editor.getSession().setMode("ace/mode/javascript")
