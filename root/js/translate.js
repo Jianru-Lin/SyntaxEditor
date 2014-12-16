@@ -65,7 +65,7 @@
 
 		'WhileStatement': [keyword('while'), sp_opt, bracket(children('test')), sp_opt, brace(br, indent(children('body'))), br],
 
-		'DoWhileStatement': [keyword('do'), sp_opt, brace(br, indent(children('body'))), sp_opt, keyword('while'), sp_opt, bracket(children('test')), br],
+		'DoWhileStatement': [keyword('do'), sp_opt, brace(br, indent(children('body'))), sp_opt, keyword('while'), sp_opt, bracket(children('test')), semicolon, br],
 
 		'ForStatement': function(ast) {
 			if (ast.init && ast.init.type === 'VariableDeclaration') {
