@@ -41,6 +41,10 @@
 	padding: 0 10px;
 }
 
+.lineno > div:hover {
+	background: rgba(255, 255, 255, 0.125);
+}
+
 #ast-view {
 	display: inline-block;
 	padding-left: 10px;
