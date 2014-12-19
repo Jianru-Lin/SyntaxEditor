@@ -88,7 +88,7 @@
 			},
 
 			'DoWhileStatement': function() {
-				keyword('do'), sp_opt(), brace(br, lz_indent(lz_children('body'))), sp_opt(), keyword('while'), sp_opt(), bracket(lz_children('test')), br()
+				keyword('do'), sp_opt(), brace(br, lz_indent(lz_children('body'))), sp_opt(), keyword('while'), sp_opt(), bracket(lz_children('test')), semicolon(), br()
 			},
 
 			'ForStatement': function() {
