@@ -28,9 +28,18 @@
 			$('#ast-view').empty()
 			throw err
 		}
+		
 		var o = self.render(ast)
 		astDom = o.dom
 		window.metaDataTable = o.metaDataTable
+
+		// generate line number
+		var lineCount = $(astDom).find('br').length
+		var lineno = $('.lineno').empty()
+		for (var i = 1; i <= lineCount; ++i) {
+			lineno.append($('<div>').text(i.toString()))
+		}
+
 		$('#ast-view').empty().append(astDom)
 	}
 
