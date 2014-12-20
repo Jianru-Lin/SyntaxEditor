@@ -20,10 +20,10 @@
 
 		self.compile = compile
 
-		$.get('test/demo-all.txt', function(text) {
-			beforeEditor.setValue(text)
-			$('a[href="#after"]').click()
-		})
+		// $.get('test/demo-all.txt', function(text) {
+		// 	beforeEditor.setValue(text)
+		// 	$('a[href="#after"]').click()
+		// })
 	})
 
 	function compile() {
@@ -31,6 +31,8 @@
 		if (beforeText === lastBeforeText) {
 			return
 		}
+		lastBeforeText = beforeText
+
 		afterEditor.setValue('')
 		try {
 			var ast = parse(beforeText)
@@ -41,6 +43,8 @@
 
 		var afterText = self.renderAsText(ast)
 		afterEditor.setValue(afterText)
+		afterEditor.clearSelection()
+		afterEditor.gotoLine(1)
 	}
 
 })(window);
