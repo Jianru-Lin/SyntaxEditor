@@ -45,6 +45,7 @@
 		afterEditor.setValue(afterText)
 		afterEditor.clearSelection()
 		afterEditor.gotoLine(1)
+		afterEditor.session.foldAll()
 	}
 
 })(window);
