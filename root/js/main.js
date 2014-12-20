@@ -1,46 +1,46 @@
 ;(function(self) {
 	'use strict'
 
-	var editor
-	var lastText
+	var beforeEditor
+	var afterEditor
+	var lastBeforeText
 	var astDom
 
 	$(function() {
-		editor = ace.edit("source-code")
-		editor.setTheme("ace/theme/idle_fingers")
-		editor.getSession().setMode("ace/mode/javascript")
-		editor.setValue('')
+
+		beforeEditor = ace.edit("source-code")
+		beforeEditor.setTheme("ace/theme/idle_fingers")
+		beforeEditor.getSession().setMode("ace/mode/javascript")
+		beforeEditor.setValue('')
+
+		afterEditor = ace.edit("formatted-code")
+		afterEditor.setTheme("ace/theme/idle_fingers")
+		afterEditor.getSession().setMode("ace/mode/javascript")
+		afterEditor.setValue('')
 
 		self.compile = compile
 
 		$.get('test/demo-all.txt', function(text) {
-			editor.setValue(text)
+			beforeEditor.setValue(text)
 			$('a[href="#after"]').click()
 		})
 	})
 
 	function compile() {
-		var text = editor.getValue()
-		if (text === lastText) return
+		var beforeText = beforeEditor.getValue()
+		if (beforeText === lastBeforeText) {
+			return
+		}
+		afterEditor.setValue('')
 		try {
-			var ast = parse(text)
-		} catch (err) {
-			$('#ast-view').empty()
+			var ast = parse(beforeText)
+		}
+		catch (err) {
 			throw err
 		}
-		
-		var o = self.render(ast)
-		astDom = o.dom
-		window.metaDataTable = o.metaDataTable
 
-		// generate line number
-		var lineCount = $(astDom).find('br').length
-		var lineno = $('.lineno').empty()
-		for (var i = 1; i <= lineCount; ++i) {
-			lineno.append($('<div>').text(i.toString()))
-		}
-
-		$('#ast-view').empty().append(astDom)
+		var afterText = self.renderAsText(ast)
+		afterEditor.setValue(afterText)
 	}
 
 })(window);

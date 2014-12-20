@@ -74,8 +74,29 @@
 				}
 			}
 			return e
-		}
+		},
 
+		toText: function toText(vast, metaDataTable) {
+			if (!vast) debugger
+			if (vast.notDom) return
+
+			var text = ''
+			if ('br' === vast.name) {
+				text = '\n'
+			}
+			else if (vast.text) {
+				text = vast.text
+			}
+			else if (vast.children && vast.children.length > 0) {
+				for (var i = 0, len = vast.children.length; i < len; ++i) {
+					var t = toText(vast.children[i], metaDataTable)
+					if (t) {
+						text += t
+					}
+				}
+			}
+			return text
+		}
 	}
 
 	function nextId() {

@@ -19,33 +19,7 @@
 	overflow: auto;
 }
 
-#source-code {
+#source-code, #formatted-code {
 	height: 100%;
 	font-size: inherit;
-}
-
-.formated-code {
-	height: 100%;
-	overflow: auto;
-}
-
-.lineno {
-	background: rgba(255, 255, 255, 0.15);
-	width: 57px;
-	color: #FFF;
-	display: inline-block;
-}
-
-.lineno > div {
-	text-align: right;
-	padding: 0 10px;
-}
-
-.lineno > div:hover {
-	background: rgba(255, 255, 255, 0.125);
-}
-
-#ast-view {
-	display: inline-block;
-	padding-left: 10px;
 }

@@ -1,6 +1,7 @@
 ;(function(self) {
 
 	self.render = render
+	self.renderAsText = renderAsText
 
 	function render(ast) {
 		var vast = self.astToVast(ast)
@@ -10,6 +11,13 @@
 			dom: dom,
 			metaDataTable: metaDataTable
 		}
+	}
+
+	function renderAsText(ast) {
+		var vast = self.astToVast(ast)
+		var metaDataTable = {}
+		var text = Vast.toText(vast, metaDataTable)
+		return text
 	}
 
 	;(function(self) {
