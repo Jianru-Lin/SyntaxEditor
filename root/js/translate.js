@@ -369,7 +369,13 @@
 
 			'CallExpression': function() {
 				// TODO recheck the priority problem here
-				pchildren(priority.CallExpression, 'callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))
+				var ast = astStack.top()
+				if (ast.callee.type === 'FunctionExpression') {
+					bracket(lz_pchildren(priority.CallExpression, 'callee')), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))	
+				}
+				else {
+					pchildren(priority.CallExpression, 'callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))						
+				}
 			},
 
 			'MemberExpression': function () {
