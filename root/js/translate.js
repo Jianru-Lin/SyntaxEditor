@@ -10,6 +10,30 @@
 		astStack.push(ast)
 		vastStack.push(Vast.div('vast'))
 
+		var priority = {
+			'PrimaryExpression': 1,
+			'FunctionExpression': 1,
+			'MemberExpression': 2,
+			'NewExpression': 3,
+			'CallExpression': 3,
+			'LeftHandSideExpression': 3,
+			'PostfixExpression': 4,
+			'UnaryExpression': 5,
+			'MultiplicativeExpression': 6,
+			'AdditiveExpression': 7,
+			'ShiftExpression': 8,
+			'RelationalExpression': 9,
+			'EqualityExpression': 10,
+			'BitwiseANDExpression': 11,
+			'BitwiseXORExpression': 12,
+			'BitwiseORExpression': 13,
+			'LogicalANDExpression': 14,
+			'LogicalORExpression': 15,
+			'ConditionalExpression': 16,
+			'AssignmentExpression': 17,
+			'Expression': 18 // SequenceExpression
+		}
+
 		var ruleTable = {
 			'Program': function() {
 				children('body')
@@ -171,7 +195,7 @@
 			},
 
 			'ArrayExpression': function() {
-				square_bracket(lz_children('elements', [comma, sp_opt]))
+				square_bracket(lz_pchildren(priority.PrimaryExpression, 'elements', [comma, sp_opt]))
 			},
 
 			'ObjectExpression': function() {
@@ -187,7 +211,8 @@
 			},
 
 			'Property': function() {
-				children('key'), colon(), sp_opt(), children('value')
+				// get/set not implemented
+				children('key'), colon(), sp_opt(), pchildren(priority.Expression, 'value')
 			},
 
 			'FunctionExpression': function () {
@@ -205,8 +230,7 @@
 			'ArrowExpression': undefined,
 
 			'SequenceExpression': function () {
-				// TODO Priority Problem
-				bracket(lz_children('expressions', [comma, sp_opt]))
+				pchildren(priority.AssignmentExpression, 'expressions', [comma, sp_opt])
 			},
 
 			'UnaryExpression': function() {
@@ -214,58 +238,153 @@
 				var ast = astStack.top()
 
 				if (ast.prefix) {
-					operator_prop(), sp(), children('argument')
+					operator_prop(), sp(), pchildren(priority.UnaryExpression, 'argument')
 				}
 				else {
-					children('argument'), sp(), operator_prop()
+					pchildren(priority.UnaryExpression, 'argument'), sp(), operator_prop()
 				}
 			},
 
 			'BinaryExpression': function() {
-				children('left'), sp_opt(), operator_prop(), sp_opt(), children('right')
+
+				var ast = astStack.top()
+				var desiredPriority = calcDesiredPriority()
+
+				pchildren(desiredPriority.left, 'left'), sp_opt(), operator_prop(), sp_opt(), pchildren(desiredPriority.right, 'right')
+
+				function calcDesiredPriority() {
+					var t = toECMA262_5E(ast)
+					switch (t) {
+						case 'MultiplicativeExpression':
+							return {
+								left: priority.MultiplicativeExpression,
+								right: priority.UnaryExpression
+							}
+						case 'AdditiveExpression':
+							return {
+								left: priority.AdditiveExpression,
+								right: priority.MultiplicativeExpression
+							}
+						case 'ShiftExpression':
+							return {
+								left: priority.ShiftExpression,
+								right: priority.AdditiveExpression
+							}
+						case 'RelationalExpression':
+							return {
+								left: priority.RelationalExpression,
+								right: priority.ShiftExpression
+							}
+						case 'EqualityExpression':
+							return {
+								left: priority.EqualityExpression,
+								right: priority.RelationalExpression
+							}
+						case 'BitwiseANDExpression':
+							return {
+								left: priority.BitwiseANDExpression,
+								right: priority.EqualityExpression
+							}
+						case 'BitwiseXORExpression':
+							return {
+								left: priority.BitwiseXORExpression,
+								right: priority.BitwiseANDExpression
+							}
+						case 'BitwiseORExpression':
+							return {
+								left: priority.BitwiseORExpression,
+								right: priority.BitwiseXORExpression
+							}
+						default:
+							throw new Error('I can\'t calc desired priority of ' + t)
+					}
+				}
 			},
 
 			'AssignmentExpression': function() {
-				children('left'), sp_opt(), operator_prop(), sp_opt(), children('right')
+				pchildren(priority.LeftHandSideExpression, 'left'), sp_opt(), operator_prop(), sp_opt(), pchildren(priority.AssignmentExpression, 'right')
 			},
 
 			'UpdateExpression': function() {
 				
 				var ast = astStack.top()
+				var desiredPriority = calcDesiredPriority()
 
 				if (ast.prefix) {
-					operator_prop(), sp_opt(), children('argument')
+					operator_prop(), sp_opt(), pchildren(desiredPriority, 'argument')
 				}
 				else {
-					children('argument'), sp_opt(), operator_prop()
+					pchildren(desiredPriority, 'argument'), sp_opt(), operator_prop()
+				}
+
+				function calcDesiredPriority() {
+					var t = toECMA262_5E(ast)
+					switch (t) {
+						case 'UnaryExpression':
+							return priority.UnaryExpression
+						case 'PostfixExpression':
+							return priority.LeftHandSideExpression
+						default:
+							throw new Error('I can\'t calc desired priority of ' + t)
+					}
 				}
 			},
 
 			'LogicalExpression': function() {
-				children('left'), sp_opt(), operator_prop(), sp_opt(), children('right')
+
+				var ast = astStack.top()
+				var desiredPriority = calcDesiredPriority()
+
+				pchildren(desiredPriority.left, 'left'), sp_opt(), operator_prop(), sp_opt(), pchildren(desiredPriority.right, 'right')
+
+				function calcDesiredPriority() {
+					var t = toECMA262_5E(ast)
+					switch (t) {
+						case 'LogicalANDExpression':
+							return {
+								left: priority.LogicalANDExpression,
+								right: priority.BitwiseORExpression
+							}
+						case 'LogicalORExpression':
+							return {
+								left: priority.LogicalORExpression,
+								right: priority.LogicalANDExpression
+							}
+						default:
+							throw new Error('I can\'t calc desired priority of ' + t)
+					}
+				}
 			},
 
 			'ConditionalExpression': function() {
-				bracket(lz_children('test'), sp_opt, lz_operator('?'), sp_opt, lz_children('consequent'), sp_opt, lz_operator(':'), sp_opt, lz_children('alternate'))
+				// (1 ? 'x' : 'y') ? 'u' : 'v'
+				// 1 ? 'x' : 'y' ? 'u' : 'v'
+				// problem
+				pchildren(priority.LogicalORExpression, 'test'), sp_opt(), operator('?'), sp_opt(), 
+				pchildren(priority.AssignmentExpression, 'consequent'), sp_opt(), 
+				operator(':'), sp_opt(), 
+				pchildren(priority.AssignmentExpression, 'alternate')
 			},
 
 			'NewExpression': function() {
-				keyword('new'), sp(), children('callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))
+				keyword('new'), sp(), pchildren(priority.NewExpression, 'callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))
 			},
 
 			'CallExpression': function() {
-				children('callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))
+				// TODO recheck the priority problem here
+				pchildren(priority.CallExpression, 'callee'), sp_opt(), bracket(lz_children('arguments', [comma, sp_opt]))
 			},
 
 			'MemberExpression': function () {
+				// TODO recheck the priority problem here
 				
 				var ast = astStack.top()
 
 				if (ast.computed) {
-					children('object'), square_bracket(lz_children('property'))
+					pchildren(priority.MemberExpression, 'object'), square_bracket(lz_children('property'))
 				}
 				else {
-					children('object'), operator('.'), children('property')
+					pchildren(priority.MemberExpression, 'object'), operator('.'), children('property')
 				}
 			},
 
@@ -356,6 +475,163 @@
 
 		ruleTable[ast.type]()
 		return vastStack.top()
+
+		function priorityOf(target) {
+			var value = priority[toECMA262_5E(target)]
+			if (value !== undefined) {
+				return value
+			}
+			else {
+				throw new Error('I dont\'t know how to determine the priority for: ' + target.type)
+			}
+		}
+
+		function toECMA262_5E (target) {
+			switch (target.type) {
+				case 'ThisExpression':
+				case 'ArrayExpression':
+				case 'ObjectExpression':
+				case 'Identifier':
+				case 'Literal':
+					return 'PrimaryExpression'
+				case 'UpdateExpression':
+					if (target.prefix) {
+						return 'UnaryExpression'
+					}
+					else {
+						return 'PostfixExpression'
+					}
+				case 'BinaryExpression':
+					switch (target.operator) {
+						case '*':
+						case '/':
+						case '%':
+							return 'MultiplicativeExpression'
+						case '+':
+						case '-':
+							return 'AdditiveExpression'
+						case '<<':
+						case '>>':
+						case '>>>':
+							return 'ShiftExpression'
+						case '<':
+						case '>':
+						case '<=':
+						case '>=':
+						case 'instanceof':
+						case 'in':
+							return 'RelationalExpression'
+						case '==':
+						case '!=':
+						case '===':
+						case '!==':
+							return 'EqualityExpression'
+						case '&':
+							return 'BitwiseANDExpression'
+						case '^':
+							return 'BitwiseXORExpression'
+						case '|':
+							return 'BitwiseORExpression'
+						default:
+							throw new Error('unknown BinaryExpression operator: ' + target.operator)
+					}
+				case 'LogicalExpression':
+					switch (target.operator) {
+						case '&&':
+							return 'LogicalANDExpression'
+						case '||':
+							return 'LogicalORExpression'
+						default:
+							throw new Error('unknown LogicalExpression operator: ' + target.operator)
+					}
+				case 'SequenceExpression':
+					return 'Expression'
+				default:
+					// eg. UnaryExpression
+					return target.type
+			}			
+		}
+
+		// generate child and consider priority problem
+		// desiredPriority use the ECMA262_5E define, not current parser
+		function pchildren(desiredPriority, name, between) {
+
+			var children = astStack.top()[name]
+
+			var between_proxy = (function() {
+				if (!between) {
+					return function() {}
+				}
+				else if (Array.isArray(between)) {
+					return function() {
+						between.forEach(function(item) {
+							item()
+						})
+					}
+				}
+				else {
+					return function() {
+						between()
+					}
+				}
+			})()
+
+			if (children === null || children === undefined) {
+				// ignore
+				return
+			}
+
+			if (Array.isArray(children)) {
+				children.forEach(function(child, i) {
+					if (priorityOf(child) <= desiredPriority) {
+						access(child)
+					}
+					else {
+						bracket(lz_access(child))
+					}
+
+					if (i < children.length - 1) {
+						between_proxy()
+					}
+				})
+			}
+			else if (typeof children === 'object') {
+				var child = children
+				if (priorityOf(child) <= desiredPriority) {
+					access(child)
+				}
+				else {
+					bracket(lz_access(child))
+				}
+			}
+			else {
+				debugger
+				throw new Error('children(): unknown children type: ' + typeof children)
+			}
+
+			function access(ast) {
+				var rule = ruleTable[ast.type]
+				if (!rule) {
+					console.log('rule not found: ' + ast.type)
+					return
+				}
+				astStack.push(ast)
+				rule()
+				astStack.pop()
+			}
+
+			function lz_access(ast) {
+				return function() {
+					access(ast)
+				}
+			}
+		}
+
+		function lz_pchildren(desiredPriority, name, between) {
+			return function() {
+				pchildren(desiredPriority, name, between)
+			}
+		}
 
 		function children(name, between) {
 			
