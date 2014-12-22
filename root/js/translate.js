@@ -357,9 +357,6 @@
 			},
 
 			'ConditionalExpression': function() {
-				// (1 ? 'x' : 'y') ? 'u' : 'v'
-				// 1 ? 'x' : 'y' ? 'u' : 'v'
-				// problem
 				pchildren(priority.LogicalORExpression, 'test'), sp_opt(), operator('?'), sp_opt(), 
 				pchildren(priority.AssignmentExpression, 'consequent'), sp_opt(), 
 				operator(':'), sp_opt(), 
