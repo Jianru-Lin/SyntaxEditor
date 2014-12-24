@@ -174,7 +174,7 @@
 					keyword('var'), sp(), children('declarations', [comma, sp_opt])
 				}
 				else {
-					keyword('var'), sp(), children('declarations', [comma, sp_opt]), semicolon(), br()
+					keyword('var'), sp(), children('declarations', [comma, br, sp_opt, sp_opt, sp_opt, sp_opt]), semicolon(), br()
 				}
 			},
 
