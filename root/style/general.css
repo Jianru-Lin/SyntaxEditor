@@ -6,21 +6,13 @@
 	right: 0;
 }
 
-#top-tab-content {
+#editor {
 	position: absolute;
 	left: 0;
 	top: 52px;
 	right: 0;
 	bottom: 0;
-}
-
-#before, #after {
-	height: 100%;
 	overflow: auto;
-}
-
-#source-code, #formatted-code {
-	height: 100%;
 	font-size: 16px;
 	line-height: 1.5em;
 }
