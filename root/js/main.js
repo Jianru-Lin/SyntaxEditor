@@ -1,51 +1,47 @@
 ;(function(self) {
 	'use strict'
 
-	var beforeEditor
-	var afterEditor
-	var lastBeforeText
-	var astDom
+	var editor
 
 	$(function() {
 
-		beforeEditor = ace.edit("source-code")
-		beforeEditor.setTheme("ace/theme/idle_fingers")
-		beforeEditor.getSession().setMode("ace/mode/javascript")
-		beforeEditor.setValue('')
-
-		afterEditor = ace.edit("formatted-code")
-		afterEditor.setTheme("ace/theme/idle_fingers")
-		afterEditor.getSession().setMode("ace/mode/javascript")
-		afterEditor.setValue('')
+		editor = ace.edit("editor")
+		editor.setTheme("ace/theme/idle_fingers")
+		editor.getSession().setMode("ace/mode/javascript")
+		editor.setValue('')
 
 		self.compile = compile
 
-		// $.get('test/demo-all.txt', function(text) {
-		// 	beforeEditor.setValue(text)
-		// 	$('a[href="#after"]').click()
-		// })
+		$('#format').click(compile)
+
+		$('#fold-all').click(function() {
+			editor.getSession().foldAll();
+		})
+
+		$('#unfold-all').click(function() {
+			editor.getSession().unfold();
+		})
+
+		$('#run').click(function() {
+			var src = editor.getValue()
+			run(src)
+		})
 	})
 
 	function compile() {
-		var beforeText = beforeEditor.getValue()
-		if (beforeText === lastBeforeText) {
-			return
-		}
-		lastBeforeText = beforeText
+		var text = editor.getValue()
 
-		afterEditor.setValue('')
 		try {
-			var ast = parse(beforeText)
+			var ast = parse(text)
 		}
 		catch (err) {
 			throw err
 		}
 
-		var afterText = self.renderAsText(ast)
-		afterEditor.setValue(afterText)
-		afterEditor.clearSelection()
-		afterEditor.gotoLine(1)
-		afterEditor.session.foldAll()
+		var newText = self.renderAsText(ast)
+		editor.setValue(newText)
+		editor.clearSelection()
+		editor.gotoLine(1)
 	}
 
 })(window);
