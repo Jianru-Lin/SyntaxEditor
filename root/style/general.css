@@ -27,3 +27,8 @@ nav button {
 	font-style: italic;
 	font-size: 16px;
 }
+
+/* fix the conflict between ACE and Bootstrap */
+.ace_search_field {
+	color: #333;
+}
