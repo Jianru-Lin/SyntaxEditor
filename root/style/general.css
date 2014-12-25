@@ -20,3 +20,10 @@
 nav button {
 	width: 125px;
 }
+
+.navbar-brand {
+	font-family: Verdana;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 16px;
+}
