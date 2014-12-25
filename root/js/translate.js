@@ -13,7 +13,7 @@
 		var priority = {
 			'PrimaryExpression': 1,
 			'FunctionExpression': 1,
-			'MemberExpression': 2,
+			'MemberExpression': 3,
 			'NewExpression': 3,
 			'CallExpression': 3,
 			'LeftHandSideExpression': 3,
