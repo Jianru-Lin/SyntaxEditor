@@ -24,11 +24,12 @@
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">λ-VIEW 2.0</a>
-			<ul class="nav navbar-nav">
-				<li class="active"><a data-toggle="tab" href="#before">Before</a></li>
-				<li><a data-toggle="tab" href="#after" onclick="compile();">After</a></li>
-			</ul>
 		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a data-toggle="tab" href="#before">Before</a></li>
+			<li><a data-toggle="tab" href="#after" onclick="compile();">After</a></li>
+		</ul>
+		<button id="run" class="btn btn-success navbar-btn" type="button"><i class="glyphicon glyphicon-play"></i> Run</button>
 	</nav>
 
 	<div class="tab-content" id="top-tab-content">

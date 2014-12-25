@@ -24,6 +24,11 @@
 		// 	beforeEditor.setValue(text)
 		// 	$('a[href="#after"]').click()
 		// })
+
+		$('#run').click(function() {
+			var src = afterEditor.getValue()
+			run(src)
+		})
 	})
 
 	function compile() {
