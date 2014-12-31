@@ -212,7 +212,24 @@
 
 			'Property': function() {
 				// get/set not implemented
-				children('key'), colon(), sp_opt(), pchildren(priority.Expression, 'value')
+				var ast = astStack.top()
+
+				if (ast.kind === 'get' || ast.kind === 'set') {
+					generateGetSet();
+				}
+				else {
+					children('key'), colon(), sp_opt(), pchildren(priority.Expression, 'value')					
+				}
+
+				function generateGetSet() {
+					
+					keyword(ast.kind), sp(), children('key'), sp_opt()
+
+					var functionExp = ast.value
+					astStack.push(functionExp)
+					bracket(lz_children('params', [comma, sp_opt])),  sp_opt(), brace(br, lz_indent(lz_children('body')))
+					astStack.pop()
+				}
 			},
 
 			'FunctionExpression': function () {
