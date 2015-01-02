@@ -16,6 +16,16 @@ catch(err) {
 
 router.post('/', function(req, res) {
 	
+	var script_url = !req.body ? '' : (!req.body.script_url ? '' : req.body.script_url)
+
+	if (script_url) {
+		res.render('run', {
+			title: 'Run',
+			src: script_url
+		})
+		return;
+	}
+
 	var script_content = !req.body ? '' : (!req.body.script_content ? '' : req.body.script_content)
 
 	var id = nextId++
