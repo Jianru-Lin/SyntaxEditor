@@ -183,7 +183,7 @@
 				var ast = astStack.top()
 
 				if (ast.init) {
-					children('id'), sp_opt(), operator('='), sp_opt(), children('init')
+					children('id'), sp_opt(), operator('='), sp_opt(), pchildren(priority.AssignmentExpression, 'init')
 				}
 				else {
 					children('id')
