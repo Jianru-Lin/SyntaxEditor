@@ -1,0 +1,34 @@
+.navbar {
+	border-radius: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+}
+
+#editor {
+	position: absolute;
+	left: 0;
+	top: 52px;
+	right: 0;
+	bottom: 0;
+	overflow: auto;
+	font-size: 16px;
+	line-height: 1.5em;
+}
+
+nav button {
+	width: 125px;
+}
+
+.navbar-brand {
+	font-family: Verdana;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 16px;
+}
+
+/* fix the conflict between ACE and Bootstrap */
+.ace_search_field {
+	color: #333;
+}
