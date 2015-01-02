@@ -15,17 +15,22 @@
 		$('#format').click(compile)
 
 		$('#fold-all').click(function() {
-			editor.getSession().foldAll();
+			editor.getSession().foldAll()
+			focusEditor()
 		})
 
 		$('#unfold-all').click(function() {
-			editor.getSession().unfold();
+			editor.getSession().unfold()
+			focusEditor()
 		})
 
 		$('#run').click(function() {
 			var src = editor.getValue()
 			run(src)
+			focusEditor()
 		})
+		
+		focusEditor()
 	})
 
 	function compile() {
@@ -42,6 +47,13 @@
 		editor.setValue(newText)
 		editor.clearSelection()
 		editor.gotoLine(1)
+		focusEditor()
+	}
+
+	function focusEditor() {
+		setTimeout(function() {
+			editor.focus()
+		}, 0)
 	}
 
 })(window);
