@@ -29,6 +29,22 @@
 			run(src)
 			focusEditor()
 		})
+
+		if (sessionStorage) {
+			onload = function() {
+				var lastCode = sessionStorage.getItem('lastCode')
+				if (lastCode) {
+					editor.setValue(lastCode)
+					editor.clearSelection()
+					editor.gotoLine(1)
+				}
+			}
+
+			onunload = function() {
+				var lastCode = editor.getValue()
+				sessionStorage.setItem('lastCode', lastCode)
+			}
+		}
 		
 		focusEditor()
 	})
