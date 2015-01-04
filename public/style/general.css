@@ -27,6 +27,10 @@ nav button {
 	width: 125px;
 }
 
+.modal-footer button {
+	width: 125px;
+}
+
 .navbar-brand {
 	font-family: Verdana;
 	font-weight: bold;

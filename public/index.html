@@ -30,9 +30,9 @@
 		<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width: auto;"><i class="fa fa-file-text-o"></i></button>
 			<ul class="dropdown-menu" role="menu">
-				<li><a href="#"><!-- <i class="fa fa-folder-open-o"></i>  -->Load...</a></li>
+				<li><a href="#" data-toggle="modal" data-target="#loadModal" accessKey="l" title="Alt+L"><!-- <i class="fa fa-folder-open-o"></i>  -->Load...</a></li>
 				<li role="presentation" class="divider"></li>
-				<li><a href="#"><!-- <i class="fa fa-save"></i>  -->Save...</a></li>
+				<li><a href="#" data-toggle="modal" data-target="#saveModal" accessKey="s" title="Alt+S"><!-- <i class="fa fa-save"></i>  -->Save...</a></li>
 			</ul>
 		</div>
 
@@ -45,6 +45,56 @@
 	</nav>
 
 	<div id="editor"></div>
+
+	<div class="modal fade" id="loadModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Load</h4>
+				</div>
+				<!-- body -->
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="">Source Code Name</label>
+							<input type="text" class="form-control">
+						</div>
+					</form>
+				</div>
+				<!-- footer -->
+				<div class="modal-footer">
+					<button class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="saveModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Save</h4>
+				</div>
+				<!-- body -->
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="">Source Code Name</label>
+							<input type="text" class="form-control">
+						</div>
+					</form>
+				</div>
+				<!-- footer -->
+				<div class="modal-footer">
+					<button class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 自动刷新 -->
 	<script type="text/javascript">

@@ -45,6 +45,20 @@
 				sessionStorage.setItem('lastCode', lastCode)
 			}
 		}
+
+		if (localStorage) {
+			$('#loadModal .modal-footer .btn-primary').click(function() {
+				var name = $('#loadModal .modal-body input').val()
+				if (!name) {
+					return
+				}
+				var code = localStorage.getItem(name)
+				editor.setValue(code)
+				editor.clearSelection()
+				editor.gotoLine(1)
+				$('#loadModal').modal('hide')
+			})
+		}
 		
 		focusEditor()
 	})
