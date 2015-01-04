@@ -58,6 +58,16 @@
 				editor.gotoLine(1)
 				$('#loadModal').modal('hide')
 			})
+
+			$('#saveModal .modal-footer .btn-primary').click(function() {
+				var name = $('#saveModal .modal-body input').val()
+				if (!name) {
+					return
+				}
+				var code = editor.getValue()
+				localStorage.setItem(name, code)
+				$('#saveModal').modal('hide')
+			})
 		}
 		
 		focusEditor()
