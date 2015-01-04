@@ -45,6 +45,57 @@
 				sessionStorage.setItem('lastCode', lastCode)
 			}
 		}
+
+		if (localStorage) {
+
+			$('#loadModal').on('show.bs.modal', function() {
+				setTimeout(function() {
+					$('#loadModal .modal-body input').focus()
+				}, 300)
+			})
+
+			$('#saveModal').on('show.bs.modal', function() {
+				setTimeout(function() {
+					$('#saveModal .modal-body input').focus()
+				}, 300)
+			})
+
+			$('.modal').on('hide.bs.modal', function() {
+				editor.focus()
+			})
+
+			$('#loadModal .modal-footer .btn-primary').click(function() {
+				var name = $('#loadModal .modal-body input').val()
+				if (!name) {
+					return
+				}
+				var code = localStorage.getItem(name)
+				editor.setValue(code)
+				editor.clearSelection()
+				editor.gotoLine(1)
+				$('#loadModal').modal('hide')
+			})
+
+			$('#saveModal .modal-footer .btn-primary').click(function() {
+				var name = $('#saveModal .modal-body input').val()
+				if (!name) {
+					return
+				}
+				var code = editor.getValue()
+				localStorage.setItem(name, code)
+				$('#saveModal').modal('hide')
+			})
+
+			$('#loadModal form').submit(function(e) {
+				e.preventDefault()
+				$('#loadModal .modal-footer .btn-primary').click()
+			})
+
+			$('#saveModal form').submit(function(e) {
+				e.preventDefault()
+				$('#saveModal .modal-footer .btn-primary').click()
+			})
+		}
 		
 		focusEditor()
 	})

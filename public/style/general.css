@@ -27,6 +27,10 @@ nav button {
 	width: 125px;
 }
 
+.modal-footer button {
+	width: 125px;
+}
+
 .navbar-brand {
 	font-family: Verdana;
 	font-weight: bold;
@@ -37,4 +41,9 @@ nav button {
 /* fix the conflict between ACE and Bootstrap */
 .ace_search_field {
 	color: #333;
+}
+
+ul.dropdown-menu {
+	padding-top: 9px;
+	padding-bottom: 12px;
 }
