@@ -38,3 +38,8 @@ nav button {
 .ace_search_field {
 	color: #333;
 }
+
+ul.dropdown-menu {
+	padding-top: 9px;
+	padding-bottom: 12px;
+}
