@@ -85,6 +85,16 @@
 				localStorage.setItem(name, code)
 				$('#saveModal').modal('hide')
 			})
+
+			$('#loadModal form').submit(function(e) {
+				e.preventDefault()
+				$('#loadModal .modal-footer .btn-primary').click()
+			})
+
+			$('#saveModal form').submit(function(e) {
+				e.preventDefault()
+				$('#saveModal .modal-footer .btn-primary').click()
+			})
 		}
 		
 		focusEditor()
