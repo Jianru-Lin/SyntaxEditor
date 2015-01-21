@@ -5,10 +5,16 @@
 
 	$(function() {
 
+		ace.require("ace/ext/language_tools")
 		editor = ace.edit("editor")
 		editor.setTheme("ace/theme/idle_fingers")
 		editor.getSession().setMode("ace/mode/javascript")
 		editor.setValue('')
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		})
 
 		self.compile = compile
 
