@@ -401,10 +401,20 @@
 				var ast = astStack.top()
 
 				if (ast.computed) {
-					pchildren(priority.MemberExpression, 'object'), square_bracket(lz_children('property'))
+					if (ast.object.type === 'FunctionExpression') {
+						bracket(lz_children('object')), square_bracket(lz_children('property'))
+					}
+					else {
+						pchildren(priority.MemberExpression, 'object'), square_bracket(lz_children('property'))
+					}
 				}
 				else {
-					pchildren(priority.MemberExpression, 'object'), operator('.'), children('property')
+					if (ast.object.type === 'FunctionExpression') {
+						bracket(lz_children('object')), operator('.'), children('property')
+					}
+					else {
+						pchildren(priority.MemberExpression, 'object'), operator('.'), children('property')
+					}
 				}
 			},
 
