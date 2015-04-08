@@ -1,0 +1,42 @@
+#loadModal.modal.fade
+	.modal-dialog
+		.modal-content
+			// header
+			.modal-header
+				button.close(type='button', data-dismiss='modal')
+					span(aria-hidden='true') &times;
+				
+				h4.modal-title Load
+
+			// body
+			.modal-body
+				form
+					.form-group
+						label Source Code Name
+						input.form-control(type='text')
+
+			// footer
+			.modal-footer
+				button.btn.btn-primary OK
+
+
+#saveModal.modal.fade
+	.modal-dialog
+		.modal-content
+			// header
+			.modal-header
+				button.close(type='button', data-dismiss='modal')
+					span(aria-hidden='true') &times;
+				
+				h4.modal-title Save
+
+			// body
+			.modal-body
+				form
+					.form-group
+						label Source Code Name
+						input.form-control(type='text')
+
+			// footer
+			.modal-footer
+				button.btn.btn-primary OK

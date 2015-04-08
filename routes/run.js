@@ -14,7 +14,7 @@ catch(err) {
 	// console.log(err.toString())
 }
 
-router.post('/', function(req, res) {
+router.post('/run', function(req, res) {
 	
 	var script_url = !req.body ? '' : (!req.body.script_url ? '' : req.body.script_url)
 
@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
 	}
 });
 
-router.get('/:id', function(req, res) {
+router.get('/run/:id', function(req, res) {
 	var id = req.params.id
 	var fileName = relativeCacheDir(id + '.js')
 	var src = '../cache/' + id + '.js'

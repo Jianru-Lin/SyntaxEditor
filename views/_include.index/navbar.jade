@@ -1,0 +1,30 @@
+nav.navbar.navbar-default(role='navigation')
+	.navbar-header
+		a.navbar-brand(href='#') λ-VIEW 3
+
+	.btn-toolbar
+
+		.btn-group
+			button.btn.btn-default.navbar-btn.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false', style='width: auto;')
+				i.fa.fa-file-text-o
+			ul.dropdown-menu(role='menu')
+				li
+					a(href='#', data-toggle='modal', data-target='#loadModal', accessKey='l', title='Alt+L') Load...
+				li(role='presentation', class='divider')
+				li
+					a(href='#', data-toggle='modal', data-target='#saveModal', accessKey='s', title='Alt+S') Save...
+
+		.btn-group(role='group', aria-label='...')
+			button#format.btn.btn-default.navbar-btn(type='button')
+				i.fa.fa-indent
+				| &nbspFormat
+			button#fold-all.btn.btn-default.navbar-btn(type='button')
+				i.fa.fa-compress
+				| &nbspFold All
+			button#unfold-all.btn.btn-default.navbar-btn(type='button')
+				i.fa.fa-expand
+				| &nbspUnfold All
+
+		button#run.btn.btn-success.navbar-btn(type='button' accesskey='r' title='Alt+R')
+			i.fa.fa-play
+				| &nbspRun
