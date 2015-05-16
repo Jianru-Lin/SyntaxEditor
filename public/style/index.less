@@ -1,3 +1,7 @@
+@output-height: 28px;
+@output-bg-color: #f8f8f8;
+@output-border-color: #e7e7e7;
+
 .navbar {
 	border-radius: 0;
 	position: absolute;
@@ -11,7 +15,7 @@
 	left: 0;
 	top: 52px;
 	right: 0;
-	bottom: 25px;
+	bottom: @output-height;
 	overflow: auto;
 	font-size: 16px;
 	line-height: 1.5em;
@@ -22,9 +26,9 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 24px;
-	background: #f8f8f8;
-	border-top: 1px solid #e7e7e7;
+	height: @output-height - 1;
+	background: @output-bg-color;
+	border-top: 1px solid @output-border-color;
 }
 
 @media (max-width: 767px) {
