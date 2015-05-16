@@ -11,10 +11,20 @@
 	left: 0;
 	top: 52px;
 	right: 0;
-	bottom: 0;
+	bottom: 25px;
 	overflow: auto;
 	font-size: 16px;
 	line-height: 1.5em;
+}
+
+.output {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 24px;
+	background: #f8f8f8;
+	border-top: 1px solid #e7e7e7;
 }
 
 @media (max-width: 767px) {
