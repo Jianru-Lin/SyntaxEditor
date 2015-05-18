@@ -1,6 +1,5 @@
-@output-height: 28px;
-@output-bg-color: #f8f8f8;
-@output-border-color: #e7e7e7;
+@output-panel-bg-color: #f8f8f8;
+@output-panel-border-color: #e7e7e7;
 
 .navbar {
 	border-radius: 0;
@@ -15,20 +14,10 @@
 	left: 0;
 	top: 52px;
 	right: 0;
-	bottom: @output-height;
+	bottom: 0;
 	overflow: auto;
 	font-size: 16px;
 	line-height: 1.5em;
-}
-
-.output {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	height: @output-height - 1;
-	background: @output-bg-color;
-	border-top: 1px solid @output-border-color;
 }
 
 @media (max-width: 767px) {
@@ -60,4 +49,24 @@ nav button {
 ul.dropdown-menu {
 	padding-top: 9px;
 	padding-bottom: 12px;
+}
+
+/* output panel */
+
+.output-panel {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	width: 450px;
+	height: 240px;
+	background: @output-panel-bg-color;
+	border-top: 1px solid @output-panel-border-color;
+}
+
+.output-panel > .content {
+	position: absolute;
+	left: 4px;
+	top: 24px;
+	right: 4px;
+	bottom: 4px;
 }

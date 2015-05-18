@@ -2,8 +2,11 @@
 	'use strict'
 
 	var editor
+	var outputPanel
 
 	$(function() {
+
+		outputPanel = new OutputPanel()
 
 		ace.require("ace/ext/language_tools")
 		editor = ace.edit("editor")
