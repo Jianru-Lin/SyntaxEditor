@@ -10,7 +10,8 @@ function OutputPanel() {
 	var instance = {
 		editor: editor,
 		line: function(fmt, v) {
-			var text = fmt + '\n'
+			var text = tstr(fmt, v)
+			text = tstr('[${time}] ${text}\n', {time: new Date().toLocaleTimeString(), text: text})
 			this._append(text)
 		},
 		_insert: function(row, column, text) {
