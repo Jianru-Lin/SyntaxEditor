@@ -1,5 +1,9 @@
+@navbar-height: 52px;
+@output-panel-height: 120px;
 @output-panel-bg-color: #f8f8f8;
 @output-panel-border-color: #e7e7e7;
+@local-file-panel-bg-color: @output-panel-bg-color;
+@local-file-panel-width: 400px;
 
 .navbar {
 	border-radius: 0;
@@ -11,10 +15,10 @@
 
 #editor {
 	position: absolute;
-	left: 0;
-	top: 52px;
+	left: @local-file-panel-width;
+	top: @navbar-height;
 	right: 0;
-	bottom: 0;
+	bottom: @output-panel-height;
 	overflow: auto;
 	font-size: 16px;
 	line-height: 1.5em;
@@ -55,10 +59,10 @@ ul.dropdown-menu {
 
 .output-panel {
 	position: absolute;
-	right: 20px;
-	bottom: 20px;
-	width: 450px;
-	height: 240px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: @output-panel-height;
 	background: @output-panel-bg-color;
 	border-top: 1px solid @output-panel-border-color;
 }
@@ -75,9 +79,9 @@ ul.dropdown-menu {
 
 .local-file-panel {
 	position: absolute;
-	top: 0;
-	right: 0;
-	width: 200px;
-	bottom: 0;
-	background: blue;
+	top: @navbar-height;
+	left: 0;
+	width: @local-file-panel-width;
+	bottom: @output-panel-height;
+	background: @local-file-panel-bg-color;
 }
