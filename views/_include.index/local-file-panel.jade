@@ -1,1 +1,5 @@
-.local-file-panel local file panel
+.local-file-panel
+	.title local file
+	ul
+		li(v-repeat='file : files')
+			span {{file}}

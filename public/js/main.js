@@ -5,7 +5,8 @@
 
 	$(function() {
 
-		window.outputPanel = new OutputPanel()
+		window.outputPanel = OutputPanel()
+		window.localFilePanel = LocalFilePanel()
 
 		ace.require("ace/ext/language_tools")
 		editor = ace.edit("editor")
