@@ -4,6 +4,12 @@
 //     -> http://www.target.com:8080/index.html
 function tstr(str, data, option) {
 
+    // data can be null or undefined
+    // we just treat it as an empty object
+    if (data === undefined || data === null) {
+        data = {}
+    }
+
     checkArgs()
     init()
     return level_0(str, data2f(data))
@@ -12,7 +18,7 @@ function tstr(str, data, option) {
         if (typeof str !== 'string') {
             throw new Error('[tstr] invalid argument, type of str must be string')
         }
-        if (typeof data !== 'object') {
+        if (typeof data !== 'object' || data === null) {
             throw new Error('[tstr] invalid argument, type of data must be object')
         }
         // TODO check option
@@ -45,14 +51,16 @@ function tstr(str, data, option) {
     }
 
     function data2f(data) {
-        if (typeof data !== 'object') {
+        if (typeof data !== 'object' || data === null) {
             throw new Error('[data2f] invalid argument, typeof data must be object')
         }
         return queryValue
         
         function queryValue(expText) {
             filterExp = parseFilterExpression(expText)
-            return executeFilterExpression(filterExp)
+            var value = executeFilterExpression(filterExp)
+            // convert value to string
+            return value === null || value === undefined ? '' : (value + '')
 
             function parseFilterExpression(expText) {
                 // split by |
@@ -78,7 +86,7 @@ function tstr(str, data, option) {
 
             function executeFilterExpression(filterExp) {
                 // retrive the raw value
-                var rawValue = data[filterExp.name]
+                var rawValue = getValue(data, filterExp.name)
                 // invoke filter function on rawValue
                 var value = rawValue
                 filterExp.filterNameList.forEach(function(filterName) {
@@ -101,6 +109,26 @@ function tstr(str, data, option) {
 
                 // return result
                 return value
+
+                function getValue(obj, propLink) {
+                    if (propLink.indexOf('.') === -1) {
+                        return obj[propLink]
+                    }
+                    else {
+                        var result = obj
+                        propLink = propLink.split('.')
+                        try {
+                            propLink.forEach(function(prop) {
+                                result = result[prop]
+                            })
+                        }
+                        catch (err) {
+                            // tolerate error
+                            return ''
+                        }
+                        return result
+                    }
+                }
             }
         }
 
