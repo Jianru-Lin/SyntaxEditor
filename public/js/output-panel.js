@@ -3,7 +3,7 @@ function OutputPanel() {
 	editor = ace.edit(document.querySelector('.output-panel > .content'))
 	editor.setTheme("ace/theme/idle_fingers")
 	editor.getSession().setMode("ace/mode/text")
-	//editor.setReadOnly(true)
+	editor.setReadOnly(true)
 	editor.setShowPrintMargin(false)
 	editor.setValue('')
 
