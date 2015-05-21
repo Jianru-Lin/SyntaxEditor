@@ -5,54 +5,39 @@ function LocalFilePanel() {
 			files: []
 		},
 		methods: {
-			onAdd: function() {
+			onAdd: function(e) {
 				var fileName = window.prompt('file name')
 				if (!fileName) return
-				instance.append(fileName)
+				instance.add(fileName)
 			},
-			onRemove: function() {
-				alert('remove')
+			onRemove: function(e) {
+				var fileName = e.targetVM.file
+				if (!confirm('delete ' + fileName + '?')) return
+				instance.remove(fileName)
 			},
-			onRename: function() {
-				alert('rename')
+			onRename: function(e) {
+				var currentFileName = e.targetVM.file
+				var newFileName = window.prompt('new file name')
+				instance.rename(currentFileName, newFileName)
 			}
 		}
 	})
 
 	var instance = {
-		insertBefore: function(pos, fileName) {
-			var currentFiles = vm.files
-			if (pos < 0 || pos >= currentFiles.length) {
-				return
-			}
-			else {
-				var newFiles = []
-				var beforeCount = pos
-				while (beforeCount-- > 0) {
-					newFiles.push(currentFiles.unshift())
-				}
-				newFiles.push(fileName)
-				while (newFiles.length > 0) {
-					newFiles.push(currentFiles.unshift())
-				}
-				vm.files = newFiles()
-			}
+		rename: function(currentFileName, newFileName) {
+			var pos = vm.files.indexOf(currentFileName)
+			if (pos === -1) return
+			var files = vm.files.slice()
+			files[pos] = newFileName
+			vm.files = files
 		},
-		update: function(pos, fileName) {
-			if (pos >= 0 && pos < vm.files.length) {
-				vm.files[pos] = fileName
-			}
-		},
-		append: function(fileName) {
+		add: function(fileName) {
 			vm.files.push(fileName)
 		},
-		remove: function(pos) {
-			if (pos >= 0 && pos < vm.files.length) {
-				for (var i = pos + 1, len = vm.files.length; i < len; ++i) {
-					vm.files[i - 1] = vm.files[i]
-				}
-				vm.files.pop()
-			}
+		remove: function(fileName) {
+			vm.files = vm.files.filter(function(item) {
+				return item !== fileName
+			})
 		},
 		count: function() {
 			return vm.files.length
