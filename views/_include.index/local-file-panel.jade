@@ -1,5 +1,8 @@
 .local-file-panel
 	.title local file
+	button.add(v-on='click: onAdd') +add
 	ul
 		li(v-repeat='file : files')
 			span {{file}}
+			button.rename(v-on='click: onRename') rename
+			button.remove(v-on='click: onRemove') -del

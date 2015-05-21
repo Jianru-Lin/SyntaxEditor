@@ -3,6 +3,19 @@ function LocalFilePanel() {
 		el: document.querySelector('.local-file-panel'),
 		data: {
 			files: []
+		},
+		methods: {
+			onAdd: function() {
+				var fileName = window.prompt('file name')
+				if (!fileName) return
+				instance.append(fileName)
+			},
+			onRemove: function() {
+				alert('remove')
+			},
+			onRename: function() {
+				alert('rename')
+			}
 		}
 	})
 
@@ -49,5 +62,15 @@ function LocalFilePanel() {
 		}
 	}
 
+	// load file list
+	loadFileList()
+
 	return instance
+
+	function loadFileList() {
+		var fileList = config.getFileList()
+		if (fileList && fileList.length > 0) {
+			vm.files = fileList
+		}
+	}
 }
