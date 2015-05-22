@@ -5,6 +5,10 @@ $(function() {
 	window.editorPanel = EditorPanel()
 	window.toolPanel = ToolPanel()
 
+	localFilePanel.onOpen = function(fileName) {
+		alert('open ' + fileName)
+	}
+
 	toolPanel.onFormat = function() {
 
 		var text = editorPanel.getValue()

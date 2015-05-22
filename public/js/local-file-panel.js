@@ -19,6 +19,10 @@ function LocalFilePanel() {
 				var currentFileName = e.targetVM.file
 				var newFileName = window.prompt('new file name').trim()
 				instance.rename(currentFileName, newFileName)
+			},
+			onOpen: function(e) {
+				var fileName = e.targetVM.file
+				instance.onOpen(fileName)
 			}
 		}
 	})
@@ -49,22 +53,33 @@ function LocalFilePanel() {
 			var files = vm.files.slice()
 			files[pos] = newFileName
 			vm.files = files
+			// save to config
+			config.setFileList(vm.files)
 		},
 		add: function(fileName) {
 			if (this.exists(fileName)) return false
 			vm.files.push(fileName)
+			// save to config
+			config.setFileList(vm.files)
 		},
 		remove: function(fileName) {
 			var fileNameLo = fileName.toLowerCase()
 			vm.files = vm.files.filter(function(item) {
 				return item.toLowerCase() !== fileNameLo
 			})
+			// save to config
+			config.setFileList(vm.files)
 		},
 		count: function() {
 			return vm.files.length
 		},
 		clear: function() {
 			vm.files = []
+			// save to config
+			config.setFileList(vm.files)
+		},
+		onOpen: function(fileName) {
+			// implement by outside
 		}
 	}
 

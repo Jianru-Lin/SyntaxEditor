@@ -4,5 +4,6 @@
 	ul
 		li(v-repeat='file : files')
 			span {{file}}
+			button.open(v-on='click: onOpen') open
 			button.rename(v-on='click: onRename') rename
 			button.remove(v-on='click: onRemove') -del
