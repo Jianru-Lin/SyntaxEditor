@@ -12,6 +12,16 @@ function EditorPanel() {
 	})
 
 	var instance = {
+		_fileName: undefined,
+		openFile: function(fileName) {
+			this._fileName = fileName
+			var content = config.getFile(fileName)
+			this.setValue(content)
+		},
+		saveFile: function() {
+			if (!this._fileName) return
+			config.setFile(this._fileName, this.getValue())
+		},
 		getValue: function() {
 			return editor.getValue()
 		},

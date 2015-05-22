@@ -6,7 +6,8 @@ $(function() {
 	window.toolPanel = ToolPanel()
 
 	localFilePanel.onOpen = function(fileName) {
-		alert('open ' + fileName)
+		editorPanel.saveFile()
+		editorPanel.openFile(fileName)
 	}
 
 	toolPanel.onFormat = function() {
