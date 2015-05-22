@@ -17,6 +17,21 @@ window.config = {
 			localStorage.setItem('config', JSON.stringify(this._value))
 		}
 	},
+	getFile: function(name) {
+		if (localStorage) {
+			return localStorage.getItem('[file]::' + name) || ''
+		}
+	},
+	setFile: function(name, content) {
+		if (localStorage) {
+			localStorage.setItem('[file]::' + name, content || '')
+		}
+	},
+	removeFile: function(name) {
+		if (localStorage) {
+			localStorage.removeItem('[file]::' + name)
+		}
+	},
 	getFileList: function() {
 		return this._value.fileList
 	},
