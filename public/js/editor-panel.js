@@ -51,7 +51,7 @@ function EditorPanel() {
 		if (e.type === 'update') {
 
 		}
-		else if (e.type === 'delete' && vfs.isSameName(e.name, instance._fileName)) {
+		else if (e.type === 'delete' && instance._fileName !== undefined && vfs.isSameName(e.name, instance._fileName)) {
 			instance.closeFile()
 		}
 	})

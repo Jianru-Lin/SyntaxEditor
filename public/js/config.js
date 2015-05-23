@@ -4,10 +4,18 @@ window.config = {
 		defaultFile: {
 			name: 'default.js',
 			content: ''
-		}
+		},
+		lastOpenedFile: undefined
 	},
 	get defaultFile() {
 		return this._value.defaultFile
+	},
+	get lastOpenedFile() {
+		return this._value.lastOpenedFile
+	},
+	set lastOpenedFile(v) {
+		this._value.lastOpenedFile = v
+		this.save()
 	},
 	load: function() {
 		if (localStorage) {

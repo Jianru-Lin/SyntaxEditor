@@ -9,6 +9,9 @@ $(function() {
 		editorPanel.saveFile()
 		editorPanel.closeFile()
 		editorPanel.openFile(fileName)
+		editorPanel.focus()
+		// remember last opened file
+		config.lastOpenedFile = fileName
 	}
 
 	toolPanel.onFormat = function() {
@@ -48,8 +51,9 @@ $(function() {
 		localFilePanel.add(config.defaultFile.name, config.defaultFile.content)
 		localFilePanel.open(config.defaultFile.name)
 	}
-
-	editorPanel.focus()
+	else {
+		localFilePanel.open(config.lastOpenedFile)
+	}
 })
 
 window.onbeforeunload = function() {
