@@ -94,7 +94,7 @@ ul.dropdown-menu {
 /* local file panel */
 
 .local-file-panel {
-	overflow: hidden;
+	overflow: auto;
 	position: absolute;
 	top: @navbar-height;
 	left: 0;
@@ -115,7 +115,16 @@ ul.dropdown-menu {
 
 .local-file-panel ul li {
 	border-bottom: 1px solid #eaeaea;
-	padding: 4px;
+	padding: 10px 15px;;
+}
+
+.local-file-panel ul li i {
+	margin-right: 10px;
+}
+
+.local-file-panel ul li a.remove {
+	color: inherit;
+	text-decoration: none;
 }
 
 .local-file-panel ul li:hover {

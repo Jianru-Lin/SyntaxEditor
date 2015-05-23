@@ -3,5 +3,6 @@
 	button.add(v-on='click: onAdd') +add
 	ul
 		li(v-repeat='file : files' v-class='open : file.open' v-on='click: onOpen, dblclick: onRename')
+			i.fa.fa-file-text-o
 			span {{file.name}}
-			button.remove.pull-right(v-on='click: onRemove') -del
+			a.fa.fa-times.remove.pull-right(href='javascript:', v-on='click: onRemove')

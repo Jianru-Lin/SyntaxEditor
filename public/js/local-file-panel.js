@@ -17,7 +17,9 @@ function LocalFilePanel() {
 			},
 			onRename: function(e) {
 				var currentFileName = e.targetVM.file.name
-				var newFileName = window.prompt('new file name').trim()
+				var newFileName = window.prompt('new file name') || ''
+				newFileName = newFileName.trim()
+				if (!newFileName) return
 				vfs.updateFileName(currentFileName, newFileName)
 			},
 			onOpen: function(e) {
