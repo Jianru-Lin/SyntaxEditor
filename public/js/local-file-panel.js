@@ -8,17 +8,17 @@ function LocalFilePanel() {
 			onAdd: function(e) {
 				var fileName = window.prompt('file name').trim()
 				if (!fileName) return
-				instance.add(fileName)
+				vfs.createFile(fileName)
 			},
 			onRemove: function(e) {
 				var fileName = e.targetVM.file
 				if (!confirm('delete ' + fileName + '?')) return
-				instance.remove(fileName)
+				vfs.deleteFile(fileName)
 			},
 			onRename: function(e) {
 				var currentFileName = e.targetVM.file
 				var newFileName = window.prompt('new file name').trim()
-				instance.rename(currentFileName, newFileName)
+				alert('rename')
 			},
 			onOpen: function(e) {
 				var fileName = e.targetVM.file
@@ -27,71 +27,26 @@ function LocalFilePanel() {
 		}
 	})
 
+	vfs.addEventListener(function(e) {
+		if (e.type === 'create') {
+			vm.files.push(e.fileName)
+		}
+		else if (e.type === 'update') {
+
+		}
+		else if (e.type === 'delete') {
+
+		}
+	})
+
 	var instance = {
-		exists: function(fileName) {
-			var fileNameLo = fileName.toLowerCase()
-			return vm.files.some(function(item) {
-				return item.toLowerCase() === fileNameLo
-			})
-		},
-		indexOf: function(fileName) {
-			var fileNameLo = fileName.toLowerCase()
-			for (var i = 0, len = vm.files.length; i < len; ++i) {
-				if (fileNameLo === vm.files[i].toLowerCase()) {
-					return i
-				}
-			}
-			return -1
-		},
-		rename: function(currentFileName, newFileName) {
-			var pos = this.indexOf(currentFileName)
-			if (pos === -1) return false
-			if (newFileName.toLowerCase() !== currentFileName.toLowerCase() &&
-				this.exists(newFileName)) {
-				return false
-			}
-			var files = vm.files.slice()
-			files[pos] = newFileName
-			vm.files = files
-			// save to config
-			config.setFileList(vm.files)
-		},
-		add: function(fileName) {
-			if (this.exists(fileName)) return false
-			vm.files.push(fileName)
-			// save to config
-			config.setFileList(vm.files)
-		},
-		remove: function(fileName) {
-			var fileNameLo = fileName.toLowerCase()
-			vm.files = vm.files.filter(function(item) {
-				return item.toLowerCase() !== fileNameLo
-			})
-			// save to config
-			config.setFileList(vm.files)
-		},
-		count: function() {
-			return vm.files.length
-		},
-		clear: function() {
-			vm.files = []
-			// save to config
-			config.setFileList(vm.files)
-		},
 		onOpen: function(fileName) {
 			// implement by outside
 		}
 	}
 
 	// load file list
-	loadFileList()
+	vm.files = vfs.retriveFileList()
 
 	return instance
-
-	function loadFileList() {
-		var fileList = config.getFileList()
-		if (fileList && fileList.length > 0) {
-			vm.files = fileList
-		}
-	}
 }

@@ -1,7 +1,6 @@
 window.config = {
 	_value: {
-		version: '1.0',
-		fileList: []
+		version: '1.0'
 	},
 	load: function() {
 		if (localStorage) {
@@ -16,31 +15,6 @@ window.config = {
 		if (localStorage) {
 			localStorage.setItem('config', JSON.stringify(this._value))
 		}
-	},
-	getFile: function(name) {
-		if (localStorage) {
-			return localStorage.getItem('[file]::' + name) || ''
-		}
-	},
-	setFile: function(name, content) {
-		if (localStorage) {
-			localStorage.setItem('[file]::' + name, content || '')
-		}
-	},
-	removeFile: function(name) {
-		if (localStorage) {
-			localStorage.removeItem('[file]::' + name)
-		}
-	},
-	getFileList: function() {
-		return this._value.fileList
-	},
-	setFileList: function(v) {
-		if (!Array.isArray(v)) {
-			throw new Error('invalid argument')
-		}
-		this._value.fileList = v
-		this.save()
 	}
 }
 
