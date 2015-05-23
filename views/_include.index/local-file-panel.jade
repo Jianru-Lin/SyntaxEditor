@@ -2,8 +2,6 @@
 	.title local file
 	button.add(v-on='click: onAdd') +add
 	ul
-		li(v-repeat='file : files' v-class='open : file.open')
-			span() {{file.name}}
-			button.open(v-on='click: onOpen') open
-			button.rename(v-on='click: onRename') rename
-			button.remove(v-on='click: onRemove') -del
+		li(v-repeat='file : files' v-class='open : file.open' v-on='click: onOpen, dblclick: onRename')
+			span {{file.name}}
+			button.remove.pull-right(v-on='click: onRemove') -del
