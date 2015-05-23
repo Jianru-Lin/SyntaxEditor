@@ -1,4 +1,11 @@
 function EditorPanel() {
+	var vm = new Vue({
+		el: document.querySelector('.editor-panel'),
+		data: {
+			noFileOpened: true
+		}
+	})
+
 	var editor
 	ace.require("ace/ext/language_tools")
 	editor = ace.edit("editor")
@@ -17,6 +24,7 @@ function EditorPanel() {
 			this._fileName = fileName
 			var content = vfs.retriveFileContent(fileName)
 			this.setValue(content)
+			vm.noFileOpened = false
 		},
 		saveFile: function() {
 			if (!this._fileName) return
@@ -25,6 +33,7 @@ function EditorPanel() {
 		closeFile: function() {
 			this._fileName = undefined
 			this.setValue('')
+			vm.noFileOpened = true
 		},
 		getValue: function() {
 			return editor.getValue()

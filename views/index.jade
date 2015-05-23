@@ -4,7 +4,6 @@ block headex
 	title λ-View 3
 	link(rel='stylesheet/less', type='text/css', href='style/index.less')
 	script(src='lib/less.min.js')
-	link(rel="stylesheet", type="text/css", href="style/ast.css")
 	script(src='lib/esprima.js')
 	script(src='lib/ajax.js')
 	script(src='lib/tstr.js')
@@ -27,6 +26,6 @@ block headex
 block bodyex
 	include _include.index/navbar.jade
 	include _include.index/modal.jade
-	#editor
+	include _include.index/editor-panel.jade
 	include _include.index/output-panel.jade
 	include _include.index/local-file-panel.jade

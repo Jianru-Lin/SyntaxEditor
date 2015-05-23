@@ -13,23 +13,6 @@
 	right: 0;
 }
 
-#editor {
-	position: absolute;
-	left: @local-file-panel-width;
-	top: @navbar-height;
-	right: 0;
-	bottom: @output-panel-height;
-	overflow: auto;
-	font-size: 16px;
-	line-height: 1.5em;
-}
-
-@media (max-width: 767px) {
-	#editor {
-		top: 102px;
-	}	
-}
-
 nav button {
 	width: 125px;
 }
@@ -53,6 +36,38 @@ nav button {
 ul.dropdown-menu {
 	padding-top: 9px;
 	padding-bottom: 12px;
+}
+
+/* editor panel */
+
+.editor-panel {
+	position: absolute;
+	left: @local-file-panel-width;
+	top: @navbar-height;
+	right: 0;
+	bottom: @output-panel-height;
+}
+
+.editor-panel .no-file-opened-tip {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#editor {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	font-size: 16px;
+	line-height: 1.5em;
+}
+
+@media (max-width: 767px) {
+	.editor-panel {
+		top: 102px;
+	}	
 }
 
 /* output panel */
