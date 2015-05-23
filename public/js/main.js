@@ -45,6 +45,6 @@ $(function() {
 	editorPanel.focus()
 })
 
-window.onbeforeunload = function() {
-	return confirm('refresh?')
-}
+// window.onbeforeunload = function() {
+// 	return confirm('refresh?')
+// }
