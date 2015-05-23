@@ -7,6 +7,7 @@ $(function() {
 
 	localFilePanel.onOpen = function(fileName) {
 		editorPanel.saveFile()
+		editorPanel.closeFile()
 		editorPanel.openFile(fileName)
 	}
 

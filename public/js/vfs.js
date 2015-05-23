@@ -105,10 +105,38 @@ window.vfs = {
 		return true
 	},
 	retriveFileContent: function(name) {
+		if (!this.isValidName(name)) {
+			throw new Error('invalid arguments')
+		}
 
+		var mapItem = this.metaData.fileMapTable[name]
+		if (!mapItem) {
+			// not found
+			throw new Error('not found')
+		}
+
+		var content = localStorage.getItem(mapItem.fullName)
+		return content
 	},
 	updateFileContent: function(name, newContent) {
+		if (!this.isValidName(name)) {
+			throw new Error('invalid arguments')
+		}
 
+		if (typeof newContent !== 'string') {
+			throw new Error('invalid arguments')
+		}
+
+		var mapItem = this.metaData.fileMapTable[name]
+		if (!mapItem) {
+			// not found
+			throw new Error('not found')
+		}
+
+		localStorage.setItem(mapItem.fullName, newContent)
+
+		// fire event
+		// TODO
 	},
 	existsFile: function(name) {
 		if (!this.isValidName(name)) {

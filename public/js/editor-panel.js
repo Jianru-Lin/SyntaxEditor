@@ -15,12 +15,16 @@ function EditorPanel() {
 		_fileName: undefined,
 		openFile: function(fileName) {
 			this._fileName = fileName
-			//var content = config.getFile(fileName)
-			//this.setValue(content)
+			var content = vfs.retriveFileContent(fileName)
+			this.setValue(content)
 		},
 		saveFile: function() {
 			if (!this._fileName) return
-			//config.setFile(this._fileName, this.getValue())
+			vfs.updateFileContent(this._fileName, this.getValue())
+		},
+		closeFile: function() {
+			this._fileName = undefined
+			this.setValue('')
 		},
 		getValue: function() {
 			return editor.getValue()
@@ -42,6 +46,15 @@ function EditorPanel() {
 			}, 0)
 		}
 	}
+
+	vfs.addEventListener(function(e) {
+		if (e.type === 'update') {
+
+		}
+		else if (e.type === 'delete' && vfs.isSameName(e.name, instance._fileName)) {
+			instance.closeFile()
+		}
+	})
 
 	return instance
 }
