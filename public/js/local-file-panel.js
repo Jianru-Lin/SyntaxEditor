@@ -11,30 +11,37 @@ function LocalFilePanel() {
 				vfs.createFile(fileName)
 			},
 			onRemove: function(e) {
-				var fileName = e.targetVM.file
+				var fileName = e.targetVM.file.name
 				if (!confirm('delete ' + fileName + '?')) return
 				vfs.deleteFile(fileName)
 			},
 			onRename: function(e) {
-				var currentFileName = e.targetVM.file
+				var currentFileName = e.targetVM.file.name
 				var newFileName = window.prompt('new file name').trim()
 				vfs.updateFileName(currentFileName, newFileName)
 			},
 			onOpen: function(e) {
-				var fileName = e.targetVM.file
-				instance.onOpen(fileName)
+				var file = e.targetVM.file
+				this.files.map(function(item) {
+					item.open = false
+				})
+				file.open = true
+				instance.onOpen(file.name)
 			}
 		}
 	})
 
 	vfs.addEventListener(function(e) {
 		if (e.type === 'create') {
-			vm.files.push(e.name)
+			vm.files.push({
+				name: e.name
+			})
 		}
 		else if (e.type === 'update' && e.what === 'name') {
 			vm.files = vm.files.map(function(item) {
-				if (vfs.isSameName(e.oldValue, item)) {
-					return e.newValue
+				if (vfs.isSameName(e.oldValue, item.name)) {
+					item.name = e.newValue
+					return item
 				}
 				else {
 					return item
@@ -43,7 +50,7 @@ function LocalFilePanel() {
 		}
 		else if (e.type === 'delete') {
 			vm.files = vm.files.filter(function(item) {
-				return !vfs.isSameName(item, e.name)
+				return !vfs.isSameName(item.name, e.name)
 			})
 		}
 	})
@@ -53,7 +60,9 @@ function LocalFilePanel() {
 			vfs.createFile(fileName, content)
 		},
 		open: function(fileName) {
-			// TODO update style
+			vm.files.map(function(item) {
+				item.open = vfs.isSameName(item.name, fileName)
+			})
 			this.onOpen(fileName)
 		},
 		onOpen: function(fileName) {
@@ -65,7 +74,12 @@ function LocalFilePanel() {
 	}
 
 	// load file list
-	vm.files = vfs.retriveFileList()
+	vm.files = vfs.retriveFileList().map(function(fileName) {
+		return {
+			name: fileName,
+			open: false
+		}
+	})
 
 	return instance
 }
