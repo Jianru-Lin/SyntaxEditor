@@ -43,6 +43,12 @@ $(function() {
 		editorPanel.focus()
 	}
 
+	// create default file as needed
+	if (localFilePanel.count() === 0) {
+		localFilePanel.add(config.defaultFile.name, config.defaultFile.content)
+		localFilePanel.open(config.defaultFile.name)
+	}
+
 	editorPanel.focus()
 })
 

@@ -1,6 +1,13 @@
 window.config = {
 	_value: {
-		version: '1.0'
+		version: '1.0',
+		defaultFile: {
+			name: 'default.js',
+			content: ''
+		}
+	},
+	get defaultFile() {
+		return this._value.defaultFile
 	},
 	load: function() {
 		if (localStorage) {

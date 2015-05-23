@@ -49,8 +49,18 @@ function LocalFilePanel() {
 	})
 
 	var instance = {
+		add: function(fileName, content) {
+			vfs.createFile(fileName, content)
+		},
+		open: function(fileName) {
+			// TODO update style
+			this.onOpen(fileName)
+		},
 		onOpen: function(fileName) {
 			// implement by outside
+		},
+		count: function() {
+			return vm.files.length
 		}
 	}
 

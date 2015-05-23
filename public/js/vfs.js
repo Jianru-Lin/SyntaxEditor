@@ -61,6 +61,10 @@ window.vfs = {
 		mapItem.fullName = 'vfs://' + newName
 		delete this.metaData.fileMapTable[currentName]
 		this.metaData.fileMapTable[newName] = mapItem
+
+		this.metaData.fileList = this.metaData.fileList.map(function(item) {
+			return self.isSameName(item, currentName) ? newName : item
+		})
 		
 		// how to update local storage key? delete old item and create an new one
 		var content = localStorage.getItem(currentFullName)
