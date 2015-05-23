@@ -1,8 +1,9 @@
 .local-file-panel
-	.title local file
-	button.add(v-on='click: onAdd') +add
+	.title File
+		button.btn.btn-default.btn-xs.add.pull-right(v-on='click: onAdd') +new
+	div.clearfix
 	ul
 		li(v-repeat='file : files' v-class='open : file.open' v-on='click: onOpen, dblclick: onRename')
 			i.fa.fa-file-text-o
 			span {{file.name}}
-			a.fa.fa-times.remove.pull-right(href='javascript:', v-on='click: onRemove')
+			a.fa.fa-times.remove.pull-right(href='javascript:', v-on='click: onRemove', title='delete')
