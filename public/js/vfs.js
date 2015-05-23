@@ -20,11 +20,11 @@ window.vfs = {
 		else {
 			var fileMapItem = {
 				name: name,
-				lowLevelName: 'vfs://' + name
+				fullName: 'vfs://' + name
 			}
 			this.metaData.fileMapTable[name] = fileMapItem
 			this.metaData.fileList.push(name)
-			localStorage.setItem(fileMapItem.lowLevelName, content || '')
+			localStorage.setItem(fileMapItem.fullName, content || '')
 			this._saveMetaData()
 
 			// fire event
@@ -55,17 +55,17 @@ window.vfs = {
 			return false
 		}
 
-		var currentLowLevelName = mapItem.lowLevelName
+		var currentFullName = mapItem.fullName
 
 		mapItem.name = newName
-		mapItem.lowLevelName = 'vfs://' + newName
+		mapItem.fullName = 'vfs://' + newName
 		delete this.metaData.fileMapTable[currentName]
 		this.metaData.fileMapTable[newName] = mapItem
 		
 		// how to update local storage key? delete old item and create an new one
-		var content = localStorage.getItem(currentLowLevelName)
-		localStorage.removeItem(currentLowLevelName)
-		localStorage.setItem(mapItem.lowLevelName, content)
+		var content = localStorage.getItem(currentFullName)
+		localStorage.removeItem(currentFullName)
+		localStorage.setItem(mapItem.fullName, content)
 
 		// save meta data
 		this._saveMetaData()
@@ -91,7 +91,7 @@ window.vfs = {
 			// not found
 			return false
 		}
-		localStorage.removeItem(mapItem.lowLevelName)
+		localStorage.removeItem(mapItem.fullName)
 		this.metaData.fileList = this.metaData.fileList.filter(function(item) {
 			return !self.isSameName(item, name)
 		})
