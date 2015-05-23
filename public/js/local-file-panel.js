@@ -18,7 +18,7 @@ function LocalFilePanel() {
 			onRename: function(e) {
 				var currentFileName = e.targetVM.file
 				var newFileName = window.prompt('new file name').trim()
-				alert('rename')
+				vfs.updateFileName(currentFileName, newFileName)
 			},
 			onOpen: function(e) {
 				var fileName = e.targetVM.file
@@ -29,13 +29,22 @@ function LocalFilePanel() {
 
 	vfs.addEventListener(function(e) {
 		if (e.type === 'create') {
-			vm.files.push(e.fileName)
+			vm.files.push(e.name)
 		}
-		else if (e.type === 'update') {
-
+		else if (e.type === 'update' && e.what === 'name') {
+			vm.files = vm.files.map(function(item) {
+				if (vfs.isSameName(e.oldValue, item)) {
+					return e.newValue
+				}
+				else {
+					return item
+				}
+			})
 		}
 		else if (e.type === 'delete') {
-
+			vm.files = vm.files.filter(function(item) {
+				return !vfs.isSameName(item, e.name)
+			})
 		}
 	})
 
