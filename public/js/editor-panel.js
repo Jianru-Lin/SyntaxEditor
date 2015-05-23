@@ -57,10 +57,12 @@ function EditorPanel() {
 	}
 
 	vfs.addEventListener(function(e) {
-		if (e.type === 'update') {
+		if (instance._fileName === undefined) return
 
+		if (e.type === 'update' && e.what === 'name' && instance._fileName === e.oldValue) {
+			instance._fileName = e.newValue
 		}
-		else if (e.type === 'delete' && instance._fileName !== undefined && vfs.isSameName(e.name, instance._fileName)) {
+		else if (e.type === 'delete' &&  vfs.isSameName(e.name, instance._fileName)) {
 			instance.closeFile()
 		}
 	})

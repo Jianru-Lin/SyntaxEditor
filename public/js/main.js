@@ -47,13 +47,13 @@ $(function() {
 	}
 
 	// create default file as needed
-	if (localFilePanel.count() === 0) {
-		localFilePanel.add(config.defaultFile.name, config.defaultFile.content)
-		localFilePanel.open(config.defaultFile.name)
-	}
-	else {
-		localFilePanel.open(config.lastOpenedFile)
-	}
+	// if (localFilePanel.count() === 0) {
+	// 	localFilePanel.add(config.defaultFile.name, config.defaultFile.content)
+	// 	localFilePanel.open(config.defaultFile.name)
+	// }
+	// else {
+	// 	localFilePanel.open(config.lastOpenedFile)
+	// }
 })
 
 window.onbeforeunload = function() {

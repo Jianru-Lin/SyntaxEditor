@@ -22,11 +22,7 @@ function LocalFilePanel() {
 			},
 			onOpen: function(e) {
 				var file = e.targetVM.file
-				this.files.map(function(item) {
-					item.open = false
-				})
-				file.open = true
-				instance.onOpen(file.name)
+				instance.open(file.name)
 			}
 		}
 	})
@@ -34,8 +30,11 @@ function LocalFilePanel() {
 	vfs.addEventListener(function(e) {
 		if (e.type === 'create') {
 			vm.files.push({
-				name: e.name
+				name: e.name,
+				open: false
 			})
+			// open on create
+			instance.open(e.name)
 		}
 		else if (e.type === 'update' && e.what === 'name') {
 			vm.files = vm.files.map(function(item) {
@@ -60,7 +59,7 @@ function LocalFilePanel() {
 			vfs.createFile(fileName, content)
 		},
 		open: function(fileName) {
-			vm.files.map(function(item) {
+			vm.files.forEach(function(item) {
 				item.open = vfs.isSameName(item.name, fileName)
 			})
 			this.onOpen(fileName)
