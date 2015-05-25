@@ -1,9 +1,10 @@
 @navbar-height: 52px;
-@output-panel-height: 120px;
+/*@output-panel-height: 120px;*/
+@output-panel-height: 0px;
 @output-panel-bg-color: #f8f8f8;
 @output-panel-border-color: #e7e7e7;
 @local-file-panel-bg-color: @output-panel-bg-color;
-@local-file-panel-width: 400px;
+@local-file-panel-width: 320px;
 
 .navbar {
 	border-radius: 0;
@@ -73,6 +74,7 @@ ul.dropdown-menu {
 /* output panel */
 
 .output-panel {
+	display: none;
 	overflow: hidden;
 	position: absolute;
 	left: 0;
