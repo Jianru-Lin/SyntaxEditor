@@ -2,9 +2,10 @@
 /*@output-panel-height: 120px;*/
 @output-panel-height: 0px;
 @output-panel-bg-color: #f8f8f8;
-@output-panel-border-color: #e7e7e7;
+@border-color: #e7e7e7;
 @local-file-panel-bg-color: @output-panel-bg-color;
 @local-file-panel-width: 320px;
+@background-color: rgb(248, 248, 248);
 
 .navbar {
 	border-radius: 0;
@@ -47,6 +48,7 @@ ul.dropdown-menu {
 	top: @navbar-height;
 	right: 0;
 	bottom: @output-panel-height;
+	background: @background-color;
 }
 
 .editor-panel .no-file-opened-tip {
@@ -82,7 +84,7 @@ ul.dropdown-menu {
 	bottom: 0;
 	height: @output-panel-height;
 	background: @output-panel-bg-color;
-	border-top: 1px solid @output-panel-border-color;
+	border-top: 1px solid @border-color;
 }
 
 .output-panel > .content {
@@ -100,9 +102,10 @@ ul.dropdown-menu {
 	position: absolute;
 	top: @navbar-height;
 	left: 0;
-	width: @local-file-panel-width;
+	width: @local-file-panel-width - 1;
 	bottom: @output-panel-height;
 	background: @local-file-panel-bg-color;
+	border-right: solid 1px @border-color;
 }
 
 .local-file-panel .title {
@@ -116,11 +119,11 @@ ul.dropdown-menu {
 }
 
 .local-file-panel ul {
-	border-top: 1px solid #eaeaea;
+	border-top: 1px solid @border-color;
 }
 
 .local-file-panel ul li {
-	border-bottom: 1px solid #eaeaea;
+	border-bottom: 1px solid @border-color;
 	padding: 10px 15px;;
 }
 
