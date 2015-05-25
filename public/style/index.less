@@ -36,6 +36,18 @@ nav .btn-toolbar {
 	top: 8px;
 }
 
+nav {
+	overflow: hidden;
+}
+
+nav .btn-toolbar {
+	white-space: nowrap;
+}
+
+nav .btn-toolbar .btn {
+	float: none;
+}
+
 nav button {
 	width: 125px;
 }
@@ -127,6 +139,10 @@ ul.dropdown-menu {
 	padding: 10px 15px;
 }
 
+.local-file-panel * {
+	cursor: default !important;
+}
+
 .local-file-panel ul {
 	padding: 0;
 	margin: 0;
@@ -159,6 +175,10 @@ ul.dropdown-menu {
 
 .local-file-panel ul li i {
 	margin-right: 10px;
+}
+
+.local-file-panel ul li a {
+	background: transparent !important;
 }
 
 .local-file-panel ul li a.remove {

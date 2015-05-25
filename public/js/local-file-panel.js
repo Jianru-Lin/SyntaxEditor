@@ -6,7 +6,8 @@ function LocalFilePanel() {
 		},
 		methods: {
 			onAdd: function(e) {
-				var fileName = window.prompt('file name').trim()
+				var fileName = window.prompt('file name', '') || ''
+				fileName = fileName.trim()
 				if (!fileName) return
 				vfs.createFile(fileName)
 			},
@@ -17,7 +18,7 @@ function LocalFilePanel() {
 			},
 			onRename: function(e) {
 				var currentFileName = e.targetVM.file.name
-				var newFileName = window.prompt('new file name') || ''
+				var newFileName = window.prompt('new file name', currentFileName) || ''
 				newFileName = newFileName.trim()
 				if (!newFileName) return
 				vfs.updateFileName(currentFileName, newFileName)
