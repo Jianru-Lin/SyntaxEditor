@@ -4,15 +4,9 @@ nav.navbar.navbar-default(role='navigation')
 
 	.btn-toolbar
 
-		.btn-group
-			button.btn.btn-default.navbar-btn.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false', style='width: auto;')
+		.btn-group(role='group', aria-label='...')
+			button.btn.btn-default.navbar-btn(type='button', style='width: auto;')
 				i.fa.fa-file-text-o
-			ul.dropdown-menu(role='menu')
-				li
-					a(href='#', data-toggle='modal', data-target='#loadModal', accessKey='l', title='Alt+L') Load...
-				li(role='presentation', class='divider')
-				li
-					a(href='#', data-toggle='modal', data-target='#saveModal', accessKey='s', title='Alt+S') Save...
 
 		.btn-group(role='group', aria-label='...')
 			button#format.btn.btn-default.navbar-btn(type='button')
