@@ -1,24 +1,23 @@
-nav.navbar.navbar-default(role='navigation')
-	.navbar-header
-		a.navbar-brand(href='#') λ-VIEW 3
+nav
+	a.brand(href='#') λ-VIEW 3
 
 	.btn-toolbar
 
-		.btn-group(role='group', aria-label='...')
-			button.btn.btn-default.navbar-btn(type='button', style='width: auto;')
+		.btn-group(role='group', aria-label='...', style='display: none')
+			button.btn.btn-default(type='button', style='width: auto;')
 				i.fa.fa-file-text-o
 
 		.btn-group(role='group', aria-label='...')
-			button#format.btn.btn-default.navbar-btn(type='button')
+			button#format.btn.btn-default(type='button')
 				i.fa.fa-indent
 				| &nbspFormat
-			button#fold-all.btn.btn-default.navbar-btn(type='button')
+			button#fold-all.btn.btn-default(type='button')
 				i.fa.fa-compress
 				| &nbspFold All
-			button#unfold-all.btn.btn-default.navbar-btn(type='button')
+			button#unfold-all.btn.btn-default(type='button')
 				i.fa.fa-expand
 				| &nbspUnfold All
 
-		button#run.btn.btn-success.navbar-btn(type='button' accesskey='r' title='Alt+R')
+		button#run.btn.btn-success(type='button' accesskey='r' title='Alt+R')
 			i.fa.fa-play
 				| &nbspRun

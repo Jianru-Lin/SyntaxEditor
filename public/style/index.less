@@ -7,12 +7,33 @@
 @local-file-panel-width: 320px;
 @background-color: rgb(248, 248, 248);
 
-.navbar {
+nav {
 	border-radius: 0;
 	position: absolute;
 	left: 0;
 	top: 0;
 	right: 0;
+	height: 50px;
+	background: @output-panel-bg-color;
+	border-bottom: 1px solid @border-color;
+}
+
+nav .brand {
+	color: #777;
+	font-family: Verdana;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 16px;
+	padding: 0;
+	line-height: 50px;
+	margin-left: 15px;
+}
+
+nav .btn-toolbar {
+	position: absolute;
+	left: @local-file-panel-width;
+	right: 0;
+	top: 8px;
 }
 
 nav button {
@@ -65,12 +86,6 @@ ul.dropdown-menu {
 	overflow: auto;
 	font-size: 16px;
 	line-height: 1.5em;
-}
-
-@media (max-width: 767px) {
-	.editor-panel {
-		top: 102px;
-	}	
 }
 
 /* output panel */
